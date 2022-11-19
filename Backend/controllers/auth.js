@@ -41,8 +41,8 @@ function validateUserRegister(user) {
       symbol: 1,
       requirementCount: 4,
     }).required(),
-    fname: Joi.string().min(2).max(32).required(),
-    sname: Joi.string().max(32).required(),
+    firstName: Joi.string().min(2).max(32).required(),
+    lastName: Joi.string().max(32).required(),
     username: Joi.string().max(32).min(2).required(),
   });
   return schema.validate(user);
@@ -68,7 +68,9 @@ module.exports = {
         return res.status(403).send({ message: "User already exists" });
       }
     } catch (err) {
-      return res.status(500).send({ message: "Internal server error checking if user exists\n" + err });
+      return res.status(500).send({
+        message: "Internal server error checking if user exists\n" + err,
+      });
     }
     if (user_data.password != user_data.confirmPassword)
       return res.status(400).send({ message: "Passwords do not match" });
@@ -110,7 +112,7 @@ module.exports = {
         console.log(userPassword._password);
         const validPassword = await bcrypt.compare(
           req.body.password,
-          userPassword._password,
+          userPassword._password
         );
         if (!validPassword)
           return res.status(400).send({ message: "Invalid password" });

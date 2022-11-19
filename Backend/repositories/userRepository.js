@@ -51,7 +51,7 @@ module.exports = {
   createUser: (user_data) => {
     return new Promise((resolve, reject) => {
       let queryString = `INSERT INTO _user (username, fname, sname, email, _password,_image)
-      VALUES ('${user_data.username}','${user_data.fname}','${user_data.sname}','${user_data.email}','${user_data.password}}','${user_data.image}}')
+      VALUES ('${user_data.username}','${user_data.firstName}','${user_data.lastName}','${user_data.email}','${user_data.password}}','${user_data.image}}')
       ;`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
@@ -137,7 +137,7 @@ module.exports = {
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
-      })
-    })
-  }
+      });
+    });
+  },
 };
