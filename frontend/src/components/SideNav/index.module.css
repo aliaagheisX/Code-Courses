@@ -1,0 +1,36 @@
+.wrapper {
+    padding: 2rem;
+    background: #ffffff;
+    border: 1px solid #d4d4f8;
+    border-radius: 7px;
+}
+
+.wrapper h3 {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 16px;
+    color: #383848;
+    padding-bottom: 1rem;
+}
+
+.wrapper ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    font-size: 1.1rem;
+    font-family: "Montserrat";
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 13px;
+}
+
+.wrapper li a {
+    color: #8b8ba6;
+    text-decoration: none;
+}
+
+.wrapper li a:hover {
+    text-decoration: underline;
+}

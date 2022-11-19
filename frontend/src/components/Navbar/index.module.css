@@ -1,0 +1,10 @@
+.wrapper {
+    background: linear-gradient(90deg, #7f7fd5 62.81%, #86a8e7 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    padding: 1.2rem 2rem;
+    gap: 1rem;
+    border-radius: 0px 0px 15px 15px;
+}

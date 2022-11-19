@@ -1,0 +1,63 @@
+.wrapper {
+    background: linear-gradient(90deg, #11998e 63.54%, #38ef7d 98.96%);
+    border-radius: 24px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 2rem;
+    align-items: center;
+    gap: 1rem 15rem;
+}
+
+.user {
+    display: flex;
+    flex-direction: row;
+    gap: 1.6rem;
+    align-items: center;
+    flex-wrap: wrap;
+    font-family: "Lato";
+    color: #fff;
+    justify-content: center;
+}
+
+.user h2 {
+    font-weight: 900;
+    margin: 0;
+}
+
+.bio {
+    font-weight: 700;
+    font-size: 1.15rem;
+    opacity: 0.67;
+}
+
+.score {
+    background-color: black;
+    padding: 3px 5px;
+    border-radius: 3px;
+}
+.avatar {
+    width: 75px;
+    border-radius: 50%;
+    border: 5px solid #383848;
+}
+.userDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 0.4rem;
+}
+.userDetails > * {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.rank {
+    color: rgba(255, 255, 255, 0.39);
+    font-family: "Montserrat";
+    font-weight: 700;
+    font-size: 7rem;
+    line-height: 5rem;
+    text-align: center;
+}

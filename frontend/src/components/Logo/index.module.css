@@ -1,0 +1,17 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+}
+
+.wrapper img {
+    width: 5rem;
+    max-width: 100px;
+}
+
+.logo {
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    font-size: 1.6rem;
+}

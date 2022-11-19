@@ -1,0 +1,16 @@
+.body {
+    width: 95%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 4rem 0;
+    gap: 5rem;
+    align-items: flex-start;
+}
+.body aside {
+    flex-grow: 0.1;
+}
+.body main {
+    flex-grow: 1;
+}
