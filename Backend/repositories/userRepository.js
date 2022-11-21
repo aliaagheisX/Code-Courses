@@ -3,11 +3,9 @@ const { DBconnection } = require("../config/database");
 module.exports = {
   checkEmailQuery: (email) => {
     return new Promise((resolve, reject) => {
-      console.log(email);
       let queryString = `SELECT email FROM _user WHERE email='${email}'`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) reject(err);
-        console.log(rows);
         resolve(rows[0]);
       });
     });

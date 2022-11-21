@@ -31,6 +31,8 @@ function patchValidate(user) {
     firstName: Joi.string().pattern(/^[a-zA-Z]+$/).message("fname can only contain letters from the alphabet").min(2).max(32),
     lastName: Joi.string().pattern(/^[a-zA-Z]+$/).message("sname can only contain letters from the alphabet").max(32),
     username: Joi.string().alphanum().message("username can only contain alphanumeric characters").max(32).min(2),
+    about: Joi.string(),
+    image: Joi.string(),
   });
   return schema.validate(user);
 }
@@ -61,13 +63,8 @@ module.exports = {
     }
   },
   getUserLoggedIn: async (req, res) => {
-    if (!req.header("id")) {
-      return res
-        .status(400)
-        .send({ message: "Request id header cannot be empty" });
-    }
     try {
-      let id = req.header("id");
+      let id = req.body.user.ID;
       let user = await userRepo.getUserById(id);
       if (!user) return res.status(404).send({ message: "User not found" });
       return res.status(200).send({ user: user });
@@ -88,7 +85,7 @@ module.exports = {
       console.log(columns);
       const { error } = patchValidate(columns);
       if (error)
-        return res.status(400).send({ message: error.details[0].message });
+        return res.status(400).send({ message: "Validation error" + error.details[0].message });
 
       if (columns["fname"] != null) {
         await userRepo.editfname(username, columns["fname"]);
@@ -182,7 +179,7 @@ module.exports = {
   },
   deleteSignedInUser: async (req, res) => {
     try {
-      let id = req.header("id");
+      let id = req.body.user.ID;
       let rows = await userRepo.deleteUserbyID(id);
       if (!rows.affectedRows) {
         return res.status(404).send({ message: "User not found" });

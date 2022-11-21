@@ -107,7 +107,7 @@ module.exports = {
     try {
       let userPassword = await userRepo.getUserPassword(req.body.email);
       if (userPassword) {
-        console.log(userPassword._password);
+        // console.log(userPassword._password);
         const validPassword = await bcrypt.compare(
           req.body.password,
           userPassword._password
@@ -123,7 +123,7 @@ module.exports = {
 
     try {
       let user = await userRepo.getUser(req.body.email);
-      let payload = { email: user.email };
+      let payload = { email: user.EMAIL };
       const token = jwt.sign({ payload }, process.env.PRIMARY_KEY);
       return res.status(200).send({
         token: token,
