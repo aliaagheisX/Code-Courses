@@ -41,9 +41,9 @@ function validateUserRegister(user) {
       symbol: 1,
       requirementCount: 4,
     }).required(),
-    firstName: Joi.string().min(2).max(32).required(),
-    lastName: Joi.string().max(32).required(),
-    username: Joi.string().max(32).min(2).required(),
+    firstName: Joi.string().pattern(/^[a-zA-Z]+$/).message("fname can only contain letters from the alphabet").min(2).max(32),
+    lastName: Joi.string().pattern(/^[a-zA-Z]+$/).message("sname can only contain letters from the alphabet").max(32),
+    username: Joi.string().alphanum().message("username can only contain alphanumeric characters").max(32).min(2),
   });
   return schema.validate(user);
 }
@@ -52,8 +52,6 @@ function validateUserRegister(user) {
 async function encrypt(password) {
   const saltRounds = await bcrypt.genSalt(10);
   const hashedPwd = await bcrypt.hash(password, saltRounds);
-  const valid = await bcrypt.compare(password, hashedPwd);
-  console.log(valid);
   return hashedPwd;
 }
 module.exports = {
