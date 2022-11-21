@@ -12,9 +12,9 @@ router.get("/:id", userController.getUserById);
 router.get("/getbyusername/:username", userController.getUserByUsername);
 
 router.delete("/delete/me", [authToken], userController.deleteSignedInUser);
-router.delete("/delete", [admin], userController.deleteAllUsers);
-router.delete("/deletebyid/:id", [admin], userController.deleteUserbyID);
-router.delete("/deletebyusername/:username", [admin], userController.deleteUserbyName);
+router.delete("/delete", [authToken, admin], userController.deleteAllUsers);
+router.delete("/deletebyid/:id", [authToken, admin], userController.deleteUserbyID);
+router.delete("/deletebyusername/:username", [authToken, admin], userController.deleteUserbyName);
 
 router.patch("/:username/edit", [authToken, canEditProfile], userController.editUser);
 module.exports = router;
