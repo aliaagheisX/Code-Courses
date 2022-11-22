@@ -4,11 +4,6 @@
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="7" style="edgeStyle=none;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="ai0SHzeHxv4TIJYBhMSX-1" target="VOd4HTr_Wmd-bEYNQVig-7">
-                    <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="470" y="150" as="targetPoint"/>
-                    </mxGeometry>
-                </mxCell>
                 <mxCell id="ai0SHzeHxv4TIJYBhMSX-1" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;Article&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=20;spacingTop=5;" parent="1" vertex="1">
                     <mxGeometry x="349" y="210" width="121" height="70" as="geometry"/>
                 </mxCell>
@@ -1229,9 +1224,6 @@
                 </mxCell>
                 <mxCell id="NX0UnnKIkDLm7sZIIWQF-17" value="HAS" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-1280.5" y="640" width="80" height="80" as="geometry"/>
-                </mxCell>
-                <mxCell id="VOd4HTr_Wmd-bEYNQVig-7" value="&lt;font style=&quot;font-size: 24px&quot;&gt;Title&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="449.75" y="40" width="80" height="80" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
