@@ -4,9 +4,32 @@ const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./.env" });
 const cors = require("cors");
+const swaggerUI = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
 const db = require("./config/database");
 
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "CodeCourses API",
+      version: "1.0.0",
+      description: "Our DB Project API Documentation",
+    },
+    servers: [
+      {
+        url: "http://localhost:4000"
+      }
+    ],
+  },
+  apis: ['./routes/*.js']
+};
+
+const specs = swaggerJsDoc(options);
+
 const app = express();
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
 
 dotenv.config({ path: "./.env" }); // Using dotenv just for more security
 

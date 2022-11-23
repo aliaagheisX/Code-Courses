@@ -13,7 +13,7 @@ module.exports = {
             console.log(user);
             next();
         } catch (err) {
-            res.status(400).send({ message: "Unauthorized. Invalid token" });
+            res.status(401).send({ message: "Unauthorized. Invalid token" });
         }
     },
 };
