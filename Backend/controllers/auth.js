@@ -59,7 +59,7 @@ module.exports = {
     const user_data = req.body;
     const { error } = validateUserRegister(req.body);
     if (error)
-      return res.status(400).send({ message: error.details[0].message });
+      return res.status(403).send({ message: error.details[0].message });
     try {
       let user = await userRepo.getUser(user_data.email);
       if (user) {
@@ -71,7 +71,7 @@ module.exports = {
       });
     }
     if (user_data.password != user_data.confirmPassword)
-      return res.status(400).send({ message: "Passwords do not match" });
+      return res.status(403).send({ message: "Passwords do not match" });
     try {
       user_data.password = await encrypt(user_data.password);
       user_data.confirmPassword = "";
@@ -93,11 +93,11 @@ module.exports = {
   login: async (req, res) => {
     const { error } = validateUserLogIn(req.body);
     if (error)
-      return res.status(400).send({ message: error.details[0].message });
+      return res.status(430).send({ message: error.details[0].message });
 
     try {
       let userEmail = await userRepo.checkEmailQuery(req.body.email);
-      if (!userEmail) return res.status(400).send({ message: "Invalid email" });
+      if (!userEmail) return res.status(403).send({ message: "Invalid email" });
     } catch (err) {
       return res
         .status(500)
@@ -113,7 +113,7 @@ module.exports = {
           userPassword._password
         );
         if (!validPassword)
-          return res.status(400).send({ message: "Invalid password" });
+          return res.status(403).send({ message: "Invalid password" });
       }
     } catch (err) {
       return res

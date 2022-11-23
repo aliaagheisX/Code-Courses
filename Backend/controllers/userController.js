@@ -81,20 +81,26 @@ module.exports = {
       if (!user) {
         return res.status(404).send({ message: "User not found" });
       }
+      let email = user.EMAIL;
+      let payload = { email: email };
+      let token = jwt.sign({ payload }, process.env.PRIMARY_KEY);
       let columns = req.body;
       console.log(columns);
       const { error } = patchValidate(columns);
       if (error)
-        return res.status(400).send({ message: "Validation error" + error.details[0].message });
+        return res.status(403).send({ message: "Validation error" + error.details[0].message });
 
-      if (columns["fname"] != null) {
+      if (columns["firstName"] != null) {
         await userRepo.editfname(username, columns["fname"]);
       }
-      if (columns["sname"] != null) {
+      if (columns["lastNname"] != null) {
         await userRepo.editsname(username, columns["sname"]);
       }
       if (columns["email"] != null) {
         await userRepo.editEmail(username, columns["email"]);
+        email = columns["email"];
+        payload = { email: email };
+        token = jwt.sign({ payload }, process.env.PRIMARY_KEY);        
       }
       if (columns["password"] != null) {
         if (columns["confirmPassword"] == null) {
@@ -112,7 +118,10 @@ module.exports = {
         // The username should be edited the last because the rest of the queries depend on the username
         await userRepo.editUsername(username, columns["username"]);
       }
-      return res.status(200).send({ message: "User Edited Successfully" });
+      return res.status(200).send({ 
+        token: token,
+        message: "User Edited Successfully" 
+      });
     } catch (err) {
       return res
         .status(500)
