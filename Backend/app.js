@@ -47,8 +47,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", require("./routes/users"));
-const PORT = process.env.PORT || 3000;
 app.use("/auth", require("./routes/auth"));
+app.use("/students", require("./routes/students"));
+
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, (err) => {
   if (err) return console.error("Error setting up server", err);

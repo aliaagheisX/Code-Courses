@@ -174,7 +174,7 @@ module.exports = {
   getAllUsers: async (req, res) => {
     try {
       let users = await userRepo.getAllUsers();
-      if (!users) {
+      if (!users.length) {
         return res
           .status(404)
           .send({ message: "Looks like you have no users" });
