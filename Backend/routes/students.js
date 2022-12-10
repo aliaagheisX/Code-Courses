@@ -128,4 +128,7 @@ router.get('/', studentController.getAllStudents);
 
 router.get('/:s_id', studentController.getStudentById);
 
+router.delete('/', studentController.deleteAllStudents);
+router.delete('/:s_id', studentController.deleteStudentById);
+
 module.exports = router;

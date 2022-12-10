@@ -32,4 +32,33 @@ module.exports = {
         .send({ message: "Internal server error getting student by id" + err });
     }
   },
+  deleteAllStudents: async (req, res) => {
+    try {
+      let rows = await studentRepo.deleteAllStudents();
+      if (!rows.affectedRows) {
+        return res
+          .status(404)
+          .send({ message: "Looks like you have no students "});
+      }
+      return res.status(200).send({ message: "All students deleted" });
+    } catch (err) {
+      return res
+        .status(500)
+        .send({ message: "Internal server error deleting all students" + err });
+    }
+  },
+  deleteStudentById: async (req, res) => {
+    try {
+      let id = parseInt(req.params.id);
+      let rows = await studentRepo.deleteStudentById(id);
+      if (!rows.affectedRows) {
+        return res.status(404).send({ message: "Student not found" });
+      }
+      return res.status(200).send({ message: "Student deleted successfully" });
+    } catch (err) {
+      return res
+        .status(500)
+        .send({ message: "Internal server error deleting student\n" + err });
+    }
+  }
 };
