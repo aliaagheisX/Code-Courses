@@ -33,29 +33,44 @@ module.exports = {
         .send({ message: "Internal server error getting article by id" + err });
     }
 	},
-	getArticlesByِAuthorUsername: async (req, res) => {
-		try {
-			let username = req.params.username;
-			let author = await userRepo.getUserByName(username);
-			if (!author) {
-				return res
-					.status(404)
-					.send({ message: "Author "});
-			}
-			let articles = articleRepo.getArticlesByAuthorUsername(username);
-			if (!articles.length) {
-				return res
-					.status(404)
-					.send({ message: "Th"})
-			}
-		} catch (err) {
+	getArticlesByAuthorUsername: async (req, res) => {
+		// try {
+		// 	let username = req.params.username;
+		// 	let author = await userRepo.getUserByName(username);
+		// 	if (!author) {
+		// 		return res
+		// 			.status(404)
+		// 			.send({ message: "Author "});
+		// 	}
+		// 	let articles = articleRepo.getArticlesByAuthorUsername(username);
+		// 	if (!articles.length) {
+		// 		return res
+		// 			.status(404)
+		// 			.send({ message: "Th"})
+		// 	}
+		// 	return res
+		// 		.status(200)
+		// 		.send({ articles: articles });
+		// } catch (err) {
 
-		}
-	},
-	getArticlesByCourseId: async (req, res) => {
-		
+		// }
 	},
 	getArticlesByTopicId: async (req, res) => {
-
+		try {
+			let id = parseInt(req.params.t_id);
+			let articles = await articleRepo.getArticlesByTopicId(id);
+			if (!articles.length) {
+				return res	
+					.status(404)
+					.send({ message: "No articles in this topic" });
+			}
+			return res	
+				.status(200)
+				.send({ articles: articles });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting articles by topic id" + err });
+		}
 	}
-}
+};
