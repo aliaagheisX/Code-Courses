@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import WaitingPage from './Layouts/Waiting';
+
 import Error from './Layouts/Error';
+import Waiting from './Layouts/Waiting';
+
 
 export default function Resource({ path, render }) {
     const [error, setError] = useState(null);
@@ -28,7 +30,7 @@ export default function Resource({ path, render }) {
     }, [])
 
 
-    if (loading) return <WaitingPage />
+    if (loading) return <Waiting />
     if (error) return <Error />
 
     return render({ items });

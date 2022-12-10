@@ -14,6 +14,14 @@ body {
     box-sizing: border-box;
 }
 
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+
 .modal {
     position: absolute;
     top: 0;
@@ -29,7 +37,8 @@ body {
 }
 
 .modal-content {
-    padding: 1rem 0;
+    padding: 2rem 1rem;
+    border-radius: 20px !important;
 }
 
 form {
@@ -50,6 +59,7 @@ form .group div,
 .error {
     color: #cc2936;
     font-size: 1rem;
+    margin-bottom: -3px;
 }
 
 form label {
@@ -59,29 +69,30 @@ form label {
 }
 
 form input {
-    background: #e0e0e0;
+    border-radius: 6px;
+    background: #eee;
     border: 0;
-    border-bottom: 2px solid #000000;
+    border: 2px solid #d3d3d3;
     padding: 0.4rem 0.4rem;
     font-size: 1.1rem;
+
 }
 
 form button {
-    background: #424261;
+    background: #3f3f60;
     font-family: "Lato";
     font-weight: 700;
-    font-size: 1rem;
-    padding: 0.3rem 0;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    padding: 0.5rem 0 ;
     border: 0;
 
     color: #ffffff;
+    margin: 1rem 0;
+    border-radius: 6px;
+    
 }
 
-form button {
-    margin: 0;
-    font-size: 1.1rem;
-    padding: 0.5rem 0;
-}
 
 form button:hover {
     background: #2e2e44;

@@ -7,9 +7,10 @@ import useToken from '../useToken'
 import { Formik, Form } from 'formik';
 
 import SubmitButton from './Fields/SubmitButton';
-import api from '../api';
 
-export default function FormResource({ url, initialValues, validationSchema, children, submitBtnText }) {
+export default function FormResource({ url, initialValues, validationSchema, children, submitBtnText, ContentType }) {
+    if (!ContentType) ContentType = 'application/json'
+
     const [backendError, setBackendError] = useState(null); //handeling backend validations
     const { setToken } = useToken() //to save token
 
@@ -17,9 +18,9 @@ export default function FormResource({ url, initialValues, validationSchema, chi
     const onSubmit = async (values) => {
         try {
             /* send request */
-            const res = await fetch(api[url], {
+            const res = await fetch(url, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': ContentType },
                 body: JSON.stringify(values)
             });
 

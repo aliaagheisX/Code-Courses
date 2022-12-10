@@ -5,7 +5,7 @@ export default function TextField({ name, label, placeholder }) {
     return (
         <div className='group'>
             <label htmlFor={name}>{label}</label>
-            <Field name={name} placeholder={placeholder} />
+            <Field name={name} placeholder={placeholder} id={name} />
             <ErrorMessage component="div" name={name} />
         </div>
     )

@@ -107,7 +107,7 @@ module.exports = {
     try {
       let userPassword = await userRepo.getUserPassword(req.body.email);
       if (userPassword) {
-        // console.log(userPassword._password);
+        //console.log(req.body.password);
         const validPassword = await bcrypt.compare(
           req.body.password,
           userPassword._password

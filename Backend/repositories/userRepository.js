@@ -129,6 +129,15 @@ module.exports = {
       });
     });
   },
+  editImage: (username, image) => {
+    return new Promise((resolve, reject) => {
+      let queryString = `UPDATE _user SET _IMAGE='${image}' WHERE USERNAME = '${username}'`
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows);
+      });
+    })
+  },
   deleteAllUsers: () => {
     return new Promise((resolve, reject) => {
       let queryString = `DELETE FROM _user`;

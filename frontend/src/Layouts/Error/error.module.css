@@ -1,0 +1,20 @@
+.cont {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cont button{
+    background-color: #ffffff;
+    color: #3362cc;
+    border: 1px solid #3362cc;
+    padding: 0.3rem 1rem;
+    margin-top: 5rem;
+    font-size: 1.3rem;
+
+}
+
+.cont button:hover {
+    background-color: #ddd;
+}
