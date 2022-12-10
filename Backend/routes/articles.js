@@ -13,4 +13,6 @@ router.get('/getbytopicid/:t_id', articleController.getArticlesByTopicId);
 router.delete('/', [admin], articleController.deleteAllArticles);
 router.delete('/:a_id', [admin], articleController.deleteArticleById);
 
+router.post('/create', articleController.createArticle);
+
 module.exports = router;

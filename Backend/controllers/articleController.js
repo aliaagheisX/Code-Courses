@@ -108,5 +108,23 @@ module.exports = {
 				.status(500)
 				.send({ message: "Internal server error deleting article by id" + err });
 		}
-	}
+	},
+	createArticle: async (req, res) => {
+		try {
+			let article = req.body;
+			let element_id = await articleRepo.createElement(article);
+			let response  = await articleRepo.createArticle(article,element_id);
+			return res		
+				.status(200)
+				.send({ message: "Article created successfully" });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error posting article " + err });
+		}
+	},
+	editArticle: async (req, res) => {
+		
+	},
+	
 };
