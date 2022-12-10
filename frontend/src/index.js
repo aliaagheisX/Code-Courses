@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import './index.css';
 import App from './App';
-import Profile from './Layouts/Profile'
+import StudentProfile from './Layouts/StudentProfile'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import useToken from './useToken';
 import EditProfile from './Layouts/EditProfile';
@@ -20,9 +20,9 @@ root.render(
     <Routes>
       <Route path="/" element={<App />}>
 
-        <Route path='me' element={
+        <Route path='/students/:id' element={
           <ProtectedRoute>
-            <Profile />
+            <StudentProfile />
           </ProtectedRoute>
         }
         />

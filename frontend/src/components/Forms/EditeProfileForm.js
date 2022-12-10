@@ -14,27 +14,29 @@ import api from '../../api'
 import useToken from '../../useToken';
 
 export default function EditeProfileForm() {
-    const { token, userdata: { } } = useToken()
+    const { token, userdata: { ID, USERNAME, FNAME, SNAME, EMAIL, ABOUT, _IMAGE } } = useToken()
     return (
         <FormResource
-            url={api.editProfile}
+            url={api.editProfile(USERNAME)}
             initialValues={editProfileInitialValues}
             validationSchema={EditProfileSchema}
             submitBtnText="submit"
-            ContentType=""
+            ContentType="media"
+            token={token}
+            method='PATCH'
         >
             <div style={{ margin: '19px auto' }}>
-                <ImgField defaultImg='/a1.jpg' ChooseFileBtn={ChooseFileBtn} Avatar={Avatar} name='image' />
+                <ImgField defaultImg={_IMAGE} ChooseFileBtn={ChooseFileBtn} Avatar={Avatar} name='image' />
             </div>
             <div className="form-group">
-                <TextField name="firstName" label="first name" placeholder="Joe" />
-                <TextField name="lastName" label="last name" placeholder="Doe" />
+                <TextField name="firstName" label="first name" placeholder={FNAME} />
+                <TextField name="lastName" label="last name" placeholder={SNAME} />
             </div>
             <div className="form-group">
-                <TextField name="username" label="username" placeholder="JoeDoe" />
-                <EmailField />
+                <TextField name="username" label="username" placeholder={USERNAME} />
+                <EmailField placeholder={EMAIL} />
             </div>
-            <TextField name="about" label="about" placeholder="JoeDoe" />
+            <TextField name="about" label="about" placeholder={ABOUT} />
 
         </FormResource>
     )

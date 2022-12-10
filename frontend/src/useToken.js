@@ -15,11 +15,19 @@ export default function useToken() {
     const [userdata, setUserdata] = useState(getUserdata());
 
     const saveToken = userdata => {
-        const { token, user } = userdata
-        localStorage.setItem('token', token);
-        localStorage.setItem('userdata', JSON.stringify(user));
-        setToken(user.token);
-        setUserdata(user)
+        try {
+            const { token, user } = userdata
+            localStorage.setItem('token', token);
+            localStorage.setItem('userdata', JSON.stringify(user));
+            setToken(user.token);
+            setUserdata(user)
+        }
+        catch (err) {
+            localStorage.clear();
+            setToken();
+            setUserdata()
+            window.location.href = '/';
+        }
     };
 
     return {

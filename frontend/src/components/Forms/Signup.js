@@ -27,6 +27,6 @@ export default function Signup() {
         <PasswordField name="password" label="password" />
         <PasswordField name="confirmPassword" label="confirm password" />
       </FormResource>
-    </div >
+    </div>
   );
 }

@@ -8,13 +8,13 @@ import { Link } from "react-router-dom";
 export default function ProfileLinks() {
   const [logoutModel, setLogoutModel] = useState(false);
 
-  const { userdata: { USERNAME } } = useToken();
+  const { userdata: { USERNAME, ID } } = useToken();
 
 
   return (
     <>
       <ul className={styles.optionsList}>
-        <Link to={`/me`}>{USERNAME}</Link>
+        <Link to={`/students/${ID}`}>{USERNAME}</Link>
         <li onClick={() => setLogoutModel(true)}>Logout</li>
       </ul>
 

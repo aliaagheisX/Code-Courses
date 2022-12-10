@@ -4,7 +4,7 @@ import styles from './index.module.css'
 import useToken from '../../../useToken'
 import Avatar from '../../../components/Avatar'
 
-export default function ProfileBar({ rank, rank_ind, score }) {
+export default function ProfileBar({ userdata, rank, rank_ind, score }) {
 
 
     const bg_styles = [
@@ -19,20 +19,21 @@ export default function ProfileBar({ rank, rank_ind, score }) {
         'linear-gradient(90deg, #3C1053 63.54%, #AD5389 98.96%)',
         'linear-gradient(90deg, #200122 63.54%, #6F0000 98.96%)'
     ]
-    const { userdata: {
+    const {
         FNAME: first_name,
         SNAME: last_name,
         ABOUT: bio,
-        _IMAGE: avatar
-    } } = useToken()
+        _IMAGE: img
+    } = userdata
+    console.log(img)
 
 
     return (
         <div className={styles.wrapper} style={{ background: bg_styles[rank_ind] }}>
             <div className={styles.user}>
-                <Avatar avatar={avatar} />
+                <Avatar avatar={img} />
                 <div className={styles.userDetails}>
-                    <h2>Welcome {first_name} {last_name}</h2>
+                    <h2> {first_name} {last_name}</h2>
                     <div className={styles.bio}>{bio}</div>
                     <div className={styles.score}>{score}p</div>
                 </div>

@@ -14,7 +14,6 @@ export default function App() {
             <div style={{ display: 'flex' }}>
                 <SideNav />
                 <div style={{ margin: "0 auto", width: "85%", minWidth: "250px", padding: "4rem 0" }}>
-                    <EditeProfileForm />
                     <Outlet />
                 </div>
             </div>

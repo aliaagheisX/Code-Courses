@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 import YupPassword from "yup-password";
+
 YupPassword(Yup); // extend yup
 
 /* inital values */
@@ -18,7 +19,7 @@ export const signupInitialValues = {
 };
 
 export const editProfileInitialValues = () => ({
-  avatar: null,
+  image: null,
   username: null,
   firstName: null,
   lastName: null,
@@ -27,10 +28,11 @@ export const editProfileInitialValues = () => ({
 });
 
 export const changePasswordInitialValues = {
-  password: "",
-  newPassword: "",
-  confirmNewPassword: "",
+  password: null,
+  confirmPassword: null,
 };
+
+export const emptyInitialValues = {};
 
 /* validation schemas */
 export const LoginSchema = Yup.object().shape({
@@ -75,6 +77,7 @@ export const SignupSchema = LoginSchema.shape({
 
 
 export const EditProfileSchema = Yup.object().shape({
+  image: Yup.mixed(),
   username: Yup.string()
     .min(3, "at least 3 characters")
     .max(32, "at most 32 characters"),
@@ -108,5 +111,8 @@ export const ChangePasswordSchema = Yup.object().shape({
   confirmPassword: Yup.string().oneOf(
     [Yup.ref("password"), null],
     "Passwords must match"
-  ),
+  ).required("required"),
+})
+
+export const EmptySchema = Yup.object().shape({
 })

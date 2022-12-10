@@ -7,7 +7,7 @@ body {
     margin: 0;
     font-family: "Lato", sans-serif;
     color: #333333;
-    background: #f3f5f9;
+    background-color: #F3F5F9 !important;
 }
 
 * {
@@ -63,23 +63,32 @@ form .group div,
 }
 
 form label {
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: #000000;
+    font-family: 'Lato';
+font-style: normal;
+font-weight: 700;
+font-size: 14px;
+    color: #868686;
 }
 
 form input {
-    border-radius: 6px;
-    background: #eee;
-    border: 0;
-    border: 2px solid #d3d3d3;
-    padding: 0.4rem 0.4rem;
+    border-radius: 8px;
+    background: #FFFFFF;
+    border: 1px solid #86A8E7;  
+    padding: 0.5rem 0.6rem;
     font-size: 1.1rem;
+    font-family: 'Lato';
+    font-size: 14px;
+    
+}
+::placeholder {
+    font-family: 'Lato';
+    font-weight: 700;
+    color: #BEBFC1;
 
 }
 
 form button {
-    background: #3f3f60;
+    background: #95B2EA;
     font-family: "Lato";
     font-weight: 700;
     font-size: 1.2rem;
@@ -90,12 +99,12 @@ form button {
     color: #ffffff;
     margin: 1rem 0;
     border-radius: 6px;
-    
+    width: 95px;
 }
 
 
 form button:hover {
-    background: #2e2e44;
+    background: #7c94c5;
 }
 
 .form-group {

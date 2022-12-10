@@ -33,7 +33,7 @@ function patchValidate(user) {
     lastName: Joi.string().pattern(/^[a-zA-Z]+$/).message("sname can only contain letters from the alphabet").max(32),
     username: Joi.string().alphanum().message("username can only contain alphanumeric characters").max(32).min(2),
     about: Joi.string(),
-    avatar: Joi.any(),
+    image: Joi.any(),
   });
   return schema.validate(user);
 }
@@ -92,10 +92,13 @@ module.exports = {
         return res.status(403).send({ message: "Validation error" + error.details[0].message });
 
       if (columns["firstName"] != null) {
-        await userRepo.editfname(username, columns["fname"]);
+        await userRepo.editfname(username, columns["firstName"]);
       }
-      if (columns["lastNname"] != null) {
-        await userRepo.editsname(username, columns["sname"]);
+      if (columns["lastName"] != null) {
+        await userRepo.editsname(username, columns["lastName"]);
+      }
+      if (columns["about"] != null) {
+        await userRepo.editAbout(username, columns["about"]);
       }
       if (req.file?.path != null) {
         let imagePath = req.file.path
@@ -124,7 +127,9 @@ module.exports = {
 
         // The username should be edited the last because the rest of the queries depend on the username
         await userRepo.editUsername(username, columns["username"]);
+        username = columns["username"]
       }
+      user = await userRepo.getUserByName(username);
       return res.status(200).send({
         token: token,
         user: user,

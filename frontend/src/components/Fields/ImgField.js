@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import useToken from '../../useToken';
+
+import { useFormikContext } from 'formik'
 
 export default function ImgField({ defaultImg, ChooseFileBtn, Avatar, name }) {
 
+    const formikProps = useFormikContext()
     const [loading, setLoading] = useState(0);
     const [errorMsg, setErrorMsg] = useState('');
     const [img, setImg] = useState(defaultImg);
-    const [File, setFile] = useState();
 
-    const { token, userdata: { ID, USERNAME, EMAIL, _PASSWORD } } = useToken()
 
     const ChangeHandel = (e) => {
         setLoading(1)
@@ -44,7 +44,7 @@ export default function ImgField({ defaultImg, ChooseFileBtn, Avatar, name }) {
 
                     setErrorMsg('')
                     setImg(reader.result)
-                    setFile(file)
+                    formikProps.setFieldValue('image', file)
                 }
 
                 reader.onerror = () => {
@@ -54,27 +54,6 @@ export default function ImgField({ defaultImg, ChooseFileBtn, Avatar, name }) {
                 }
             }
         }
-
-    }
-
-    const SubmissionHandel = async (e) => {
-        e.preventDefault()
-        const formData = new FormData();
-
-        formData.append('avatar', File);
-
-        fetch(`http://localhost:4000/users/${USERNAME}/edit`, {
-            method: 'PATCH',
-            body: formData,
-            headers: { 'token': token }
-        })
-            .then(response => response.json())
-            .then(result => console.log('success', result))
-            .catch(err => console.log('error', err))
-
-
-
-        setLoading(0);
 
     }
 

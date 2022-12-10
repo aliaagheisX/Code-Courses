@@ -1,11 +1,13 @@
 import React from 'react'
 import styles from './index.module.css'
+import useToken from '../../useToken'
 import { NavLink } from 'react-router-dom'
 export default function SideNav() {
+    const { userdata: { ID } } = useToken()
     return (
         <aside className={styles.wrapper}>
             <ul>
-                <li><NavLink to="/me">
+                <li><NavLink to={`/students/${ID}`}>
                     <span className="material-symbols-outlined">
                         person
                     </span>
