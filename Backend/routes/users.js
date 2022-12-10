@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const multer = require('multer')
 const admin = require('../middleware/admin');
 const { authToken } = require('../middleware/auth');
 const { canEditProfile } = require('../permissions/userPermissions');
@@ -160,8 +161,7 @@ router.delete("/deletebyusername/:username", [authToken, admin], userController.
  *                                  type: string
  *                                  description: internal server error + error
  */
-const multer = require('multer')
 // 2
 const upload = multer({ dest: 'images/' })
-router.patch("/:username/edit", upload.single('image'), [authToken, canEditProfile], userController.editUser);
+router.patch("/:username/edit", [authToken, canEditProfile], upload.single('image'), userController.editUser);
 module.exports = router;
