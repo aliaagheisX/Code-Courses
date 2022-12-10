@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const admin = require('../middleware/admin');
+const { authToken } = require('../middleware/auth');
 
 const studentController = require('../controllers/studentController');
 
@@ -128,7 +130,7 @@ router.get('/', studentController.getAllStudents);
 
 router.get('/:s_id', studentController.getStudentById);
 
-router.delete('/', studentController.deleteAllStudents);
-router.delete('/:s_id', studentController.deleteStudentById);
+router.delete('/', [admin], studentController.deleteAllStudents);
+router.delete('/:s_id', [admin], studentController.deleteStudentById);
 
 module.exports = router;

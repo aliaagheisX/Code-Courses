@@ -30,7 +30,27 @@ module.exports = {
 	},
 	getArticlesByTopicId: (id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT A.ID, A.BODY, A.INSTRUCTORID FROM article A, article_topic AT WHERE A.ID=AT.AID AND AT.TID=${id}`;
+			let queryString = `SELECT A.ID, A.BODY, A.INSTRUCTORID 
+													FROM article A, article_topic AT 
+													WHERE A.ID=AT.AID AND AT.TID=${id}`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows);
+			})
+		})
+	},
+	deleteAllArticles: () => {
+		return new Promise((resolve, reject) => {
+			let queryString = `DELETE FROM article`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows);
+			})
+		})
+	},
+	deleteArticleById: (id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `DELETE FROM article WHERE ID=${id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
