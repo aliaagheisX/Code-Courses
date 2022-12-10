@@ -7,7 +7,7 @@ const { canEditProfile } = require('../permissions/userPermissions');
 const userController = require("../controllers/userController");
 
 router.get("/", userController.getAllUsers);
-router.get("/me", [authToken],userController.getUserLoggedIn);
+router.get("/me", [authToken], userController.getUserLoggedIn);
 router.get("/:id", userController.getUserById);
 router.get("/getbyusername/:username", userController.getUserByUsername);
 
@@ -160,5 +160,8 @@ router.delete("/deletebyusername/:username", [authToken, admin], userController.
  *                                  type: string
  *                                  description: internal server error + error
  */
-router.patch("/:username/edit", [authToken, canEditProfile], userController.editUser);
+const multer = require('multer')
+// 2
+const upload = multer({ dest: 'images/' })
+router.patch("/:username/edit", upload.single('image'), [authToken, canEditProfile], userController.editUser);
 module.exports = router;

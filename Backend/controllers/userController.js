@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const userRepo = require("../repositories/userRepository");
 const bcrypt = require("bcryptjs");
 const Joi = require("joi");
@@ -32,7 +33,7 @@ function patchValidate(user) {
     lastName: Joi.string().pattern(/^[a-zA-Z]+$/).message("sname can only contain letters from the alphabet").max(32),
     username: Joi.string().alphanum().message("username can only contain alphanumeric characters").max(32).min(2),
     about: Joi.string(),
-    image: Joi.string(),
+    image: Joi.any(),
   });
   return schema.validate(user);
 }
@@ -85,22 +86,31 @@ module.exports = {
       let payload = { email: email };
       let token = jwt.sign({ payload }, process.env.PRIMARY_KEY);
       let columns = req.body;
-      console.log(columns);
+
       const { error } = patchValidate(columns);
       if (error)
         return res.status(403).send({ message: "Validation error" + error.details[0].message });
 
       if (columns["firstName"] != null) {
-        await userRepo.editfname(username, columns["fname"]);
+        await userRepo.editfname(username, columns["firstName"]);
       }
-      if (columns["lastNname"] != null) {
-        await userRepo.editsname(username, columns["sname"]);
+      if (columns["lastName"] != null) {
+        await userRepo.editsname(username, columns["lastName"]);
+      }
+      if (columns["about"] != null) {
+        await userRepo.editAbout(username, columns["about"]);
+      }
+      if (req.file?.path != null) {
+        let imagePath = req.file.path
+        imagePath = "http://localhost:4000/" + imagePath.replace('\\', '/')
+        await userRepo.editImage(username, imagePath);
+
       }
       if (columns["email"] != null) {
         await userRepo.editEmail(username, columns["email"]);
         email = columns["email"];
         payload = { email: email };
-        token = jwt.sign({ payload }, process.env.PRIMARY_KEY);        
+        token = jwt.sign({ payload }, process.env.PRIMARY_KEY);
       }
       if (columns["password"] != null) {
         if (columns["confirmPassword"] == null) {
@@ -114,13 +124,15 @@ module.exports = {
         }
       }
       if (columns["username"] != null) {
-        console.log(columns["username"]);
+
         // The username should be edited the last because the rest of the queries depend on the username
         await userRepo.editUsername(username, columns["username"]);
+        username = columns["username"]
       }
-      return res.status(200).send({ 
+      user = await userRepo.getUserByName(username);
+      return res.status(200).send({
         token: token,
-        message: "User Edited Successfully" 
+        user: user,
       });
     } catch (err) {
       return res

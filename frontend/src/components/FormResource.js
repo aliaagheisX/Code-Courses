@@ -7,9 +7,11 @@ import useToken from '../useToken'
 import { Formik, Form } from 'formik';
 
 import SubmitButton from './Fields/SubmitButton';
-import api from '../api';
 
-export default function FormResource({ url, initialValues, validationSchema, children, submitBtnText }) {
+export default function FormResource({ token, method, ContentType, url, initialValues, validationSchema, children, submitBtnText }) {
+
+    if (!method) method = 'POST'
+
     const [backendError, setBackendError] = useState(null); //handeling backend validations
     const { setToken } = useToken() //to save token
 
@@ -17,16 +19,37 @@ export default function FormResource({ url, initialValues, validationSchema, chi
     const onSubmit = async (values) => {
         try {
             /* send request */
-            const res = await fetch(api[url], {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(values)
+            /* header */
+            const myHeader = new Headers();
+
+
+            if (!ContentType) {
+                myHeader.append('Content-Type', 'application/json')
+                values = JSON.stringify(values)
+            }
+            else {
+                const formData = new FormData();
+
+                Object.keys(values).forEach((key) => {
+                    formData.append(key, values[key])
+                });
+                values = formData;
+            }
+
+            if (token)
+                myHeader.append('token', token)
+
+
+
+            const res = await fetch(url, {
+                method: method,
+                headers: myHeader,
+                body: values
             });
 
             const data = await res.json()
-            /* validate response */
+
             if (!res.ok) {
-                console.log(data);
                 throw new Error(data.message)
             }
             else {
@@ -49,7 +72,7 @@ export default function FormResource({ url, initialValues, validationSchema, chi
         >
 
             {({ isSubmitting }) => (
-                <Form>
+                <Form encType='multipart/form-data'>
 
                     {children}
 

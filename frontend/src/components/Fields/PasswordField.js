@@ -6,7 +6,7 @@ export default function PasswordField({ name, label }) {
     return (
         <div className='group'>
             <label htmlFor={name}>{label}</label>
-            <Field name={name} type="password" placeholder="*************" />
+            <Field id={name} name={name} type="password" placeholder="*************" />
             <ErrorMessage component="div" name={name} />
         </div>
     )
