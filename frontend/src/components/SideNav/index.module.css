@@ -1,36 +1,61 @@
 .wrapper {
-    padding: 2rem;
+    padding: 0rem 1.6rem;
     background: #ffffff;
-    border: 1px solid #d4d4f8;
-    border-radius: 7px;
+    margin: 0;
+    
+    background: linear-gradient(180deg, #7F7FD5 0%, #86A8E7 100%);
+    
+    height: 100vh;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -50px;
+    z-index: 1;
 }
 
-.wrapper h3 {
-    font-family: "Montserrat";
-    font-style: normal;
-    font-weight: 700;
-    font-size: 1.6rem;
-    line-height: 16px;
-    color: #383848;
-    padding-bottom: 1rem;
-}
 
 .wrapper ul {
     display: flex;
     flex-direction: column;
-    gap: 1.6rem;
-    font-size: 1.1rem;
-    font-family: "Montserrat";
-    font-weight: 600;
-    font-size: 11px;
-    line-height: 13px;
+    gap: 5.5vh;
+    font-size: 1rem;
+    list-style-type: none;
+    padding:  0;
+    align-items: center;
+    
 }
 
-.wrapper li a {
-    color: #8b8ba6;
+
+.wrapper li a  {
+    color: #fff;
     text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+
 }
 
-.wrapper li a:hover {
-    text-decoration: underline;
+
+.wrapper li:hover  .overlay {
+    display: block;
+}
+
+
+.wrapper span {
+    font-size: 23px;
+    color: #D7E5FF;
+}
+.wrapper .overlay {
+    display: none;
+    font-weight: 700;
+    font-family: 'Montserrat';
+    position: absolute;
+    left: 5rem;
+    background: #000;
+    padding: 0.2rem 0.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
 }

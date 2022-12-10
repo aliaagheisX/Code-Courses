@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from './styles/index.module.css'
 
 
-import FormModel from '../../FormModel';
+import FormModel from '../../Forms';
 
 export default function AuthForms() {
     const [loginModal, setLoginModal] = useState(false);

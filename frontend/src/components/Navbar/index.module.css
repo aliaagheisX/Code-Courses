@@ -4,7 +4,12 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: nowrap;
-    padding: 1.2rem 2rem;
+    padding: 1.2rem 5rem;
     gap: 1rem;
-    border-radius: 0px 0px 15px 15px;
+    margin: 0;  
+    z-index: 999;
+    position: sticky;
+
 }
+
+

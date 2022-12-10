@@ -28,6 +28,7 @@ const options = {
 const specs = swaggerJsDoc(options);
 
 const app = express();
+app.use('/images', express.static('images'))
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
 
