@@ -82,5 +82,6 @@ router.delete('/:a_id', [admin], articleController.deleteArticleById);
  *                                  description: internal server error + error
  */
 router.post('/create', articleController.createArticle);
+router.post('/edit', articleController.editArticle);
 
 module.exports = router;

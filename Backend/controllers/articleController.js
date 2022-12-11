@@ -1,5 +1,7 @@
 const { parse } = require('dotenv');
 const articleRepo = require('../repositories/articleRepository');
+const elementRepo = require('../repositories/elementRepository');
+
 const userRepo = require('../repositories/userRepository');
 
 module.exports = {
@@ -112,7 +114,7 @@ module.exports = {
 	createArticle: async (req, res) => {
 		try {
 			let article = req.body;
-			let element_id = await articleRepo.createElement(article);
+			let element_id = await elementRepo.createElement(article);
 			let response  = await articleRepo.createArticle(article,element_id);
 			return res		
 				.status(200)
@@ -124,7 +126,37 @@ module.exports = {
 		}
 	},
 	editArticle: async (req, res) => {
-		
+		const article = req.body
+		if(article.title){
+			try{
+				let edit_title = await elementRepo.editElementTitle(article)
+			}catch(err){
+				return res
+				.status(500)
+				.send({ message: "Internal server error posting article " + err });
+			}
+		}
+		if(article.description){
+			try{
+				let edit_description = await elementRepo.editElementDescription(article)
+			}catch(err){
+				return res
+				.status(500)
+				.send({ message: "Internal server error posting article " + err });
+			}
+		}
+		if(article.body){
+			try{
+				let edit_body = await articleRepo.editArticleBody(article)
+			}catch(err){
+				return res
+				.status(500)
+				.send({ message: "Internal server error posting article " + err });
+			}
+		}
+		return res		
+				.status(200)
+				.send({ message: "Article edited successfully" });
 	},
 	
 };
