@@ -10,5 +10,14 @@ module.exports = {
         if (incomingUsername !== profileUsername)
             return res.status(401).send({ message: "Unauthorized. This isn't your profile." });
         next();
+    },
+    canEditInstructor: async (req, res, next) => {
+        let instructorID = parseInt(req.params.id);
+        let userID = req.user.ID;
+
+        if (instructorID !== userID) {
+            return res.status(401).send({ message: "Unauthorized. This isn't your instructor profile." });
+        }
+        next();
     }
 }

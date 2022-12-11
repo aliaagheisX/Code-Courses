@@ -1,4 +1,13 @@
 const instructorRepo = require('../repositories/instructorRepo');
+const joi = require('joi');
+const Joi = require('joi');
+
+function ratingValidate(columns) {
+	const schema = Joi.object({
+		rating: Joi.number()
+	});
+	return schema.validate(columns);
+}
 
 module.exports = {
   getAllInstructors: async (req, res) => {
@@ -16,6 +25,63 @@ module.exports = {
 			return res
 				.status(500)
 				.send({ message: "Internal server error getting all instructors" + err });
+		}
+	},
+	getInstructorById: async (req, res) => {
+		try {
+			let id = parseInt(req.params.i_id);
+			let instructor = await instructorRepo.getInstructorById(id);
+			if (!instructor) {
+				return res	
+					.status(404)
+					.send({ message: "Instructor not found" });
+			}
+			return res
+				.status(200)
+				.send({ instructor: instructor });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error retrieving instructor by id" + err });
+		}
+	},
+	postNewInstructor: async (req, res) => {
+		try {
+			let id = parseInt(req.user.ID);
+			let rows = await instructorRepo.createInstructor(id);
+			return res	
+				.status(200)
+				.send({ message: "Instructor added successfully" });
+		} catch (err) {
+			return res	
+				.status(500)
+				.send({ message: "Internal server error adding new instructor" + err });
+		}
+	},
+	editInstructor: async (req, res) => {
+		try {
+			let id = parseInt(req.params.i_id);
+			let columns = req.body;
+			const { errors } = ratingValidate(columns);
+			if (error) {
+				return res
+					.status(403)
+					.send({ message: "Validation error editing instructor" + error.details[0].message });
+			}
+			if (columns['rating'] !== null) {
+				await instructorRepo.editInstructor(id, columns['rating']);
+			}
+			let instructor = await instructorRepo.getInstructorById(id);
+			return res	
+				.status(200)
+				.send({
+					message: "Instructor edited successfully",
+					instructor: instructor
+				});
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error editing instructor" + err });
 		}
 	}
 }
