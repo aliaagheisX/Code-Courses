@@ -1,0 +1,19 @@
+.cont {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    overflow-y: auto;
+    padding: 1rem 1rem;
+    max-width: 250px;
+    max-height: 250px;
+}
+
+.cont::-webkit-scrollbar {
+    width: 0.5em;
+}
+   
+.cont::-webkit-scrollbar-thumb {
+    border-radius: 50px;
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+}
