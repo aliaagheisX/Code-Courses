@@ -2,11 +2,6 @@ import React from 'react'
 import Navbar from './components/Navbar';
 import { Outlet } from 'react-router-dom';
 import SideNav from './components/SideNav/SideNav';
-import ImgField from './components/Fields/ImgField';
-
-import Avatar from './components/Avatar';
-import ChooseFileBtn from './components/Fields/ChooseFileBtn';
-import EditeProfileForm from './components/Forms/EditeProfileForm';
 export default function App() {
     return (
         <>

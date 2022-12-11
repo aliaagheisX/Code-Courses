@@ -57,23 +57,6 @@ module.exports = {
 			})
 		})
 	},
-	createElement: (article) => {
-		const title = article.title ;
-		const description =article.description;
-		// Creating an element and returning the insertID
-		return new Promise((resolve,reject)=>{
-			let queryString = `INSERT INTO ELEMENT(TITLE,DESCRIPTION) VALUES('${title}','${description}')`;
-			DBconnection.query(queryString, (err, rows) => {
-				if (err) {
-					console.log(err)
-					return reject(err);
-				}
-				resolve(rows.insertId);
-			})
-		}); 
-
-		
-	},
 	createArticle: (article,element_id) => {
 		const article_body = article.body ;
 		const instructor_id = article.instructor_id
@@ -87,15 +70,15 @@ module.exports = {
 			})
 		
 	},
-	editArticlePut: (article) => {
-		const title = article.title ;
-		const description =article.description;		 
+	editArticleBody: (article) => {
+		const body = article.body ;
+		const id =article.id;		 
 		return new Promise((resolve, reject) => {
-			let queryString = `UPDATE ARTICLE SET TITLE = ${title} INTO ARTICLE(TITLE,DESCRIPTION) VALUES(${title},${description}) `;
+			let queryString = `UPDATE ARTICLE SET body = '${body}' WHERE ID = ${id} `;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
 			})
 		})
-	}
+	},
 }
