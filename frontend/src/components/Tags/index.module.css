@@ -1,0 +1,36 @@
+.tag {
+    padding: 2px 9px;
+    font-family: 'Lato';
+    font-weight: 700;
+    font-size: 13px;
+
+
+    color: #717191;
+    background: #D7E5FF;
+    border: 1px solid #7F7FD5;
+    border-radius: 25px;
+    cursor: pointer;
+    text-decoration: none;
+    
+}
+.tag span {
+    padding: 0 0.5px;
+}
+
+.tag:hover {
+    color: #717191;
+    background: #c7d6ef;
+    
+}
+
+.active {
+    background: #D7FFDD;
+    border: 1px solid #87D88F;
+}
+
+.active:hover {
+    color: #717191;
+
+    background: #c7edcd;
+}
+

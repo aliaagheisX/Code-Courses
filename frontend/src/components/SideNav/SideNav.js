@@ -7,11 +7,11 @@ export default function SideNav() {
     return (
         <aside className={styles.wrapper}>
             <ul>
-                <li><NavLink to={`/students/${ID}`}>
+                <li><NavLink to={`/users`}>
                     <span className="material-symbols-outlined">
                         person
                     </span>
-                    <span className={styles.overlay}>Profile</span>
+                    <span className={styles.overlay}>Users</span>
 
                 </NavLink></li>
 

@@ -3,7 +3,7 @@ const { DBconnection } = require('../config/database');
 module.exports = {
     getAllStudents: () => {
         return new Promise((resolve, reject) => {
-            let queryString = `SELECT * FROM student`;
+            let queryString = `SELECT * FROM student, _user WHERE _user.ID = student.ID `;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -12,7 +12,7 @@ module.exports = {
     },
     getStudentById: (id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `SELECT * FROM student WHERE ID=${id}`;
+            let queryString = `SELECT * FROM student, _user WHERE _user.ID = student.ID AND _user.ID=${id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows[0]);

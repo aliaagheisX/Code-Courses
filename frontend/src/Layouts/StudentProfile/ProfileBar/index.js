@@ -4,7 +4,7 @@ import styles from './index.module.css'
 import useToken from '../../../useToken'
 import Avatar from '../../../components/Avatar'
 
-export default function ProfileBar({ userdata, rank, rank_ind, score }) {
+export default function ProfileBar({ userdata, rank, rank_ind }) {
 
 
     const bg_styles = [
@@ -23,9 +23,9 @@ export default function ProfileBar({ userdata, rank, rank_ind, score }) {
         FNAME: first_name,
         SNAME: last_name,
         ABOUT: bio,
+        SCORE: score,
         _IMAGE: img
     } = userdata
-    console.log(img)
 
 
     return (
