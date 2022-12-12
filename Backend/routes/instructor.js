@@ -10,6 +10,6 @@ router.get('/:i_id', instructorController.getInstructorById);
 
 router.post('/newInstructor', [authToken], instructorController.postNewInstructor);
 
-router.patch('/:i_id', [authToken, canEditInstructor], instructorController.editInstructor);
+router.patch('/editInstructor/:i_id', [authToken, canEditInstructor], instructorController.editInstructor);
 
 module.exports = router;

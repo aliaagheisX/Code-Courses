@@ -1,10 +1,9 @@
 const instructorRepo = require('../repositories/instructorRepo');
-const joi = require('joi');
 const Joi = require('joi');
 
 function ratingValidate(columns) {
 	const schema = Joi.object({
-		rating: Joi.number()
+		rating: Joi.number().min(0).max(10),
 	});
 	return schema.validate(columns);
 }
@@ -49,9 +48,14 @@ module.exports = {
 		try {
 			let id = parseInt(req.user.ID);
 			let rows = await instructorRepo.createInstructor(id);
+			let insertID = rows.insertId;
+			let instructor = await instructorRepo.getInstructorById(insertID);
 			return res	
-				.status(200)
-				.send({ message: "Instructor added successfully" });
+				.status(201)
+				.send({ 
+					message: "Instructor added successfully",
+					instructor: instructor,
+				});
 		} catch (err) {
 			return res	
 				.status(500)
@@ -59,15 +63,19 @@ module.exports = {
 		}
 	},
 	editInstructor: async (req, res) => {
+		let id = parseInt(req.params.i_id);
+		let columns = req.body;
+		
+		const { error } = ratingValidate(columns);
+		if (error) {
+			return res
+				.status(403)
+				.send({ message: "Validation error editing instructor " + error.details[0].message });
+		}
+	
 		try {
-			let id = parseInt(req.params.i_id);
-			let columns = req.body;
-			const { errors } = ratingValidate(columns);
-			if (error) {
-				return res
-					.status(403)
-					.send({ message: "Validation error editing instructor" + error.details[0].message });
-			}
+			// if (errors) {
+			// }
 			if (columns['rating'] !== null) {
 				await instructorRepo.editInstructor(id, columns['rating']);
 			}
@@ -81,7 +89,7 @@ module.exports = {
 		} catch (err) {
 			return res
 				.status(500)
-				.send({ message: "Internal server error editing instructor" + err });
+				.send({ message: "Internal server error editing instructor " + err });
 		}
 	}
 }

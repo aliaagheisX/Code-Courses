@@ -12,7 +12,7 @@ module.exports = {
         next();
     },
     canEditInstructor: async (req, res, next) => {
-        let instructorID = parseInt(req.params.id);
+        let instructorID = parseInt(req.params.i_id);
         let userID = req.user.ID;
 
         if (instructorID !== userID) {
