@@ -197,7 +197,7 @@ module.exports = {
 				.send({ message: "Internal server error adding topic to article " + err });
 		}
 	},
-	deleteTopicFromArticle: async (req, res) => {
+	removeTopicFromArticle: async (req, res) => {
 		try {
 			let a_id = req.params.a_id;
 			let t_id = req.params.t_id;
