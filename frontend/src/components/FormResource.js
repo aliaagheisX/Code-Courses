@@ -72,7 +72,7 @@ export default function FormResource({ token, method, ContentType, url, initialV
         >
 
             {({ isSubmitting }) => (
-                <Form encType='multipart/form-data'>
+                <Form encType='multipart/form-data' className='form'>
 
                     {children}
 
