@@ -156,4 +156,13 @@ module.exports = {
       });
     });
   },
+  addAdmin: (id) => {
+    return new Promise((resolve, reject) => {
+      let queryString = `UPDATE _user SET ISADMIN=1 WHERE ID=${id}`;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows);
+      })
+    })
+  }
 };

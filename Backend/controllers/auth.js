@@ -136,4 +136,21 @@ module.exports = {
         .send({ message: "Internal server error checking user\n" + err });
     }
   },
+  addAdmin: async (req, res) => {
+    try {
+      let id = parseInt(req.params.u_id);
+      let response = await userRepo.addAdmin(id);
+      let user = await userRepo.getUserById(id);
+      return res
+        .status(200)
+        .send({
+          message: "Admin added successfully",
+          user: user,
+        });
+    } catch (err) {
+      return res
+        .status(500)
+        .send({ message: "Internal server error adding admin " + err });
+    }
+  },
 };

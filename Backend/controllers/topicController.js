@@ -5,14 +5,14 @@ function topicValidate(columns) {
     const schema = Joi.object({
         name: Joi.string().pattern(/^[a-zA-Z]+$/).message("fname can only contain letters from the alphabet").min(2).max(32).required(),
     });
-    schema.validate(columns);
+    return schema.validate(columns);
 }
 
 function topicPatchValidate(columns) {
     const schema = Joi.object({
         name: Joi.string().pattern(/^[a-zA-Z]+$/).message("fname can only contain letters from the alphabet").min(2).max(32),
     });
-    schema.validate(columns);
+    return schema.validate(columns);
 }
 
 module.exports = {

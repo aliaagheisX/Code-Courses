@@ -26,6 +26,8 @@ function validateUser(user) {
 
 router.post("/login", authController.login);
 
-router.post("/register/", authController.register);
+router.post("/register", authController.register);
+
+router.post("/addadmin/:u_id", authController.addAdmin);
 
 module.exports = router;

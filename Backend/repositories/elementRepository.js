@@ -14,9 +14,7 @@ module.exports = {
 				}
 				resolve(rows.insertId);
 			})
-		}); 
-
-		
+		});		
 	},
 	editElementTitle: (article) => {
 		const title = article.title ;

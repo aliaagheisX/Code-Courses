@@ -58,7 +58,7 @@ module.exports = {
 		})
 	},
 	createArticle: (article,element_id) => {
-		const article_body = article.body ;
+		const article_body = article.body;
 		const instructor_id = article.instructor_id
 		// Creating an element and returning the 
 			return new Promise((resolve, reject) => {
