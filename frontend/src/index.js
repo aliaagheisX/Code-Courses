@@ -42,12 +42,18 @@ root.render(
           <Route path='admins' element={<Students />} />
         </Route>
 
-        <Route path='/Topics' element={<Topics />} />
+
+
+        <Route path='/Topics' element={
+          <AdminRoute >
+            <Topics />
+          </AdminRoute>} />
 
 
         <Route path='/articles' element={<Articles />} />
         <Route path='/articles/add' element={<AddArticle />} />
         <Route path='/articles/:id' element={<ShowArticle />} />
+
 
 
 
