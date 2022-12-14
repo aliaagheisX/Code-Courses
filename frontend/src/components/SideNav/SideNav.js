@@ -15,6 +15,14 @@ export default function SideNav() {
 
                 </NavLink></li>
 
+                <li><NavLink to={`/topics`}>
+                    <span className="material-symbols-outlined">
+                        category
+                    </span>
+                    <span className={styles.overlay}>Topics</span>
+
+                </NavLink></li>
+
                 <li><NavLink to="/courses">
                     <span className="material-symbols-outlined">
                         play_arrow
