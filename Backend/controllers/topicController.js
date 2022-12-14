@@ -3,14 +3,14 @@ const Joi = require('joi');
 
 function topicValidate(columns) {
     const schema = Joi.object({
-        name: Joi.string().pattern(/^[a-zA-Z]+$/).message("fname can only contain letters from the alphabet").min(2).max(32).required(),
+        name: Joi.string().pattern(/^[a-zA-Z]+$/).message("topic  can only contain letters from the alphabet").min(2).max(32).required(),
     });
     return schema.validate(columns);
 }
 
 function topicPatchValidate(columns) {
     const schema = Joi.object({
-        name: Joi.string().pattern(/^[a-zA-Z]+$/).message("fname can only contain letters from the alphabet").min(2).max(32),
+        name: Joi.string().pattern(/^[a-zA-Z]+$/).message("topic can only contain letters from the alphabet").min(2).max(32),
     });
     return schema.validate(columns);
 }
@@ -68,11 +68,11 @@ module.exports = {
             }
             let insertID = response.insertId;
             let topic = await topicRepo.getTopicById(insertID);
-            return res  
+            return res
                 .status(201)
-                .send({ 
+                .send({
                     message: "New topic created",
-                    topic: topic    
+                    topic: topic
                 });
         } catch (err) {
             return res

@@ -8,7 +8,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import useToken from './useToken';
 import EditProfile from './Layouts/EditProfile';
 import Users from './Layouts/Users/Users';
-import Students from './Layouts/Users/Students/Students';
+import Students from './Layouts/Users/Students';
+import Instructors from './Layouts/Users/Instructors';
+import Articles from './Layouts/Articles';
+import AddArticle from './Layouts/Articles/AddArticle';
+import ShowArticle from './Layouts/Articles/ShowArticle';
+import Topics from './Layouts/Topics';
 
 const ProtectedRoute = ({ children }) => {
   const { token } = useToken();
@@ -32,10 +37,24 @@ root.render(
         <Route path='/students/:id' element={<StudentProfile />} />
 
         <Route path='/users' element={<Users />} >
-          <Route path='students' element={<Students />} />
-          <Route path='instructors' element={<Students />} />
+          <Route path='students' index element={<Students />} />
+          <Route path='instructors' element={<Instructors />} />
           <Route path='admins' element={<Students />} />
         </Route>
+
+
+
+        <Route path='/Topics' element={
+          <AdminRoute >
+            <Topics />
+          </AdminRoute>} />
+
+
+        <Route path='/articles' element={<Articles />} />
+        <Route path='/articles/add' element={<AddArticle />} />
+        <Route path='/articles/:id' element={<ShowArticle />} />
+
+
 
 
         <Route path='edit/me' element={
