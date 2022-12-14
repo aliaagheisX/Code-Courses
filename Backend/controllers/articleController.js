@@ -126,7 +126,8 @@ module.exports = {
 		}
 	},
 	editArticle: async (req, res) => {
-		const article = req.body
+		const article = req.body;
+		let id = req.params.a_id;
 		if(article.title){
 			try{
 				let edit_title = await elementRepo.editElementTitle(article)
@@ -154,9 +155,25 @@ module.exports = {
 				.send({ message: "Internal server error posting article " + err });
 			}
 		}
+		if (req.file?.path != null) {
+			let imagePath = req.file.path
+			imagePath = "http://localhost:4000/" + imagePath.replace('\\', '/')
+			try {
+				await elementRepo.editImage(id, imagePath);
+			} catch (err) {
+				return res
+					.status(500)
+					.send({ message: "Internal server error editing article " + err });
+			}
+	
+		}
+		let newArticle = await articleRepo.getArticleById(id);
 		return res		
-				.status(200)
-				.send({ message: "Article edited successfully" });
+			.status(200)
+			.send({ 
+				message: "Article edited successfully",
+				article: newArticle,
+			});
 	},
 	
 };
