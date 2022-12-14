@@ -116,9 +116,13 @@ module.exports = {
 			let article = req.body;
 			let element_id = await elementRepo.createElement(article);
 			let response  = await articleRepo.createArticle(article,element_id);
+			let newArticle = await articleRepo.getArticleById(element_id);
 			return res		
 				.status(200)
-				.send({ message: "Article created successfully" });
+				.send({ 
+					message: "Article created successfully",
+					article: newArticle,
+				});
 		} catch (err) {
 			return res
 				.status(500)
@@ -175,5 +179,61 @@ module.exports = {
 				article: newArticle,
 			});
 	},
-	
+	addTopicToArticle: async (req, res) => {
+		try {
+			let a_id = req.params.a_id;
+			let t_id = req.params.t_id;
+			let response = await articleRepo.addTopicToArticle(a_id, t_id);
+			let topics = await articleRepo.getArticleTopics(a_id);
+			return res
+				.status(201)
+				.send({
+					message: "Topic added to article successfully",
+					topics: topics,
+				});
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error adding topic to article " + err });
+		}
+	},
+	deleteTopicFromArticle: async (req, res) => {
+		try {
+			let a_id = req.params.a_id;
+			let t_id = req.params.t_id;
+			let response = await articleRepo.deleteTopicFromArticle(a_id, t_id);
+			if (!response.affectedRows) {
+				return res
+					.status(404)
+					.send({ message: "Topic or article not found" });
+			}
+			return res
+				.status(200)
+				.send({ message: "Topic removed successfully from article" });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error removing topic from article " + err });
+		}
+	},
+	getArticleTopics: async (req, res) => {
+		try {
+			let a_id = req.params.a_id;
+			let topics = await articleRepo.getArticleTopics(a_id);
+			if (!topics.length) {
+				return res
+					.status(404)
+					.send({ message: "No topics found for this article" });
+			}
+			return res
+				.status(200)
+				.send({
+					topics: topics,
+				});
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting article topics " + err });
+		}
+	}
 };

@@ -10,10 +10,11 @@ router.get('/', articleController.getAllArticles);
 router.get('/getbyarticleid/:a_id', articleController.getArticleById);
 router.get('/getbyusername/:username', articleController.getArticlesByAuthorUsername);
 router.get('/getbytopicid/:t_id', articleController.getArticlesByTopicId);
-// router.get('/getarticletopics/:a_id', articleController.getArticleTopics);
+router.get('/getarticletopics/:a_id', articleController.getArticleTopics);
 
-router.delete('/', [admin], articleController.deleteAllArticles);
-router.delete('/:a_id', [admin], articleController.deleteArticleById);
+router.delete('/', [authToken, admin], articleController.deleteAllArticles);
+router.delete('/:a_id', [authToken, admin], articleController.deleteArticleById);
+router.delete('/removetopicfromarticle/:a_id/:t_id', articleController.removeTopicFromArticle);
 /**
  * @swagger
  * /articles/create:
@@ -84,6 +85,8 @@ router.delete('/:a_id', [admin], articleController.deleteArticleById);
  *                                  description: internal server error + error
  */
 router.post('/create', articleController.createArticle);
+
+router.post('/addtopictoarticle/:a_id/:t_id', articleController.addTopicToArticle);
 
 const upload = multer({ dest: 'images/' });
 router.patch('/edit/:a_id', upload.single('image'), articleController.editArticle);
