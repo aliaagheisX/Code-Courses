@@ -1,0 +1,29 @@
+.cont {
+    display: flex;
+    gap: 1rem;
+}
+.cont img {
+    width: 35px;
+}
+
+.det {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-height: 35px;
+
+    color: #717190;
+
+}
+
+.det .name {
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.det .email {
+    font-weight: normal;
+font-size: 10px;
+
+color: rgba(91, 88, 88, 0.54);
+}

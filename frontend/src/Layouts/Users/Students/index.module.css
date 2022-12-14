@@ -1,7 +1,24 @@
 .cont {
-
+    width: 85%;
+    background: #FFFFFF;
+    outline:  0.5px solid #95B2EA;
+    box-shadow: 0px 4px 24px 4px rgba(149, 178, 234, 0.25);
+    border-radius: 12px;
 }
 
-.cont img {
-    width: 45px;
+.cont .admin {
+    color: #B4690E;
+}
+.cont th {
+    padding: 14px 0; 
+}
+
+.cont th:first-of-type {
+    padding-left: 16px;
+}
+.cont tr td { 
+    font-size: 11px;
+    vertical-align: middle;
+    
+    color: #717190;
 }
