@@ -17,7 +17,6 @@ export default function Users() {
 
             {isAdmin ? <button>Delete All</button> : null}
 
-            <Link to='students' > hi</Link>
 
             <Outlet />
 

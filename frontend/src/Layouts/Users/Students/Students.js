@@ -1,6 +1,8 @@
 import React from 'react'
 import UserSummary from '../../../components/UserSummary'
 import styles from './index.module.css'
+import Resource from '../../../Resource'
+import api from '../../../api'
 export default function Students() {
     return (
 
@@ -16,25 +18,33 @@ export default function Students() {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">
-                        <UserSummary fname='joe' lname='doe' email='joedoe@g.com' img='/15-08.jpg' />
-                    </th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colSpan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
+                <Resource
+                    path={api.getStudents}
+                    render={({ items: { students } }) => (
+                        students.map((student) => {
+                            const join_date = new Date(student.JOINDATE).toDateString().split(' ').slice(1).join(' ');
+                            const isAdmin = student.ISADMIN.data[0];
+                            return (
+                                <tr>
+                                    <th scope="row">
+
+                                        <UserSummary
+                                            fname={student.FNAME}
+                                            lname={student.SNAME}
+                                            email={student.EMAIL}
+                                            img={student._IMAGE} />
+                                    </th>
+                                    <td>{join_date}</td>
+                                    <td>{student.ABOUT}</td>
+                                    <td>{student.SCORE}</td>
+                                    <td className={isAdmin ? styles.admin : ''}>
+                                        {isAdmin ? 'admin' : 'student'}
+                                    </td>
+                                </tr>
+                            )
+                        })
+
+                    )} />
             </tbody>
         </table >
     )
