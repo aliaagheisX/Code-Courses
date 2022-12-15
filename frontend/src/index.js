@@ -23,8 +23,12 @@ const ProtectedRoute = ({ children }) => {
 
 const AdminRoute = ({ children }) => {
   const { token, isAdmin } = useToken();
-  if (!token) return <Navigate to={'/'} replace />
-  if (!isAdmin) return <Navigate to={'/'} replace />
+  if (!token || !isAdmin) return <Navigate to={'/'} replace />
+  return children;
+}
+const InstructorRoute = ({ children }) => {
+  const { token, isInstructor } = useToken();
+  if (!token || !isInstructor) return <Navigate to={'/'} replace />
   return children;
 }
 
@@ -51,7 +55,11 @@ root.render(
 
 
         <Route path='/articles' element={<Articles />} />
-        <Route path='/articles/add' element={<AddArticle />} />
+        <Route path='/articles/add' element={
+          <InstructorRoute>
+            <AddArticle />
+          </InstructorRoute>
+        } />
         <Route path='/articles/:id' element={<ShowArticle />} />
 
 

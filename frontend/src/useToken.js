@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import api from './api';
 
 export default function useToken() {
     const getToken = () => {
@@ -16,10 +17,30 @@ export default function useToken() {
         return data ? JSON.parse(data) : {}
     };
 
+    const getIsInstructor = () => {
+        const data = localStorage.getItem('isInstructor');
+        return data ? JSON.parse(data) : {}
+    };
+
+
+
     const [token, setToken] = useState(getToken());
     const [userdata, setUserdata] = useState(getUserdata());
     const [isAdmin, setIsAdmin] = useState(getIsAdmin());
+    const [isInstructor, setIsInstructor] = useState(getIsInstructor());
 
+    const saveIsInstructor = async (user) => {
+        const res = await fetch(api.instructor(user.ID))
+        if (res.ok) {
+            localStorage.setItem('isInstructor', 1);
+            setIsInstructor(1)
+        }
+        else {
+            localStorage.setItem('isInstructor', 0);
+            setIsInstructor(0)
+        }
+        console.log(isInstructor)
+    }
     const saveToken = userdata => {
         try {
             const { token, user } = userdata
@@ -29,6 +50,7 @@ export default function useToken() {
             setToken(user.token);
             setUserdata(user)
             setIsAdmin(user.ISADMIN.data[0])
+            saveIsInstructor(user)
         }
         catch (err) {
             localStorage.clear();
@@ -43,6 +65,7 @@ export default function useToken() {
         setToken: saveToken,
         token,
         userdata,
-        isAdmin
+        isAdmin,
+        isInstructor
     }
 }

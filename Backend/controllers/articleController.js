@@ -10,31 +10,31 @@ module.exports = {
 			let articles = await articleRepo.getAllArticles();
 			if (!articles.length) {
 				return res
-				.status(404)
-				.send({ message: "Looks like you have no articles" });
+					.status(404)
+					.send({ message: "Looks like you have no articles" });
 			}
 			return res.status(200).send({ articles: articles });
 		} catch (err) {
-			return res      
+			return res
 				.status(500)
 				.send({ message: "Internal server error getting all articles" + err });
 		}
 	},
 	getArticleById: async (req, res) => {
 		try {
-      let id = parseInt(req.params.a_id);
-      let article = await articleRepo.getArticleById(id);
-      if (!article) {
-        return res
-          .status(404)
-          .send({ message: "Article not found" });
-      }
-      return res.status(200).send({ article: article });
-    } catch (err) {
-      return res
-        .status(500)
-        .send({ message: "Internal server error getting article by id" + err });
-    }
+			let id = parseInt(req.params.a_id);
+			let article = await articleRepo.getArticleById(id);
+			if (!article) {
+				return res
+					.status(404)
+					.send({ message: "Article not found" });
+			}
+			return res.status(200).send({ article: article });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting article by id" + err });
+		}
 	},
 	getArticlesByAuthorUsername: async (req, res) => {
 		// try {
@@ -63,11 +63,11 @@ module.exports = {
 			let id = parseInt(req.params.t_id);
 			let articles = await articleRepo.getArticlesByTopicId(id);
 			if (!articles.length) {
-				return res	
+				return res
 					.status(404)
 					.send({ message: "No articles in this topic" });
 			}
-			return res	
+			return res
 				.status(200)
 				.send({ articles: articles });
 		} catch (err) {
@@ -84,11 +84,11 @@ module.exports = {
 					.status(404)
 					.send({ message: "Looks like there are no articles" });
 			}
-			return res		
+			return res
 				.status(200)
 				.send({ message: "Articles deleted successfully" });
 		} catch (err) {
-			return res	
+			return res
 				.status(500)
 				.send({ message: "Internal server error deleting all articles" + err });
 		}
@@ -98,11 +98,11 @@ module.exports = {
 			let id = parseInt(req.params.a_id);
 			let rows = await articleRepo.deleteArticleById(id);
 			if (!rows.affectedRows) {
-				return res		
+				return res
 					.status(404)
 					.send({ message: "Article not found" });
 			}
-			return res		
+			return res
 				.status(200)
 				.send({ message: "Article deleted successfully" });
 		} catch (err) {
@@ -115,8 +115,8 @@ module.exports = {
 		try {
 			let article = req.body;
 			let element_id = await elementRepo.createElement(article);
-			let response  = await articleRepo.createArticle(article,element_id);
-			return res		
+			let response = await articleRepo.createArticle(article, element_id);
+			return res
 				.status(200)
 				.send({ message: "Article created successfully" });
 		} catch (err) {
@@ -127,36 +127,36 @@ module.exports = {
 	},
 	editArticle: async (req, res) => {
 		const article = req.body
-		if(article.title){
-			try{
+		if (article.title) {
+			try {
 				let edit_title = await elementRepo.editElementTitle(article)
-			}catch(err){
+			} catch (err) {
 				return res
-				.status(500)
-				.send({ message: "Internal server error posting article " + err });
+					.status(500)
+					.send({ message: "Internal server error posting article " + err });
 			}
 		}
-		if(article.description){
-			try{
+		if (article.description) {
+			try {
 				let edit_description = await elementRepo.editElementDescription(article)
-			}catch(err){
+			} catch (err) {
 				return res
-				.status(500)
-				.send({ message: "Internal server error posting article " + err });
+					.status(500)
+					.send({ message: "Internal server error posting article " + err });
 			}
 		}
-		if(article.body){
-			try{
+		if (article.body) {
+			try {
 				let edit_body = await articleRepo.editArticleBody(article)
-			}catch(err){
+			} catch (err) {
 				return res
-				.status(500)
-				.send({ message: "Internal server error posting article " + err });
+					.status(500)
+					.send({ message: "Internal server error posting article " + err });
 			}
 		}
-		return res		
-				.status(200)
-				.send({ message: "Article edited successfully" });
+		return res
+			.status(200)
+			.send({ message: "Article edited successfully" });
 	},
-	
+
 };

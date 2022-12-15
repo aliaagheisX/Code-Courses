@@ -64,10 +64,9 @@ body {
 
 .form label {
     font-family: 'Lato';
-font-style: normal;
-font-weight: 700;
-font-size: 14px;
-    color: #868686;
+    font-style: normal;
+    font-size: 14px;
+    color: #646464;
 }
 
 .form input {
@@ -82,7 +81,6 @@ font-size: 14px;
 }
 ::placeholder {
     font-family: 'Lato';
-    font-weight: 700;
     color: #BEBFC1;
 
 }
@@ -200,3 +198,43 @@ font-size: 14px;
     background: #c7edcd;
 }
 
+/* minimal forms */
+.mnForm form {
+    background: #FFFFFF;
+    border: 1px solid #95B2EA;
+    box-shadow: 0px 4px 24px 4px rgba(149, 178, 234, 0.25);
+    border-radius: 17px;
+    padding-bottom: 1rem;
+}
+
+
+.danger form {
+    padding: 3rem 1rem;
+}
+.danger button{
+    background-color: #CC2936;
+}
+
+.cont .mnForm form {
+    background: #FFFFFF;
+border: 1px solid #95B2EA;
+box-shadow: 0px 4px 24px 4px rgba(149, 178, 234, 0.25);
+border-radius: 17px;
+padding-bottom: 1rem;
+}
+
+
+.cont .danger form {
+    padding: 3rem 1rem;
+}
+.cont .danger button{
+    background-color: #CC2936;
+}
+
+.cont .danger button:hover {
+    background-color: #a0212c;
+
+}.danger button:hover {
+    background-color: #a0212c;
+
+}

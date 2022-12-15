@@ -2,15 +2,23 @@ const api = {
     login: 'http://localhost:4000/auth/login',
     signup: 'http://localhost:4000/auth/register',
     logout: '',
+    student: (id) => `http://localhost:4000/students/${id}`,
+    user: (id) => `http://localhost:4000/users/${id}`,
+    instructor: (id) => `http://localhost:4000/instructors/${id}`,
     deleteMe: 'http://localhost:4000/users/delete/me',
-    deleteTopic: () => 'http://localhost:4000/users/delete/me',
+    editProfile: (username) => `http://localhost:4000/users/${username}/edit`,
+
     getStudents: 'http://localhost:4000/students',
     getInstructors: 'http://localhost:4000/instructors',
+
     getTopics: 'http://localhost:4000/topics',
-    editProfile: (username) => `http://localhost:4000/users/${username}/edit`,
     editTopic: (id) => `http://localhost:4000/topics/editTopic/${id}`,
-    user: (id) => `http://localhost:4000/users/${id}`,
-    student: (id) => `http://localhost:4000/students/${id}`,
-    addTopic: 'http://localhost:4000/topics/newTopic'
+    addTopic: 'http://localhost:4000/topics/newTopic',
+
+    getArticle: (id) => `http://localhost:4000/articles/getbyarticleid/${id}`,
+    getArticles: 'http://localhost:4000/articles',
+    addArticle: 'http://localhost:4000/articles/create',
+    editArticle: 'http://localhost:4000/articles/edit',
+
 }
 export default api

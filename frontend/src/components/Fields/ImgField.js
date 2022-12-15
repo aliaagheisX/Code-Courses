@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { useFormikContext } from 'formik'
 
-export default function ImgField({ defaultImg, ChooseFileBtn, Avatar, name }) {
+export default function ImgField({ defaultImg, ChooseFileBtn, Avatar, name, mode }) {
 
     const formikProps = useFormikContext()
     const [loading, setLoading] = useState(0);
@@ -57,9 +57,12 @@ export default function ImgField({ defaultImg, ChooseFileBtn, Avatar, name }) {
 
     }
 
+    const styleMode = mode === 'avatar' ?
+        { display: 'flex', alignItems: 'end' } :
+        { display: 'flex', alignItems: 'start', flexGrow: '1' }
     return (
 
-        <div className='group' style={{ display: 'flex', alignItems: 'end' }}>
+        <div className='group' style={styleMode}>
             <Avatar avatar={img} />
             <ChooseFileBtn isLoading={loading} name={name} />
             <input hidden id={name} name={name} type="file" onChange={ChangeHandel} />
