@@ -2,4 +2,52 @@
     text-align: center;
     width: 85%;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.sec > * {
+    margin: auto;
+    text-align: center;
+}
+
+.sec h3 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 31px;
+    line-height: 37px;
+    text-transform: capitalize;
+    color: #424261;
+
+}
+
+.sec .desc {
+    font-family: 'lato';
+    font-size: 15px;   
+    letter-spacing: 0.3px;
+
+    color: #818182;
+}
+
+.markW {
+    max-width: 75%;
+    padding-top: 25px;
+    text-align: left;
+    color: #818182;
+}
+.markW h1, .markW h2,.markW h3,.markW h4 {
+    margin: 50px 0 10px 0;
+    color: #424261;
+}
+
+.markW  pre {
+    background-color: #1a1a26;
+    color: #fff;
+    padding: 12px;
+    border-radius: 5px;
+}
+
+.markW img {
+    max-width: 250px;
 }
