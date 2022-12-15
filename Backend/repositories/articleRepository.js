@@ -1,4 +1,4 @@
-const {DBconnection} = require('../config/database');
+const { DBconnection } = require('../config/database');
 
 module.exports = {
 	getAllArticles: () => {
@@ -12,7 +12,7 @@ module.exports = {
 	},
 	getArticleById: (id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT * FROM article WHERE ID=${id}`;
+			let queryString = `SELECT * FROM article, element WHERE article.ID=${id} element.ID = article.ID`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows[0]);
@@ -21,11 +21,11 @@ module.exports = {
 	},
 	getArticlesByAuthorUsername: (username) => {
 		return new Promise((resolve, reject) => {
-				let queryString = ``;
-				DBconnection.query(queryString, (err, rows) => {
-					if (err) return reject(err);
-					return resolve(rows);
-				})
+			let queryString = ``;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows);
+			})
 		})
 	},
 	getArticlesByTopicId: (id) => {
@@ -66,22 +66,22 @@ module.exports = {
 			})
 		})
 	},
-	createArticle: (article,element_id) => {
+	createArticle: (article, element_id) => {
 		const article_body = article.body;
 		const instructor_id = article.instructor_id
 		// Creating an element and returning the 
-			return new Promise((resolve, reject) => {
-				let queryString = `INSERT INTO ARTICLE(ID,BODY,INSTRUCTORID) VALUES(${element_id},'${article_body}',${instructor_id}) `;
-				DBconnection.query(queryString, (err, rows) => {
-					if (err) return reject(err);
-					return resolve(rows);
-				})
+		return new Promise((resolve, reject) => {
+			let queryString = `INSERT INTO ARTICLE(ID,BODY,INSTRUCTORID) VALUES(${element_id},'${article_body}',${instructor_id}) `;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows);
 			})
-		
+		})
+
 	},
 	editArticleBody: (article) => {
-		const body = article.body ;
-		const id =article.id;		 
+		const body = article.body;
+		const id = article.id;
 		return new Promise((resolve, reject) => {
 			let queryString = `UPDATE ARTICLE SET body = '${body}' WHERE ID = ${id} `;
 			DBconnection.query(queryString, (err, rows) => {
