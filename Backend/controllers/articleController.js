@@ -44,27 +44,24 @@ module.exports = {
         .send({ message: "Internal server error getting article by id" + err });
     }
 	},
-	getArticlesByAuthorUsername: async (req, res) => {
-		// try {
-		// 	let username = req.params.username;
-		// 	let author = await userRepo.getUserByName(username);
-		// 	if (!author) {
-		// 		return res
-		// 			.status(404)
-		// 			.send({ message: "Author "});
-		// 	}
-		// 	let articles = articleRepo.getArticlesByAuthorUsername(username);
-		// 	if (!articles.length) {
-		// 		return res
-		// 			.status(404)
-		// 			.send({ message: "Th"})
-		// 	}
-		// 	return res
-		// 		.status(200)
-		// 		.send({ articles: articles });
-		// } catch (err) {
-
-		// }
+	getArticlesByAuthorName: async (req, res) => {
+		try {
+			let fname = req.params.fname;
+			let sname = req.params.sname;
+			let articles = articleRepo.getArticlesByAuthorName(fname, sname);
+			if (!articles.length) {
+				return res
+					.status(404)
+					.send({ message: "Instructor has no articles" });
+			}
+			return res
+				.status(200)
+				.send({ articles: articles });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting articles by author name " + err });
+		}
 	},
 	getArticlesByTopicId: async (req, res) => {
 		try {

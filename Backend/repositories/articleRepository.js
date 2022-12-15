@@ -39,6 +39,15 @@ module.exports = {
 			})
 		})
 	},
+	getArticlesByAuthorName: (fname, sname) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `SELECT * FROM article, element WHERE element.ID=article.ID AND article.AUTHORFNAME='${fname}' AND article.AUTHORSNAME='${sname}'`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows);
+			})
+		})
+	},
 	deleteAllArticles: () => {
 		return new Promise((resolve, reject) => {
 			let queryString = `DELETE FROM article`;
