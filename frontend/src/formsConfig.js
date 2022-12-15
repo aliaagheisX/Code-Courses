@@ -27,6 +27,15 @@ export const editProfileInitialValues = () => ({
   bio: null,
 });
 
+
+export const addArticleInitialValues = () => ({
+  image: '',
+  title: '',
+  description: '',
+  body: '',
+  topics: [],
+});
+
 export const changePasswordInitialValues = {
   password: null,
   confirmPassword: null,
@@ -116,3 +125,19 @@ export const ChangePasswordSchema = Yup.object().shape({
 
 export const EmptySchema = Yup.object().shape({
 })
+
+export const AddArticleSchema = Yup.object().shape({
+  image: Yup.mixed(),
+  title: Yup.string()
+    .min(3, "at least 3 characters")
+    .max(50, "at most 32 characters"),
+
+  description: Yup.string()
+    .min(3, "at least 3 characters")
+    .max(50, "at most 32 characters"),
+  body: Yup.string()
+    .min(3, "at least 3 characters")
+    .max(50, "at most 32 characters"),
+
+  topics: Yup.array().of(Yup.string())
+});

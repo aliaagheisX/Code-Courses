@@ -9,7 +9,7 @@ function ratingValidate(columns) {
 }
 
 module.exports = {
-  getAllInstructors: async (req, res) => {
+	getAllInstructors: async (req, res) => {
 		try {
 			let instructors = await instructorRepo.getAllInstructors();
 			if (!instructors.length) {
@@ -31,7 +31,7 @@ module.exports = {
 			let id = parseInt(req.params.i_id);
 			let instructor = await instructorRepo.getInstructorById(id);
 			if (!instructor) {
-				return res	
+				return res
 					.status(404)
 					.send({ message: "Instructor not found" });
 			}
@@ -50,14 +50,14 @@ module.exports = {
 			let rows = await instructorRepo.createInstructor(id);
 			let insertID = rows.insertId;
 			let instructor = await instructorRepo.getInstructorById(insertID);
-			return res	
+			return res
 				.status(201)
-				.send({ 
+				.send({
 					message: "Instructor added successfully",
 					instructor: instructor,
 				});
 		} catch (err) {
-			return res	
+			return res
 				.status(500)
 				.send({ message: "Internal server error adding new instructor" + err });
 		}
@@ -65,14 +65,14 @@ module.exports = {
 	editInstructor: async (req, res) => {
 		let id = parseInt(req.params.i_id);
 		let columns = req.body;
-		
+
 		const { error } = ratingValidate(columns);
 		if (error) {
 			return res
 				.status(403)
 				.send({ message: "Validation error editing instructor " + error.details[0].message });
 		}
-	
+
 		try {
 			// if (errors) {
 			// }
@@ -80,7 +80,7 @@ module.exports = {
 				await instructorRepo.editInstructor(id, columns['rating']);
 			}
 			let instructor = await instructorRepo.getInstructorById(id);
-			return res	
+			return res
 				.status(200)
 				.send({
 					message: "Instructor edited successfully",

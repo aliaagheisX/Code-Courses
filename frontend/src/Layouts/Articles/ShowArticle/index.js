@@ -1,7 +1,15 @@
 import React from 'react'
-
+import Resource from '../../../Resource'
+import { useParams } from 'react-router-dom'
+import api from '../../../api';
 export default function ShowArticle() {
+    const { id } = useParams();
     return (
-        <div>ShowArticle</div>
+        <Resource
+            path={api.getArticle(id)}
+            render={(items) => {
+                console.log(items)
+            }}
+        />
     )
 }

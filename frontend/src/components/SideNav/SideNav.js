@@ -23,6 +23,11 @@ export default function SideNav() {
 
                 </NavLink></li>
 
+                <li><NavLink to="/articles">
+                    <span className="material-symbols-outlined">feed</span>
+                    <span className={styles.overlay}>Articles</span>
+                </NavLink></li>
+
                 <li><NavLink to="/courses">
                     <span className="material-symbols-outlined">
                         play_arrow
@@ -51,10 +56,7 @@ export default function SideNav() {
                     <span className={styles.overlay}>Questions</span>
                 </NavLink></li>
 
-                <li><NavLink to="/articles">
-                    <span className="material-symbols-outlined">feed</span>
-                    <span className={styles.overlay}>Articles</span>
-                </NavLink></li>
+
 
                 <li><NavLink to="/discussions">
                     <span className="material-symbols-outlined">forum</span>

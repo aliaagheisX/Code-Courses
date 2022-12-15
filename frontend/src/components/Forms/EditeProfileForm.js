@@ -26,7 +26,7 @@ export default function EditeProfileForm() {
             method='PATCH'
         >
             <div style={{ margin: '19px auto' }}>
-                <ImgField defaultImg={_IMAGE} ChooseFileBtn={ChooseFileBtn} Avatar={Avatar} name='image' />
+                <ImgField mode='avatar' defaultImg={_IMAGE} ChooseFileBtn={ChooseFileBtn} Avatar={Avatar} name='image' />
             </div>
             <div className="form-group">
                 <TextField name="firstName" label="first name" placeholder={FNAME} />
