@@ -107,5 +107,14 @@ module.exports = {
 				return resolve(rows);
 			})
 		})
+	},
+	deleteArticleTopics: (id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `DELETE FROM article_topic WHERE AID=${id}`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows);
+			})
+		})
 	}
 }

@@ -15,7 +15,7 @@ router.get('/getarticletopics/:a_id', articleController.getArticleTopics);
 
 router.delete('/', [authToken, admin], articleController.deleteAllArticles);
 router.delete('/:a_id', [authToken, admin], articleController.deleteArticleById);
-router.delete('/removetopicfromarticle/:a_id/:t_id', [authToken, admin], articleController.removeTopicFromArticle);
+// router.delete('/removetopicfromarticle/:a_id/:t_id', [authToken, admin], articleController.removeTopicFromArticle);
 /**
  * @swagger
  * /articles/create:
@@ -87,7 +87,7 @@ router.delete('/removetopicfromarticle/:a_id/:t_id', [authToken, admin], article
  */
 router.post('/create', [authToken, canCreateArticle], articleController.createArticle);
 
-router.post('/addtopictoarticle/:a_id/:t_id', [authToken, canEditArticle], articleController.addTopicToArticle);
+router.post('/editarticletopics/:a_id', [authToken, canEditArticle], articleController.editArticleTopics);
 
 const upload = multer({ dest: 'images/' });
 router.patch('/edit/:a_id', [authToken, canEditArticle], upload.single('image'), articleController.editArticle);

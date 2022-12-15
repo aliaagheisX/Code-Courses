@@ -1,6 +1,14 @@
-const { parse } = require('dotenv');
 const articleRepo = require('../repositories/articleRepository');
 const elementRepo = require('../repositories/elementRepository');
+const topicRepo = require('../repositories/topicRepository');
+const Joi = require('joi');
+
+function topicListValidate(columns) {
+	const schema = Joi.object({
+		topics: Joi.array().items(Joi.string().alphanum()).min(1).required(),
+	});
+	return schema.validate(columns);
+}
 
 const userRepo = require('../repositories/userRepository');
 
@@ -179,16 +187,27 @@ module.exports = {
 				article: newArticle,
 			});
 	},
-	addTopicToArticle: async (req, res) => {
+	editArticleTopics: async (req, res) => {
 		try {
 			let a_id = req.params.a_id;
-			let t_id = req.params.t_id;
-			let response = await articleRepo.addTopicToArticle(a_id, t_id);
+			let columns = req.body;
+			const { error } = topicListValidate(columns);
+			if (error) {
+				return res
+					.status(403)
+					.send({ message: "Validation error " + error.details[0].message });
+			}
+			await articleRepo.deleteArticleTopics(a_id);
+			for (let topicName in columns.topics) {
+				let topic = await topicRepo.getTopicByName(topicName);
+				let t_id = topic.ID;
+				await articleRepo.addTopicToArticle(a_id, t_id);
+			}
 			let topics = await articleRepo.getArticleTopics(a_id);
 			return res
 				.status(201)
 				.send({
-					message: "Topic added to article successfully",
+					message: "Article topics edited successfully",
 					topics: topics,
 				});
 		} catch (err) {
