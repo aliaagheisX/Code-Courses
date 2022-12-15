@@ -17,6 +17,7 @@ export default function FormResource({ token, method, ContentType, url, initialV
 
 
     const onSubmit = async (values) => {
+        console.log(values)
         try {
             /* send request */
             /* header */
@@ -39,6 +40,7 @@ export default function FormResource({ token, method, ContentType, url, initialV
             if (token)
                 myHeader.append('token', token)
 
+            console.log(values)
 
 
             const res = await fetch(url, {

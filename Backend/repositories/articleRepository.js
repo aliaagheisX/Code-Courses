@@ -12,7 +12,7 @@ module.exports = {
 	},
 	getArticleById: (id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT * FROM article, element WHERE article.ID=${id} element.ID = article.ID`;
+			let queryString = `SELECT * FROM article, element WHERE article.ID=${id} AND element.ID = article.ID`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows[0]);
