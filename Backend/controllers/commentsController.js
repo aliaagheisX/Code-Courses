@@ -1,6 +1,24 @@
 const commentsRepo = require('../repositories/commentsRepository');
 
 module.exports = {
+	getRepliesToComment: async (req, res) => {
+		try {
+			let id = parseInt(req.params.c_id);
+			let replies = await commentsRepo.getRepliesToComment(id);
+			if (!replies.length) {
+				return res
+					.status(404)
+					.send({ message: "Comment has no replies" });
+			}
+			return res
+				.status(200)
+				.send({ replies: replies });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting replies " + err });
+		}
+	},
 	deleteAllComments: async (req, res) => {
 		try {
 			let response = await commentsRepo.deleteAllComments();
@@ -54,5 +72,22 @@ module.exports = {
 				.send({ message: "Internal server error deleting user comments " + err });
 		}
 	},
-		
+	deleteCommentsByArticle: async (req, res) => {
+		try {
+			let id = parseInt(req.params.a_id);
+			let response = await commentsRepo.deleteCommentsByArticle(id);
+			if (!response.affectedRows) {
+				return res
+					.status(404)
+					.send({ message: "No comments found for article" });
+			}
+			return res
+				.status(200)
+				.send({ message: "Article comments deleted successfully" });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error deleting comments from article " + err });
+		}
+	}	
 }
