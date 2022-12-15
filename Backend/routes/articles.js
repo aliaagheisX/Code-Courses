@@ -3,6 +3,8 @@ const router = express.Router();
 const admin = require('../middleware/admin');
 const { authToken } = require('../middleware/auth');
 const multer = require('multer');
+const upload = multer({ dest: 'images/' });
+
 
 const articleController = require('../controllers/articleController');
 const { canCreateArticle, canAddTopic, canEditArticle } = require('../permissions/articlePermissions');
@@ -85,11 +87,10 @@ router.delete('/:a_id', [authToken, admin], articleController.deleteArticleById)
  *                                  type: string
  *                                  description: internal server error + error
  */
-router.post('/create', [authToken, canCreateArticle], articleController.createArticle);
+router.post('/create', [authToken, canCreateArticle], upload.single('image'), articleController.createArticle);
 
 router.post('/editarticletopics/:a_id', [authToken, canEditArticle], articleController.editArticleTopics);
 
-const upload = multer({ dest: 'images/' });
 router.patch('/edit/:a_id', [authToken, canEditArticle], upload.single('image'), articleController.editArticle);
 
 module.exports = router;

@@ -1,12 +1,11 @@
 import React from 'react'
 import { Field, ErrorMessage } from 'formik';
 
-
-export default function PasswordField({ name, label }) {
+export default function TextAreaField({ name, label, placeholder }) {
     return (
         <div className='group'>
             <label htmlFor={name}>{label}</label>
-            <Field id={name} name={name} type="password" placeholder="*************" autoComplete="on" />
+            <Field as='textarea' name={name} placeholder={placeholder} id={name} />
             <ErrorMessage component="div" name={name} />
         </div>
     )

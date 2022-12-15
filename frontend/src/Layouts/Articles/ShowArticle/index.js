@@ -7,8 +7,17 @@ export default function ShowArticle() {
     return (
         <Resource
             path={api.getArticle(id)}
-            render={(items) => {
-                console.log(items)
+            render={({ items: { article } }) => {
+                const {
+                    ID, TITLE, AUTHORFNAME, AUTHORSNAME,
+                    BODY, CREATIONDATE, DESCRIPTION, IMAGE, INSTRUCTORID
+                } = article
+
+                return (
+                    <section>
+                        <h3>{TITLE}</h3>
+                    </section>
+                )
             }}
         />
     )
