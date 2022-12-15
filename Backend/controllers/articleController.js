@@ -1,6 +1,14 @@
-const { parse } = require('dotenv');
 const articleRepo = require('../repositories/articleRepository');
 const elementRepo = require('../repositories/elementRepository');
+const topicRepo = require('../repositories/topicRepository');
+const Joi = require('joi');
+
+function topicListValidate(columns) {
+	const schema = Joi.object({
+		topics: Joi.array().items(Joi.string().alphanum()).min(1).required(),
+	});
+	return schema.validate(columns);
+}
 
 const userRepo = require('../repositories/userRepository');
 
@@ -115,10 +123,19 @@ module.exports = {
 		try {
 			let article = req.body;
 			let element_id = await elementRepo.createElement(article);
+<<<<<<< HEAD
 			let response = await articleRepo.createArticle(article, element_id);
 			return res
+=======
+			let response  = await articleRepo.createArticle(article,element_id);
+			let newArticle = await articleRepo.getArticleById(element_id);
+			return res		
+>>>>>>> 44a2402ee4609197c11e62c820b56f4f15e94ebf
 				.status(200)
-				.send({ message: "Article created successfully" });
+				.send({ 
+					message: "Article created successfully",
+					article: newArticle,
+				});
 		} catch (err) {
 			return res
 				.status(500)
@@ -126,9 +143,16 @@ module.exports = {
 		}
 	},
 	editArticle: async (req, res) => {
+<<<<<<< HEAD
 		const article = req.body
 		if (article.title) {
 			try {
+=======
+		const article = req.body;
+		let id = req.params.a_id;
+		if(article.title){
+			try{
+>>>>>>> 44a2402ee4609197c11e62c820b56f4f15e94ebf
 				let edit_title = await elementRepo.editElementTitle(article)
 			} catch (err) {
 				return res
@@ -154,9 +178,100 @@ module.exports = {
 					.send({ message: "Internal server error posting article " + err });
 			}
 		}
+<<<<<<< HEAD
 		return res
 			.status(200)
 			.send({ message: "Article edited successfully" });
 	},
 
+=======
+		if (req.file?.path != null) {
+			let imagePath = req.file.path
+			imagePath = "http://localhost:4000/" + imagePath.replace('\\', '/')
+			try {
+				await elementRepo.editImage(id, imagePath);
+			} catch (err) {
+				return res
+					.status(500)
+					.send({ message: "Internal server error editing article " + err });
+			}
+	
+		}
+		let newArticle = await articleRepo.getArticleById(id);
+		return res		
+			.status(200)
+			.send({ 
+				message: "Article edited successfully",
+				article: newArticle,
+			});
+	},
+	editArticleTopics: async (req, res) => {
+		try {
+			let a_id = req.params.a_id;
+			let columns = req.body;
+			const { error } = topicListValidate(columns);
+			if (error) {
+				return res
+					.status(403)
+					.send({ message: "Validation error " + error.details[0].message });
+			}
+			await articleRepo.deleteArticleTopics(a_id);
+			for (let topicName in columns.topics) {
+				let topic = await topicRepo.getTopicByName(topicName);
+				let t_id = topic.ID;
+				await articleRepo.addTopicToArticle(a_id, t_id);
+			}
+			let topics = await articleRepo.getArticleTopics(a_id);
+			return res
+				.status(201)
+				.send({
+					message: "Article topics edited successfully",
+					topics: topics,
+				});
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error adding topic to article " + err });
+		}
+	},
+	removeTopicFromArticle: async (req, res) => {
+		try {
+			let a_id = req.params.a_id;
+			let t_id = req.params.t_id;
+			let response = await articleRepo.deleteTopicFromArticle(a_id, t_id);
+			if (!response.affectedRows) {
+				return res
+					.status(404)
+					.send({ message: "Topic or article not found" });
+			}
+			return res
+				.status(200)
+				.send({ message: "Topic removed successfully from article" });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error removing topic from article " + err });
+		}
+	},
+	getArticleTopics: async (req, res) => {
+		try {
+			let a_id = req.params.a_id;
+			let topics = await articleRepo.getArticleTopics(a_id);
+			if (!topics.length) {
+				return res
+					.status(404)
+					.send({ message: "No topics found for this article" });
+			}
+			return res
+				.status(200)
+				.send({
+					topics: topics,
+				});
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting article topics " + err });
+		}
+	}
+>>>>>>> 44a2402ee4609197c11e62c820b56f4f15e94ebf
 };

@@ -130,7 +130,7 @@ router.get('/', studentController.getAllStudents);
 
 router.get('/:s_id', studentController.getStudentById);
 
-router.delete('/', [admin], studentController.deleteAllStudents);
-router.delete('/:s_id', [admin], studentController.deleteStudentById);
+router.delete('/', [authToken, admin], studentController.deleteAllStudents);
+router.delete('/:s_id', [authToken, admin], studentController.deleteStudentById);
 
 module.exports = router;

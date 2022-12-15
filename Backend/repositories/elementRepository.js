@@ -38,4 +38,13 @@ module.exports = {
 			})
 		})
 	},
+	editElementImage: (id, imagePath) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `UPDATE ELEMENT SET IMAGE='${imagePath}' WHERE ID=${id}`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows);
+			})
+		})
+	}
 }

@@ -10,6 +10,15 @@ module.exports = {
             })
         })
     },
+    getTopicByName: (name) => {
+        return new Promise((resolve, reject) => {
+            let queryString = `SELECT * FROM topic WHERE name='${name}'`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows[0]);
+            })
+        })
+    },
     getTopicById: (id) => {
         return new Promise((resolve, reject) => {
             let queryString = `SELECT * FROM topic WHERE ID=${id}`;
