@@ -1,8 +1,6 @@
 import React from 'react'
 import Spinner from 'react-bootstrap/Spinner';
 export default function ChooseFileBtn({ isLoading, name, mode }) {
-    if (mode === undefined)
-        mode = 'normal'
 
     const StyleCont = {
         width: '25px',
@@ -29,10 +27,10 @@ export default function ChooseFileBtn({ isLoading, name, mode }) {
         display: 'block'
     }
     return (
-        <label style={mode === 'normal' ? StyleCont : StyleContBtn} htmlFor={name}>
+        <label style={mode === 'avatar' ? StyleCont : StyleContBtn} htmlFor={name}>
             {isLoading ?
                 <Spinner animation="border" variant="light" size="sm" /> :
-                mode === 'normal' ?
+                mode === 'avatar' ?
                     <span className="material-symbols-outlined" style={{ fontSize: '15px', color: 'white', textAlign: 'center' }}>
                         edit
                     </span> :

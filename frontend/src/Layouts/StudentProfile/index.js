@@ -23,15 +23,24 @@ export default function StudentProfile() {
                 return i - 1;
             }
         }
-        return 9;//max rating
+        return 8;//max rating
     }
     const getPercentileOfNxtRating = (score) => {
+
         const currRank = getRatingByScore(score);
-        if (currRank === 9) return 100;
+        let nxtRankScore = 0;
+        let befRankScore = 0;
+        if (score >= 3000) {
+            nxtRankScore = (Math.floor(score / 1000) + 1) * 1000;
+            befRankScore = nxtRankScore - 1000;
+        }
+        else {
+            nxtRankScore = min_scores_per_rank[currRank + 1];
+            befRankScore = min_scores_per_rank[currRank];
+        }
 
-        const nxtRankScore = min_scores_per_rank[currRank + 1];
+        return [(nxtRankScore - score), ((score - befRankScore) / (nxtRankScore - befRankScore) * 100)];
 
-        return [(nxtRankScore - score), (score / nxtRankScore * 100)];
 
     }
 
@@ -40,11 +49,10 @@ export default function StudentProfile() {
         < Resource
             path={api.student(id)}
             render={({ items: { student } }) => {
-
                 const rank_ind = getRatingByScore(student.SCORE)
                 const rank = ranks[rank_ind]
                 const [rem, percent] = getPercentileOfNxtRating(student.SCORE)
-                const nxtRank = rank === 9 ? 'Greatness' : ranks[rank_ind + 1];
+                const nxtRank = rank_ind === 8 ? 'Thousands' : ranks[rank_ind + 1];
 
                 return (
                     <section className={styles.body} >

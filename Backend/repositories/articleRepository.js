@@ -3,7 +3,7 @@ const { DBconnection } = require('../config/database');
 module.exports = {
 	getAllArticles: () => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT * FROM article`;
+			let queryString = `SELECT A.AUTHORFNAME, A.AUTHORSNAME, A.INSTRUCTORID, E.*, (SELECT COUNT(L.UID) FROM likeonarticle L WHERE L.AID = A.ID ) as likes FROM article A, element E WHERE E.ID = A.ID;`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
@@ -12,7 +12,7 @@ module.exports = {
 	},
 	getArticleById: (id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT * FROM article, element WHERE article.ID=${id} AND element.ID = article.ID`;
+			let queryString = `SELECT A.*, E.*, COUNT(L.UID) as likes FROM article A, element E, likeonarticle L WHERE A.ID=${id} AND   E.ID = A.ID AND   L.AID =A.ID;`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows[0]);
@@ -67,7 +67,7 @@ module.exports = {
 		})
 	},
 	createArticle: (article, element_id) => {
-		const article_body = article.body;
+		const article_body = article.body.replace(/'/g, "`");
 		const instructor_id = article.instructor_id
 		// Creating an element and returning the 
 		return new Promise((resolve, reject) => {

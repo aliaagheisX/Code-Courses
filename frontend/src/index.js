@@ -14,6 +14,7 @@ import Articles from './Layouts/Articles';
 import AddArticle from './Layouts/Articles/AddArticle';
 import ShowArticle from './Layouts/Articles/ShowArticle';
 import Topics from './Layouts/Topics';
+import EditeArticle from './Layouts/Articles/EditeArticle';
 
 const ProtectedRoute = ({ children }) => {
   const { token } = useToken();
@@ -41,7 +42,8 @@ root.render(
         <Route path='/students/:id' element={<StudentProfile />} />
 
         <Route path='/users' element={<Users />} >
-          <Route path='students' index element={<Students />} />
+          <Route path='' element={<Students />} />
+          <Route path='students' element={<Students />} />
           <Route path='instructors' element={<Instructors />} />
           <Route path='admins' element={<Students />} />
         </Route>
@@ -54,13 +56,19 @@ root.render(
           </AdminRoute>} />
 
 
-        <Route path='/articles' element={<Articles />} />
+        <Route path='/articles/:id' element={<ShowArticle />} />
         <Route path='/articles/add' element={
           <InstructorRoute>
             <AddArticle />
           </InstructorRoute>
         } />
-        <Route path='/articles/:id' element={<ShowArticle />} />
+        <Route path='/articles/edite/:id' element={
+          <InstructorRoute>
+            <EditeArticle />
+          </InstructorRoute>
+        } />
+        <Route path='/articles' element={<Articles />} />
+
 
 
 
@@ -74,5 +82,5 @@ root.render(
 
       </Route>
     </Routes>
-  </BrowserRouter>
+  </BrowserRouter >
 ); 

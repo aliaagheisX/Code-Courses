@@ -7,6 +7,7 @@ import styles from './index.module.css'
 
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'https://esm.sh/remark-gfm@3'
+import Likes from './Likes';
 
 export default function ShowArticle() {
     const { id } = useParams();
@@ -17,11 +18,13 @@ export default function ShowArticle() {
             render={({ items: { article } }) => {
                 const {
                     ID, TITLE, AUTHORFNAME, AUTHORSNAME,
-                    BODY, CREATIONDATE, DESCRIPTION, IMAGE, INSTRUCTORID
+                    BODY, CREATIONDATE, DESCRIPTION, IMAGE, INSTRUCTORID, likes
                 } = article
+                console.log(likes)
 
                 return (
                     <section className={styles.sec}>
+                        <Likes likes={likes} />
                         <h3>{TITLE}</h3>
                         <p className={styles.desc}>{DESCRIPTION}</p>
                         <div className='tag-list'>

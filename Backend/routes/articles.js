@@ -16,7 +16,7 @@ router.get('/getbytopicid/:t_id', articleController.getArticlesByTopicId);
 router.get('/getarticletopics/:a_id', articleController.getArticleTopics);
 
 router.delete('/', [authToken, admin], articleController.deleteAllArticles);
-router.delete('/:a_id', [authToken, admin], articleController.deleteArticleById);
+router.delete('/:a_id', [authToken, canEditArticle], articleController.deleteArticleById);
 // router.delete('/removetopicfromarticle/:a_id/:t_id', [authToken, admin], articleController.removeTopicFromArticle);
 /**
  * @swagger

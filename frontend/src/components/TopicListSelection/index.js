@@ -4,9 +4,11 @@ import api from '../../api'
 import Tag from './Tag'
 import { useFormikContext, ErrorMessage } from 'formik'
 
-export default function TopicListSelection() {
+export default function TopicListSelection({ InitialTags }) {
     const formikProps = useFormikContext()
-    const [tagList, setTagList] = useState([])
+    if (InitialTags === undefined) InitialTags = []
+    const [tagList, setTagList] = useState(InitialTags)
+    console.log(tagList)
     const addTag = (tag) => {
         const temp = tagList
         temp.push(tag)
@@ -17,10 +19,9 @@ export default function TopicListSelection() {
         const temp = tagList.splice(tagList.indexOf(tag), 1)
         setTagList(temp)
     }
-
     useEffect(() => {
-        formikProps.setFieldValue('topics', tagList)
-    }, [tagList])
+        setTagList(InitialTags)
+    }, [])
 
     return (
         <div>

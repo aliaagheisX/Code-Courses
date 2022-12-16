@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 
-import { addArticleInitialValues, AddArticleSchema } from "../../formsConfig";
+import { editArticleInitialValues, EditArticleSchema } from "../../formsConfig";
 
 import TextField from "../Fields/TextField";
 import ImgField from "../Fields/ImgField"
@@ -14,10 +14,9 @@ import useToken from '../../useToken';
 import SubmitButton from '../Fields/SubmitButton'
 import { Formik, Form } from 'formik';
 
-
-export default function AddArticleForm() {
+export default function EditArticleForm({ article }) {
     const [backendError, setBackendError] = useState(null); //handeling backend validations
-    const { token, userdata: { ID: id } } = useToken()
+    const { token, userdata: { ID: Iid } } = useToken()
 
     const onSubmit = async (values) => {
         try {
@@ -68,8 +67,8 @@ export default function AddArticleForm() {
     return (
 
         <Formik
-            initialValues={addArticleInitialValues(id)}
-            validationSchema={AddArticleSchema}
+            initialValues={editArticleInitialValues(Iid)}
+            validationSchema={EditArticleSchema}
             onSubmit={onSubmit}
         >
 
@@ -77,12 +76,12 @@ export default function AddArticleForm() {
                 <Form encType='multipart/form-data' className='form'>
 
                     <div style={{ margin: '19px 0' }}>
-                        <ImgField mode='thumb' defaultImg='/4.jpg' ChooseFileBtn={ChooseFileBtn} Avatar={Thumb} name='image' />
+                        <ImgField mode='thumb' defaultImg={article.IMAGE} ChooseFileBtn={ChooseFileBtn} Avatar={Thumb} name='image' />
                     </div>
                     <div className='form-vert'>
                         <div className='group' style={{ flexDirection: 'column' }}>
-                            <TextField name="title" label="Title" placeholder='my title' />
-                            <TextField name="description" label="description" placeholder='small summary on what article do' />
+                            <TextField name="title" label="Title" placeholder={article.TITLE} />
+                            <TextField name="description" label="description" placeholder={article.DESCRIPTION} />
                         </div>
                         <TopicListSelection />
                     </div>

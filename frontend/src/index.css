@@ -14,6 +14,14 @@ body {
     box-sizing: border-box;
 }
 
+a {
+color: initial !important;
+text-decoration: none !important;
+}
+
+a:hover {
+    opacity: 0.7;
+}
 .material-symbols-outlined {
   font-variation-settings:
   'FILL' 1,
@@ -89,7 +97,7 @@ body {
 
 }
 
-.form button {
+.form button, .btnS, .btnDanger {
     background: #95B2EA;
     font-family: "Lato";
     font-weight: 700;
@@ -105,7 +113,7 @@ body {
 }
 
 
-.form button:hover {
+.form button:hover, .btnS:hover,.btnDanger:hover {
     background: #7c94c5;
 }
 
@@ -215,7 +223,7 @@ body {
 .danger form {
     padding: 3rem 1rem;
 }
-.danger button{
+.danger button, .btnDanger{
     background-color: #CC2936;
 }
 
@@ -231,15 +239,15 @@ padding-bottom: 1rem;
 .cont .danger form {
     padding: 3rem 1rem;
 }
-.cont .danger button{
+.cont .danger button, .btnDanger{
     background-color: #CC2936;
 }
 
-.cont .danger button:hover {
+.cont .danger button:hover,.btnDanger:hover {
     background-color: #a0212c;
 
 }
-.danger button:hover {
+.danger button:hover, .btnDanger:hover {
     background-color: #a0212c;
 }
 
@@ -266,4 +274,113 @@ padding-bottom: 1rem;
 }
 
 
+.btnIconList {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.btnIcon {
+    width: 17px;
+    height: 17px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #95B2EA;
+    border-radius: 50%;
+    margin-left: -12px;
+    margin-bottom: -9px;
+    cursor: pointer;
+    color: #fff;
+}
+.btnIcon.danger {
+    background-color: #CC2936;
+}
+.btnIcon.danger:hover {
+    background-color: #a0212c;
+}
+.btnIcon:hover {
+    background-color: #7990be;
+}
+
+.btnIcon.success {
+    background: #8FC93A;
+}
+.btnIcon.success:hover {
+    background: #6a952a;
+}
+
+.btnIcon span {
+    font-size: 10px;   
+}
+
+.elementCont {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5rem;
+    padding: 30px 0;
+}
+
+.component {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: 15px;
+    height: 150px;
+    position: relative;
+    background-size: cover;
+    padding: 20px 20px;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.component:hover .overlay {
+
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.9) 5%, rgba(0, 0, 0, 0.5) 100%);
+
+}
+
+.component .overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 15px;
+    top: 0;
+    left: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 5%, rgba(0, 0, 0, 0.5) 100%);
+
+    z-index: 1;
+}
+.component .heading, .component .desc {
+    z-index: 11;
+}
+.component .description, .component .desc {
+color: #fff;
+}
+
+.component .description {
+    color: #929292;
+}
+.component h4 a {
+    
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 16px;
+    margin: 0;
+    margin-bottom: 5px;
+    color: white !important;
+}
+
+.component .material-symbols-outlined{
+    font-size: 13px;
+    vertical-align: middle;
+    font-variation-settings: 'FILL' 0;
+
+}
+
+.component .desc {
+    display: flex;
+    gap: 9px;
+    vertical-align: baseline;
+}
 

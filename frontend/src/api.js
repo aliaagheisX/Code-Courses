@@ -6,6 +6,7 @@ const api = {
     user: (id) => `http://localhost:4000/users/${id}`,
     instructor: (id) => `http://localhost:4000/instructors/${id}`,
     deleteMe: 'http://localhost:4000/users/delete/me',
+    delteUser: (id) => `http://localhost:4000/users/deletebyid/${id}`,
     editProfile: (username) => `http://localhost:4000/users/${username}/edit`,
 
     getStudents: 'http://localhost:4000/students',
