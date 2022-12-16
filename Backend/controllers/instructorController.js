@@ -91,5 +91,22 @@ module.exports = {
 				.status(500)
 				.send({ message: "Internal server error editing instructor " + err });
 		}
-	}
+	},
+	deleteInstructor:async(req, res) => {
+		let id = parseInt(req.params.i_id);
+		let columns = req.body;
+		try {
+			let instructor = await instructorRepo.getInstructorById(id);
+			return res
+				.status(200)
+				.send({
+					message: "Instructor edited successfully",
+					instructor: instructor
+				});
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error editing instructor " + err });
+		}
+	},
 }

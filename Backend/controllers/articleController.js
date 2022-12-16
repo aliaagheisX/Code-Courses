@@ -9,7 +9,6 @@ function topicListValidate(columns) {
 	});
 	return schema.validate(columns);
 }
-edit_article_validate = (article_instant)
 
 const userRepo = require('../repositories/userRepository');
 
