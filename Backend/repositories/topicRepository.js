@@ -57,7 +57,7 @@ module.exports = {
   },
   deleteAllTopics: () => {
     return new Promise((resolve, reject) => {
-      const queryString = `TRUNCATE  TOPIC`;
+      const queryString = `DELETE FROM  TOPIC`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);

@@ -110,10 +110,10 @@ module.exports = {
     try {
       let delete_instructors = await instructorRepo.deleteAllInstructors();
       return res.status(200).send({
-        message: "Instructor deleted successfully",
-        instructor: instructor,
+        message: "All Instructors deleted successfully",
       });
     } catch (err) {
+      console.log(err);
       return res
         .status(500)
         .send({ message: "Internal server error deleting instructor " + err });

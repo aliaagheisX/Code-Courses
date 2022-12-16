@@ -122,7 +122,6 @@ module.exports = {
       let delete_topics = await topicRepo.deleteAllTopics();
       return res.status(200).send({
         message: "All Topics deleted successfully",
-        topic: topic,
       });
     } catch (err) {
       return res

@@ -27,6 +27,6 @@ router.delete(
   [canDeleteInstructor],
   instructorController.deleteInstructor
 );
-router.delete("/delete_all", [admin], instructorController.deleteInstructor);
+router.delete("/delete_all", instructorController.deleteAllInstructors);
 
 module.exports = router;

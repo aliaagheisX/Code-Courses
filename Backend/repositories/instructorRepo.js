@@ -46,11 +46,13 @@ module.exports = {
       });
     });
   },
-  deleteAllInstructors: (id) => {
+  deleteAllInstructors: () => {
     return new Promise((resolve, reject) => {
-      let queryString = `TRUNCATE TABLE INSTRUCTOR`;
+      let queryString = `DELETE FROM ARTICLE;`;
       DBconnection.query(queryString, (err, rows) => {
-        if (err) return reject(err);
+        if (err) {
+          return reject(err);
+        }
         return resolve(rows[0]);
       });
     });
