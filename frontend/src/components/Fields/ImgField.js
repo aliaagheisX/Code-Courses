@@ -64,7 +64,7 @@ export default function ImgField({ defaultImg, ChooseFileBtn, Avatar, name, mode
 
         <div className='group' style={styleMode}>
             <Avatar avatar={img} />
-            <ChooseFileBtn isLoading={loading} name={name} />
+            <ChooseFileBtn isLoading={loading} name={name} mode={mode} />
             <input hidden id={name} name={name} type="file" onChange={ChangeHandel} />
 
             <div className='error'>{errorMsg}</div>

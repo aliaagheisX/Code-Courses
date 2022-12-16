@@ -5,7 +5,8 @@ import Error from './Layouts/Error';
 import Waiting from './Layouts/Waiting';
 
 
-export default function Resource({ path, render }) {
+export default function Resource({ path, render, ErrorComp }) {
+    if (ErrorComp === undefined) ErrorComp = <Error />;
     const [error, setError] = useState(null);
     const [loading, setLoadeding] = useState(true);
     const [items, setItems] = useState([]);
@@ -31,7 +32,7 @@ export default function Resource({ path, render }) {
 
 
     if (loading) return <Waiting />
-    if (error) return <Error />
+    if (error) return ErrorComp
 
     return render({ items });
 }

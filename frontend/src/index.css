@@ -69,7 +69,7 @@ body {
     color: #646464;
 }
 
-.form input {
+.form input, .form textarea {
     border-radius: 8px;
     background: #FFFFFF;
     border: 1px solid #86A8E7;  
@@ -78,6 +78,10 @@ body {
     font-family: 'Lato';
     font-size: 14px;
     
+}
+
+.form textarea  {
+    height: 400px;
 }
 ::placeholder {
     font-family: 'Lato';
@@ -91,13 +95,13 @@ body {
     font-weight: 700;
     font-size: 1.2rem;
     letter-spacing: 1px;
-    padding: 0.5rem 0 ;
+    padding: 0.6rem 0 ;
     border: 0;
 
     color: #ffffff;
     margin: 1rem 0;
     border-radius: 6px;
-    width: 95px;
+    width: 105px;
 }
 
 
@@ -132,8 +136,9 @@ body {
     gap: 0.6rem;
     overflow-y: auto;
     padding: 1rem 1rem;
-    max-width: 500px;
+    max-width: 420px;
     max-height: 250px;
+    align-content: flex-start;
 }
 
 .tag-list::-webkit-scrollbar {
@@ -149,9 +154,8 @@ body {
 .tag {
     padding: 2px 9px;
     font-family: 'Lato';
-    font-weight: 700;
     font-size: 13px;
-
+    display: inline-block;
 
     color: #717191;
     background: #D7E5FF;
@@ -234,7 +238,32 @@ padding-bottom: 1rem;
 .cont .danger button:hover {
     background-color: #a0212c;
 
-}.danger button:hover {
-    background-color: #a0212c;
-
 }
+.danger button:hover {
+    background-color: #a0212c;
+}
+
+.form-vert {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    
+}
+.form-vert > .group {
+    gap: 1.6rem;
+}
+
+.form-vert .tag-list {
+    border-left: 2px solid #ddd;
+}
+
+.thum-wrapper {
+    width: 840px; 
+    height: 400px;
+    background-size: cover
+}
+
+
+

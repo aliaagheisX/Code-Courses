@@ -28,12 +28,13 @@ export const editProfileInitialValues = () => ({
 });
 
 
-export const addArticleInitialValues = () => ({
+export const addArticleInitialValues = (id) => ({
   image: '',
   title: '',
   description: '',
   body: '',
   topics: [],
+  'instructor_id': id
 });
 
 export const changePasswordInitialValues = {
@@ -128,16 +129,16 @@ export const EmptySchema = Yup.object().shape({
 
 export const AddArticleSchema = Yup.object().shape({
   image: Yup.mixed(),
-  title: Yup.string()
-    .min(3, "at least 3 characters")
-    .max(50, "at most 32 characters"),
+  title: Yup.string().required('must enter')
+    .min(2, "at least 2 characters")
+    .max(25, "at most 25 characters"),
 
-  description: Yup.string()
-    .min(3, "at least 3 characters")
-    .max(50, "at most 32 characters"),
-  body: Yup.string()
-    .min(3, "at least 3 characters")
-    .max(50, "at most 32 characters"),
+  description: Yup.string().required('must enter')
+    .min(20, "at least 20 characters")
+    .max(150, "at most 150 characters"),
+  body: Yup.string().required('must enter')
+    .min(20, "at least 20 characters")
+    .max(5000000, "at most 5000000 characters"),
 
-  topics: Yup.array().of(Yup.string())
+  topics: Yup.array().min(1, "at least 1").required("required")
 });

@@ -1,49 +1,18 @@
 {
-    "version": "2.0.0",
-    "presentation": {
-      "echo": false,
-      "reveal": "always",
-      "focus": false,
-      "panel": "dedicated",
-      "showReuseMessage": true
-    },
-    "tasks": [
-      {
-        // The name that shows up in terminal tab
-        "label": "front",
-        // The task will launch a shell
-        "type": "shell",
-        "command": "cd frontend;npm strart",
-        // Set the shell type
-        "options": {
-          "shell": {
-            "executable": "cmd.exe",
-            "args": []
-          }
-        },
-        // Mark as a background task to avoid the spinner animation on the terminal tab
-        "isBackground": true,
-        "problemMatcher": [],
-        // Create the tasks in a terminal group
-        "presentation": {
-          "group": "my-group"
-        }
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run react server on startup",
+      "type": "shell",
+      "command": "npm start",
+      "windows": {
+        "command": "npm start"
       },
-      {
-        "label": "Second",
-        "type": "shell",
-        "command": "",
-        "options": {
-          "shell": {
-            "executable": "pwsh.exe",
-            "args": []
-          }
-        },
-        "isBackground": true,
-        "problemMatcher": [],
-        "presentation": {
-          "group": "my-group"
-        }
-      }
-    ]
-  }
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "runOptions": { "runOn": "folderOpen" }
+    }
+  ]
+}

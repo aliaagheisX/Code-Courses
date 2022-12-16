@@ -1,12 +1,12 @@
 const { DBconnection } = require('../config/database');
 
 module.exports = {
-	createElement: (article) => {
+	createElement: (article, image) => {
 		const title = article.title;
 		const description = article.description;
 		// Creating an element and returning the insertID
 		return new Promise((resolve, reject) => {
-			let queryString = `INSERT INTO ELEMENT(TITLE,DESCRIPTION) VALUES('${title}','${description}')`;
+			let queryString = `INSERT INTO ELEMENT(TITLE,DESCRIPTION,IMAGE) VALUES('${title}','${description}', '${image}')`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) {
 					console.log(err)
