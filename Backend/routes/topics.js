@@ -13,6 +13,6 @@ router.patch("/editTopic/:t_id", [authToken, admin], topicController.editTopic);
 
 // MISSING HERE THE MIDDLEWARES
 router.delete("/delete/:t_id", topicController.deleteTopicById);
-router.delete("/delete/all", topicController.deleteAllTopics);
+router.delete("/delete_all", topicController.deleteAllTopics);
 
 module.exports = router;
