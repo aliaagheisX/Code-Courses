@@ -16,6 +16,7 @@ module.exports = {
 	canEditArticle: async (req, res, next) => {
 		let id = req.user.ID;
 		let a_id = req.params.a_id;
+		let isInstructor = isInstructor(id);
 		if (isInstructor(id)) {
 			let article = await articleRepo.getArticleById(a_id);
 			if (article.INSTRUCTORID === id) {
@@ -28,7 +29,7 @@ module.exports = {
 		} else {
 			return res
 				.status(401)
-				.send({ message: "Unauthorized. Must be instructor" })
+				.send({ message: "Unauthorized. Must be instructor"})
 		}
 	},
 }
