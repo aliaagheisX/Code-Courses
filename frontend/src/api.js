@@ -23,6 +23,7 @@ const api = {
     addArticleTopics: (id) => `http://localhost:4000/articles/editarticletopics/${id}`,
     editArticleTopics: (id) => `http://localhost:4000/articles/editarticletopics/${id}`,
     editArticle: (id) => `http://localhost:4000/articles/edit/${id}`,
+    userReadArticle: (id) => `http://localhost:4000/articles/readarticle/${id}`,
 
 }
 export default api

@@ -5,19 +5,27 @@ export default function Likes({ likes }) {
     const [count, setCount] = useState(likes)
     return (
         <div
-            className={`${styles.stLike}  ${active ? styles.liActive : ''}`}
-            onClick={() => {
-                if (active)
-                    setCount(likes);
-                else
-                    setCount(likes + 1)
-                setActive(!active);
-            }}
-        >
-            <span className={styles.lkCont}>
+            className={styles.stLike}>
+            <span className={`${styles.lkCont} ${active ? styles.liActive : ''}`}
+
+                onClick={() => {
+                    if (active)
+                        setCount(likes);
+                    else
+                        setCount(likes + 1)
+                    setActive(!active);
+                }}>
                 <span className={styles.stl}>{count} </span>
                 <span className="material-symbols-outlined">
                     favorite
+                </span>
+            </span>
+
+
+            <span className={styles.lkCont}>
+                <span className={styles.stl}>{count} </span>
+                <span className="material-symbols-outlined">
+                    visibility
                 </span>
             </span>
         </div>

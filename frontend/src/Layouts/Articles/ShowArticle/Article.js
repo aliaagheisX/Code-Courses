@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './index.module.css'
 import Thumb from '../../../components/Thumb'
 import Resource from '../../../Resource'
@@ -7,8 +7,13 @@ import api from '../../../api';
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'https://esm.sh/remark-gfm@3'
 import Likes from './Likes';
+import useToken from '../../../useToken'
+import { json } from 'react-router-dom';
 
 export default function Article({ article }) {
+    const { counts, setCounts } = useState({})
+
+    const { token } = useToken()
     const {
         ID, TITLE, AUTHORFNAME, AUTHORSNAME,
         BODY, CREATIONDATE, DESCRIPTION, IMAGE, INSTRUCTORID, likes
@@ -16,7 +21,27 @@ export default function Article({ article }) {
     const create_date = new Date(CREATIONDATE).toDateString().split(' ').slice(1).join(' ');
 
     useEffect(() => {
-        fetch('')
+        const UserReadArticle = async () => {
+            try {
+                const res = await fetch(api.userReadArticle(ID), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'token': token },
+                    body: JSON.stringify({})
+                });
+                const data = await res.json();
+
+                if (!res.ok) throw data.message
+
+                console.log("success", data)
+                setCounts(data)
+            }
+            catch (err) {
+                console.log("error", err)
+            }
+        }
+
+        UserReadArticle()
+
     }, [])
 
     return (
