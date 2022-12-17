@@ -12,6 +12,7 @@ const { canCreateArticle, canAddTopic, canEditArticle } = require('../permission
 router.get('/', articleController.getAllArticles);
 router.get('/getbyarticleid/:a_id', articleController.getArticleById);
 router.get('/getbyname/:fname/:sname', articleController.getArticlesByAuthorName);
+router.get('/getinstructorarticles/:i_id', articleController.getArticlesOfInstructor);
 router.get('/getbytopicid/:t_id', articleController.getArticlesByTopicId);
 router.get('/getarticletopics/:a_id', articleController.getArticleTopics);
 

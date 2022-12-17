@@ -10,6 +10,15 @@ module.exports = {
 			})
 		})
 	},
+	getArticlesOfInstructor: (instructor_id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `SELECT A.AUTHORFNAME, A.AUTHORSNAME, A.INSTRUCTORID, E.*, (SELECT COUNT(L.UID) FROM likeonarticle L WHERE L.AID = A.ID ) as likes FROM article A, element E, instructor I WHERE E.ID = A.ID AND A.INSTRUCTORID = I.ID AND I.ID = ${instructor_id};`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows);
+			})
+		})
+	},
 	getArticleById: (id) => {
 		return new Promise((resolve, reject) => {
 			let queryString = `SELECT A.*, E.*, COUNT(L.UID) as likes FROM article A, element E, likeonarticle L WHERE A.ID=${id} AND   E.ID = A.ID AND   L.AID =A.ID;`;

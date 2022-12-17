@@ -3,7 +3,7 @@ import TableResource from '../../components/TableResource/TableResource'
 import Resource from '../../Resource'
 import api from '../../api'
 import AdminProtectedComponent from '../../components/AdminProtectedComponent'
-import DeleteAll from './DeleteAll'
+import DeleteAll from '../../DeleteAll'
 import useToken from '../../useToken'
 
 export default function Instructors() {
@@ -23,7 +23,7 @@ export default function Instructors() {
             render={({ items: { instructors } }) => (
                 <>
                     <AdminProtectedComponent
-                        render={<DeleteAll path={api.deleteAllInstrunctors} afterDelete={afterDeleteAll} />}
+                        render={<DeleteAll txt='Delete All' path={api.deleteAllInstrunctors} afterDelete={afterDeleteAll} />}
                         replace={<></>}
                     />
                     <TableResource

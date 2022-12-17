@@ -38,7 +38,6 @@ module.exports = {
 					.send({ message: "Article not found" });
 			}
 			let numOfArticleReads = await articleRepo.readCountArticle(id);
-
 			let numOfArticleLikes = await articleRepo.likeCountArticle(id);
 			return res.status(200).send({
 				article: article,
@@ -68,6 +67,22 @@ module.exports = {
 			return res
 				.status(500)
 				.send({ message: "Internal server error getting articles by author name " + err });
+		}
+	},
+	getArticlesOfInstructor: async (req, res) => {
+		try {
+			const instructor_id = req.params.i_id;
+			let articles = await articleRepo.getArticlesOfInstructor(instructor_id);
+			if (!articles.length) {
+				return res
+					.status(404)
+					.send({ message: "Looks like you have no articles" });
+			}
+			return res.status(200).send({ articles: articles });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting all articles" + err });
 		}
 	},
 	getArticlesByTopicId: async (req, res) => {

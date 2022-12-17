@@ -9,6 +9,7 @@ export default function Likes({ likes, views, a_id }) {
     const [count, setCount] = useState(likes)
 
     const handelLike = async () => {
+        if (!token) return;
         try {
             const res = await fetch(api.userLikeArticle(a_id), {
                 method: 'POST',
