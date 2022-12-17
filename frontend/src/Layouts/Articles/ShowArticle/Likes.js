@@ -15,15 +15,15 @@ export default function Likes({ likes }) {
                         setCount(likes + 1)
                     setActive(!active);
                 }}>
-                <span className={styles.stl}>{count} </span>
+                <span className={styles.stl}>{count}  </span>
                 <span className="material-symbols-outlined">
                     favorite
                 </span>
             </span>
 
 
-            <span className={styles.lkCont}>
-                <span className={styles.stl}>{count} </span>
+            <span className={`${styles.vsCont}`}>
+                <span className={styles.stl}>12,50 </span>
                 <span className="material-symbols-outlined">
                     visibility
                 </span>
