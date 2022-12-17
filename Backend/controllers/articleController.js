@@ -37,8 +37,8 @@ module.exports = {
 					.status(404)
 					.send({ message: "Article not found" });
 			}
-			let numOfArticleReads = await article.readCountArticle(id);
-			let numOfArticleLikes = await article.likeCount(id);
+			let numOfArticleReads = await articleRepo.readCountArticle(id);
+			let numOfArticleLikes = await articleRepo.likeCount(id);
 			return res.status(200).send({ 
 				article: article,
 				articleReadCount: numOfArticleReads,
