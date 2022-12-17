@@ -125,5 +125,32 @@ module.exports = {
 				return resolve(rows);
 			})
 		})
-	}
+	},
+	readArticle: (a_id, u_id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `INSERT INTO readarticle (SID, AID) VALUES (${u_id}, ${a_id})`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows);
+			})
+		})
+	},
+	readCountUser: (u_id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `SELECT COUNT(*) AS count FROM readarticle WHERE SID=${u_id}`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows[0].count);
+			})
+		})
+	},
+	readCountArticle: (a_id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `SELECT COUNT(*) AS count FROM readarticle WHERE AID=${s_id}`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows[0].count);
+			})
+		})
+	}	
 }

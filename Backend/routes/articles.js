@@ -91,6 +91,8 @@ router.post('/create', [authToken, canCreateArticle], upload.single('image'), ar
 
 router.post('/editarticletopics/:a_id', [authToken, canEditArticle], articleController.editArticleTopics);
 
+router.post('/readarticle/:a_id', [authToken], articleController.readArticle);
+
 router.patch('/edit/:a_id', [authToken, canEditArticle], upload.single('image'), articleController.editArticle);
 
 module.exports = router;
