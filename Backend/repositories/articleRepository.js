@@ -80,7 +80,7 @@ module.exports = {
 
 	},
 	editArticleBody: (article) => {
-		const body = article.body;
+		const body = article.body.replace(/'/g, "`");
 		const id = article.id;
 		return new Promise((resolve, reject) => {
 			let queryString = `UPDATE ARTICLE SET body = '${body}' WHERE ID = ${id} `;

@@ -38,7 +38,7 @@ module.exports = {
 			})
 		})
 	},
-	editElementImage: (id, imagePath) => {
+	editImage: (id, imagePath) => {
 		return new Promise((resolve, reject) => {
 			let queryString = `UPDATE ELEMENT SET IMAGE='${imagePath}' WHERE ID=${id}`;
 			DBconnection.query(queryString, (err, rows) => {
@@ -46,5 +46,5 @@ module.exports = {
 				return resolve(rows);
 			})
 		})
-	}
+	},
 }
