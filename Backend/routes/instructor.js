@@ -24,7 +24,7 @@ router.patch(
 );
 router.delete(
   "/delete/:i_id",
-  [canDeleteInstructor],
+  [authToken, canDeleteInstructor],
   instructorController.deleteInstructor
 );
 router.delete("/delete_all", instructorController.deleteAllInstructors);

@@ -38,8 +38,9 @@ module.exports = {
 					.send({ message: "Article not found" });
 			}
 			let numOfArticleReads = await articleRepo.readCountArticle(id);
-			let numOfArticleLikes = await articleRepo.likeCount(id);
-			return res.status(200).send({ 
+
+			let numOfArticleLikes = await articleRepo.likeCountArticle(id);
+			return res.status(200).send({
 				article: article,
 				articleReadCount: numOfArticleReads,
 				likes: numOfArticleLikes,
@@ -290,13 +291,13 @@ module.exports = {
 			if (row) {
 				await articleRepo.dislikeArticle(a_id, u_id);
 				let likeCount = await articleRepo.likeCountArticle(a_id);
-				return res	
+				return res
 					.status(200)
 					.send({
 						message: "Student disliked article",
 						likeCount: likeCount,
 					});
-			} 
+			}
 			let response = await articleRepo.likeArticle(a_id, u_id);
 			let likeCount = await articleRepo.likeCountArticle(a_id);
 			return res

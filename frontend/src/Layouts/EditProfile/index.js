@@ -1,10 +1,8 @@
 import React from 'react'
 import ChangePassword from '../../components/Forms/ChangePassword'
-import DeletMe from '../../components/Forms/DeletMe'
 import EditeProfileForm from '../../components/Forms/EditeProfileForm'
 
 import styles from './index.module.css'
-
 export default function EditProfile() {
     return (
         <section className={styles.cont}>
@@ -16,9 +14,6 @@ export default function EditProfile() {
                 <section className={styles.mnForm}>
                     <h3>Change Password</h3>
                     <ChangePassword />
-                </section>
-                <section className={styles.danger}>
-                    <DeletMe />
                 </section>
             </div>
         </section>

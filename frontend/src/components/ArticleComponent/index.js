@@ -14,7 +14,7 @@ export default function ArticleComponent({ article }) {
     const navigate = useNavigate();
     return (
         <div className='component' style={{ backgroundImage: `url(${img})` }}
-            onClick={() => navigate(`${ID}`)}>
+            onClick={() => navigate(`/articles/${ID}`)}>
             <div className='overlay'></div>
             <div className='heading'>
                 <h4><Link to={`/articles/${ID}`}> {title}</Link></h4>

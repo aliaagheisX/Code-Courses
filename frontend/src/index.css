@@ -10,6 +10,7 @@ body {
     background-color: #F3F5F9 !important;
 }
 
+
 * {
     box-sizing: border-box;
 }
@@ -17,6 +18,7 @@ body {
 a {
 color: initial !important;
 text-decoration: none !important;
+opacity: 1 !important;
 }
 
 a:hover {
@@ -97,24 +99,42 @@ a:hover {
 
 }
 
-.form button, .btnS, .btnDanger {
-    background: #95B2EA;
+.form button, .btnS, .btnDanger, .btnE,.btnG  {
+    background: #7996d0;
     font-family: "Lato";
     font-weight: 700;
     font-size: 1.2rem;
     letter-spacing: 1px;
-    padding: 0.6rem 0 ;
+    padding: 0.6rem 2rem ;
     border: 0;
 
-    color: #ffffff;
+    color: #ffffff !important;
     margin: 1rem 0;
     border-radius: 6px;
-    width: 105px;
+    width: fit-content;
+    cursor: pointer;
+    /* width: 105px; */
+   /*  padding: 0 12px; */
 }
 
+.btnE {
+    background: #383848;
+}
 
-.form button:hover, .btnS:hover,.btnDanger:hover {
-    background: #7c94c5;
+.btnE:hover {
+    background: #202028;
+}
+
+.btnG {
+    background: #8fc93a;
+}
+
+.btnG:hover {
+    background: #6e9b2b;
+}
+
+.form button:hover, .btnS:hover{
+    background: #607297;
 }
 
 .form-group {
@@ -255,11 +275,9 @@ padding-bottom: 1rem;
 }
 
 .cont .danger button:hover,.btnDanger:hover {
-    background-color: #a0212c;
+    background-color: #a0212c ;
+    opacity: 1;
 
-}
-.danger button:hover, .btnDanger:hover {
-    background-color: #a0212c;
 }
 
 .form-vert {

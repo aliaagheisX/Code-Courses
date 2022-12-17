@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import './index.css';
 import App from './App';
 import StudentProfile from './Layouts/StudentProfile'
+import InstructorProfile from './Layouts/InstructorProfile'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import useToken from './useToken';
 import EditProfile from './Layouts/EditProfile';
@@ -40,6 +41,7 @@ root.render(
       <Route path="/" element={<App />}>
 
         <Route path='/students/:id' element={<StudentProfile />} />
+        <Route path='/instructors/:id' element={<InstructorProfile />} />
 
         <Route path='/users' element={<Users />} >
           <Route path='' element={<Students />} />

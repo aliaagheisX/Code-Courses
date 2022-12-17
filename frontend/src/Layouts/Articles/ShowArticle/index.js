@@ -9,7 +9,7 @@ export default function ShowArticle() {
     return (
         <Resource
             path={api.getArticle(id)}
-            render={({ items: { article } }) => (<Article article={article} />)
+            render={({ items }) => (<Article article={items} />)
             }
         />
     )

@@ -21,8 +21,6 @@ export default function Users() {
                 </NavLink>
             </div>
 
-            {isAdmin ? <button className='btnDanger'>Delete All</button> : null}
-
 
             <Outlet />
 
