@@ -1,5 +1,6 @@
 const instructorRepo = require("../repositories/instructorRepo");
 const Joi = require("joi");
+const articleRepo = require("../repositories/articleRepository");
 
 function ratingValidate(columns) {
   const schema = Joi.object({
@@ -31,7 +32,11 @@ module.exports = {
       if (!instructor) {
         return res.status(404).send({ message: "Instructor not found" });
       }
-      return res.status(200).send({ instructor: instructor });
+      let writtenCount = await articleRepo.getNumberOfArticlesByAuthor(id);
+      return res.status(200).send({ 
+        instructor: instructor,
+        writtenCount: writtenCount,
+      });
     } catch (err) {
       return res.status(500).send({
         message: "Internal server error retrieving instructor by id" + err,

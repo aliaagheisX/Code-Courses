@@ -255,5 +255,25 @@ module.exports = {
 				.status(500)
 				.send({ message: "Internal server error getting article topics " + err });
 		}
-	}
+	},
+	readArticle: async (req, res) => {
+		try {
+			let a_id = parseInt(req.params.a_id);
+			let u_id = req.user.ID;
+			let response = await articleRepo.readArticle(a_id, u_id);
+			let numOfArticlesReadByStudent = await articleRepo.readCountUser(u_id);
+			let numOfArticleReads = await articleRepo.readCountArticle(a_id);
+			return res
+				.status(200)
+				.send({
+					message: "Student has read article",
+					userReadCount: numOfArticlesReadByStudent,
+					articleReadCount: numOfArticleReads,
+				});
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error reading article " + err });
+		}
+	},
 };
