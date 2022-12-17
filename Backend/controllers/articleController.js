@@ -38,13 +38,8 @@ module.exports = {
 					.send({ message: "Article not found" });
 			}
 			let numOfArticleReads = await articleRepo.readCountArticle(id);
-<<<<<<< HEAD
 			let numOfArticleLikes = await articleRepo.likeCountArticle(id);
 			return res.status(200).send({
-=======
-			let numOfArticleLikes = await articleRepo.likeCount(id);
-			return res.status(200).send({
->>>>>>> 1d05fcc44d5424c8652b52c26c4fc8de424fd368
 				article: article,
 				articleReadCount: numOfArticleReads,
 				likes: numOfArticleLikes,
@@ -74,8 +69,21 @@ module.exports = {
 				.send({ message: "Internal server error getting articles by author name " + err });
 		}
 	},
-	getArticlesByInstructor: async (req, res) => {
-
+	getArticlesOfInstructor: async (req, res) => {
+		try {
+			const instructor_id = req.params.i_id;
+			let articles = await articleRepo.getArticlesOfInstructor(instructor_id);
+			if (!articles.length) {
+				return res
+					.status(404)
+					.send({ message: "Looks like you have no articles" });
+			}
+			return res.status(200).send({ articles: articles });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting all articles" + err });
+		}
 	},
 	getArticlesByTopicId: async (req, res) => {
 		try {

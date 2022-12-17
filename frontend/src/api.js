@@ -21,6 +21,7 @@ const api = {
     getArticleTopics: (id) => `http://localhost:4000/articles/getarticletopics/${id}`,
     getArticles: 'http://localhost:4000/articles',
     addArticle: 'http://localhost:4000/articles/create',
+    getInstructorArticles: (id) => `http://localhost:4000/articles/getinstructorarticles/${id}`,
     addArticleTopics: (id) => `http://localhost:4000/articles/editarticletopics/${id}`,
     editArticleTopics: (id) => `http://localhost:4000/articles/editarticletopics/${id}`,
     editArticle: (id) => `http://localhost:4000/articles/edit/${id}`,

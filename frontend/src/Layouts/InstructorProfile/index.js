@@ -9,9 +9,10 @@ import Resource from '../../Resource'
 import api from '../../api'
 
 import { useParams } from 'react-router-dom'
-import Articles from './Articles'
+import ArticleComponent from '../../components/ArticleComponent'
+
 import Options from './Options'
-export default function StudentProfile() {
+export default function InstructorProfile() {
 
     let { id } = useParams();
 
@@ -38,6 +39,22 @@ export default function StudentProfile() {
                             </div>
                         </main>
 
+                        <Resource
+                            path={api.getInstructorArticles(id)}
+                            ErrorComp={<></>}
+                            render={({ items: { articles } }) => (
+                                <section>
+                                    <h3>Articles</h3>
+
+                                    <div className='elementCont' >
+                                        {
+
+                                            articles.map((article) => <ArticleComponent article={article} key={article.ID} />)
+                                        }
+                                    </div>
+                                </section>
+                            )}
+                        />
                         {/* <Articles articlesRead={items.articlesRead} articlesLiked={items.articlesLiked} /> */}
                     </section>
                 )
