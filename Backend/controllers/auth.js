@@ -3,6 +3,7 @@ const passwordComplexity = require("joi-password-complexity");
 const userRepo = require("../repositories/userRepository");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const studentRepo = require("../repositories/studentRepository");
 
 function validateUserLogIn(user) {
   const schema = Joi.object({
@@ -77,14 +78,18 @@ module.exports = {
       user_data.confirmPassword = "";
       user_data.image =
         "https://7wdata.be/wp-content/uploads/2016/05/icon-user-default.png";
-      let message = await userRepo.createUser(user_data);
+      let { message, rows } = await userRepo.createUser(user_data);
+      let createStudent = await studentRepo.createStudent(rows.insertId);
+      message += " and student ";
       let user = await userRepo.getUserByName(user_data.username);
+      let student = await studentRepo.getStudentById(rows.insertId);
       console.log(user.EMAIL);
       const payload = { email: user.EMAIL };
       const token = jwt.sign({ payload }, process.env.PRIMARY_KEY);
       return res.status(201).send({
         token: token,
         user: user,
+        student: student,
         message,
       });
     } catch (err) {
