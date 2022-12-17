@@ -157,7 +157,7 @@ export const EditArticleSchema = Yup.object().shape({
 
   title: Yup.string()
     .min(2, "at least 2 characters")
-    .max(25, "at most 25 characters"),
+    .max(50, "at most 50 characters"),
 
   description: Yup.string()
     .min(20, "at least 20 characters")

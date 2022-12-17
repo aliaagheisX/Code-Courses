@@ -22,6 +22,20 @@ module.exports = {
         .send({ message: "Internal server error getting replies " + err });
     }
   },
+  getCommentsOfArticle: async (req, res) => {
+    try {
+      let id = parseInt(req.params.a_id);
+      let comments = await commentsRepo.getCommentsOfArticle(id);
+      if (!comments.length) {
+        return res.status(404).send({ message: "no comments on article" });
+      }
+      return res.status(200).send({ comments: comments });
+    } catch (err) {
+      return res
+        .status(500)
+        .send({ message: "Internal server error getting comments " + err });
+    }
+  },
   getCommentByID: async (req, res) => {
     try {
       let id = parseInt(req.params.c_id);

@@ -10,6 +10,16 @@ module.exports = {
       });
     });
   },
+
+  getCommentsOfArticle: (article_id) => {
+    return new Promise((resolve, reject) => {
+      let queryString = `SELECT * FROM _comment c WHERE c.AID=${article_id};`;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows);
+      });
+    });
+  },
   getCommentByID: (id) => {
     return new Promise((resolve, reject) => {
       const query = `SELECT * FROM _COMMENT WHERE ID = ${id}`;

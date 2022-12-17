@@ -5,6 +5,7 @@ const { authToken } = require("../middleware/auth");
 const admin = require("../middleware/admin");
 
 router.get("/articles/replies/:c_id", commentsController.getRepliesToComment);
+router.get("/articles/:a_id", commentsController.getCommentsOfArticle);
 router.get("/:c_id", commentsController.getCommentByID);
 
 router.delete(
