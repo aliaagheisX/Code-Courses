@@ -14,6 +14,7 @@ import Articles from './Layouts/Articles';
 import AddArticle from './Layouts/Articles/AddArticle';
 import ShowArticle from './Layouts/Articles/ShowArticle';
 import Topics from './Layouts/Topics';
+import QuizQuestions from './Layouts/Quiz/QuizQuestions';
 
 const ProtectedRoute = ({ children }) => {
   const { token } = useToken();
@@ -61,6 +62,13 @@ root.render(
           </InstructorRoute>
         } />
         <Route path='/articles/:id' element={<ShowArticle />} />
+
+<Route path='/quizzes'element={
+<ProtectedRoute>
+<QuizQuestions/>
+</ProtectedRoute>}/>
+
+
 
 
 
