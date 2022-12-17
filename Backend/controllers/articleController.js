@@ -147,7 +147,7 @@ module.exports = {
 	editArticle: async (req, res) => {
 		const article = req.body;
 		let id = req.params.a_id;
-		if (article.title) {
+		if (article.title !== '') {
 			try {
 				let edit_title = await elementRepo.editElementTitle(article)
 			} catch (err) {
@@ -156,7 +156,7 @@ module.exports = {
 					.send({ message: "Internal server error posting article " + err });
 			}
 		}
-		if (article.description) {
+		if (article.description !== '') {
 			try {
 				let edit_description = await elementRepo.editElementDescription(article)
 			} catch (err) {
@@ -165,7 +165,7 @@ module.exports = {
 					.send({ message: "Internal server error posting article " + err });
 			}
 		}
-		if (article.body) {
+		if (article.body !== '') {
 			try {
 				let edit_body = await articleRepo.editArticleBody(article)
 			} catch (err) {

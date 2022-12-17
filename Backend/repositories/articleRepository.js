@@ -119,7 +119,7 @@ module.exports = {
 	},
 	getArticleTopics: (a_id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT NAME FROM topic, article_topic WHERE TID=ID AND AID=${a_id}`;
+			let queryString = `SELECT NAME, TID FROM topic, article_topic WHERE TID=ID AND AID=${a_id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);

@@ -12,11 +12,12 @@ import TopicListSelection from '../TopicListSelection';
 import TextAreaField from '../Fields/TextAreaField';
 import useToken from '../../useToken';
 import SubmitButton from '../Fields/SubmitButton'
+import Resource from '../../Resource';
 import { Formik, Form } from 'formik';
 
 export default function EditArticleForm({ article }) {
     const [backendError, setBackendError] = useState(null); //handeling backend validations
-    const { token, userdata: { ID: Iid } } = useToken()
+    const { token } = useToken()
 
     const onSubmit = async (values) => {
         try {
@@ -31,8 +32,8 @@ export default function EditArticleForm({ article }) {
             const myHeader = new Headers();
             myHeader.append('token', token)
             myHeader.append('Content-Type', undefined)
-            const res1 = await fetch(api.addArticle, {
-                method: 'POST',
+            const res1 = await fetch(api.editArticle(article.ID), {
+                method: 'PATCH',
                 headers: { "token": token },
                 body: formData
             })
@@ -42,11 +43,11 @@ export default function EditArticleForm({ article }) {
             if (!res1.ok)
                 throw dataE.message
 
-            console.log('added Article', dataE)
+            console.log('edited Article', dataE)
             /* 
-            
+                ======================
             */
-            const res2 = await fetch(api.addArticleTopics(dataE.article.ID), {
+            const res2 = await fetch(api.editArticleTopics(article.ID), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'token': token },
                 body: JSON.stringify({ topics: values.topics })
@@ -56,8 +57,7 @@ export default function EditArticleForm({ article }) {
             if (!res2.ok)
                 throw dataT.message
 
-            window.location.assign(`/articles/${dataE.article.ID}`)
-
+            window.location.assign(`/articles/${article.ID}`)
         }
         catch (err) {
             console.log(err)
@@ -67,7 +67,7 @@ export default function EditArticleForm({ article }) {
     return (
 
         <Formik
-            initialValues={editArticleInitialValues(Iid)}
+            initialValues={editArticleInitialValues(article.ID, article.BODY)}
             validationSchema={EditArticleSchema}
             onSubmit={onSubmit}
         >
@@ -83,9 +83,18 @@ export default function EditArticleForm({ article }) {
                             <TextField name="title" label="Title" placeholder={article.TITLE} />
                             <TextField name="description" label="description" placeholder={article.DESCRIPTION} />
                         </div>
-                        <TopicListSelection />
+
+
+                        <Resource
+                            path={api.getArticleTopics(article.ID)}
+                            render={({ items: { topics } }) => (
+                                <TopicListSelection initialTopics={topics} />
+
+                            )}
+                            ErrorComp={<TopicListSelection />}
+                        />
                     </div>
-                    <TextAreaField mode='textarea' name="body" label="body" placeholder='hate react 😔' />
+                    <TextAreaField mode='textarea' name="body" label="body" />
 
                     {/* backend error */}
                     {backendError &&
