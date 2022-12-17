@@ -53,7 +53,10 @@ module.exports = {
       ;`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
-        return resolve({ message: "User created successfully" });
+        return resolve({ 
+          message: "User created successfully",
+          rows: rows,
+        });
       });
     });
   },

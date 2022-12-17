@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import './index.css';
 import App from './App';
 import StudentProfile from './Layouts/StudentProfile'
+import InstructorProfile from './Layouts/InstructorProfile'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import useToken from './useToken';
 import EditProfile from './Layouts/EditProfile';
@@ -14,7 +15,11 @@ import Articles from './Layouts/Articles';
 import AddArticle from './Layouts/Articles/AddArticle';
 import ShowArticle from './Layouts/Articles/ShowArticle';
 import Topics from './Layouts/Topics';
+<<<<<<< HEAD
 import QuizQuestions from './Layouts/Quiz/QuizQuestions';
+=======
+import EditeArticle from './Layouts/Articles/EditeArticle';
+>>>>>>> 5afeb22f6d8516c667223966abd75f6143df2532
 
 const ProtectedRoute = ({ children }) => {
   const { token } = useToken();
@@ -40,9 +45,11 @@ root.render(
       <Route path="/" element={<App />}>
 
         <Route path='/students/:id' element={<StudentProfile />} />
+        <Route path='/instructors/:id' element={<InstructorProfile />} />
 
         <Route path='/users' element={<Users />} >
-          <Route path='students' index element={<Students />} />
+          <Route path='' element={<Students />} />
+          <Route path='students' element={<Students />} />
           <Route path='instructors' element={<Instructors />} />
           <Route path='admins' element={<Students />} />
         </Route>
@@ -55,13 +62,19 @@ root.render(
           </AdminRoute>} />
 
 
-        <Route path='/articles' element={<Articles />} />
+        <Route path='/articles/:id' element={<ShowArticle />} />
         <Route path='/articles/add' element={
           <InstructorRoute>
             <AddArticle />
           </InstructorRoute>
         } />
-        <Route path='/articles/:id' element={<ShowArticle />} />
+        <Route path='/articles/edite/:id' element={
+          <InstructorRoute>
+            <EditeArticle />
+          </InstructorRoute>
+        } />
+        <Route path='/articles' element={<Articles />} />
+
 
 <Route path='/quizzes'element={
 <ProtectedRoute>
@@ -82,5 +95,5 @@ root.render(
 
       </Route>
     </Routes>
-  </BrowserRouter>
+  </BrowserRouter >
 ); 

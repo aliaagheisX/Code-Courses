@@ -1,0 +1,12 @@
+.danger form {
+    padding: 0;
+}
+
+.danger button{
+    background-color: #CC2936;
+}
+
+.danger button:hover {
+    background-color: #a0212c;
+
+}

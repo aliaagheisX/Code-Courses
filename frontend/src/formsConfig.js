@@ -37,6 +37,15 @@ export const addArticleInitialValues = (id) => ({
   'instructor_id': id
 });
 
+export const editArticleInitialValues = (id, body) => ({
+  image: null,
+  title: '',
+  description: '',
+  body: body,
+  topics: [],
+  'id': id
+});
+
 export const changePasswordInitialValues = {
   password: null,
   confirmPassword: null,
@@ -141,4 +150,22 @@ export const AddArticleSchema = Yup.object().shape({
     .max(5000000, "at most 5000000 characters"),
 
   topics: Yup.array().min(1, "at least 1").required("required")
+});
+
+export const EditArticleSchema = Yup.object().shape({
+  image: Yup.mixed(),
+
+  title: Yup.string()
+    .min(2, "at least 2 characters")
+    .max(50, "at most 50 characters"),
+
+  description: Yup.string()
+    .min(20, "at least 20 characters")
+    .max(150, "at most 150 characters"),
+
+  body: Yup.string()
+    .min(20, "at least 20 characters")
+    .max(5000000, "at most 5000000 characters"),
+
+  topics: Yup.array().min(1, "at least 1")
 });

@@ -1,3 +1,4 @@
+const articleRepo = require('../repositories/articleRepository');
 const studentRepo = require('../repositories/studentRepository');
 
 module.exports = {
@@ -22,10 +23,18 @@ module.exports = {
       let student = await studentRepo.getStudentById(id);
       if (!student) {
         return res
-          .status(404)
-          .send({ message: "Student not found" });
+        .status(404)
+        .send({ message: "Student not found" });
       }
-      return res.status(200).send({ student: student });
+      let readCount = await articleRepo.readCountUser(id);
+      let articlesRead = await articleRepo.getArticlesReadByUser(id);
+      let articlesLiked = await articleRepo.getArticlesLikedByUser(id);
+      return res.status(200).send({ 
+        student: student,
+        readCount: readCount,
+        articlesRead: articlesRead,
+        articlesLiked: articlesLiked,
+      });
     } catch (err) {
       return res
         .status(500)

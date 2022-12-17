@@ -12,7 +12,7 @@ import TopicListSelection from '../TopicListSelection';
 import TextAreaField from '../Fields/TextAreaField';
 import useToken from '../../useToken';
 import SubmitButton from '../Fields/SubmitButton'
-import { Formik, Form, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 
 
 export default function AddArticleForm() {
@@ -57,10 +57,7 @@ export default function AddArticleForm() {
             if (!res2.ok)
                 throw dataT.message
 
-            console.log({
-                Article: dataE,
-                Topics: dataT
-            })
+            window.location.assign(`/articles/${dataE.article.ID}`)
 
         }
         catch (err) {
@@ -91,6 +88,12 @@ export default function AddArticleForm() {
                     </div>
                     <TextAreaField mode='textarea' name="body" label="body" placeholder='hate react 😔' />
 
+                    {/* backend error */}
+                    {backendError &&
+                        <span className='errorForm'>
+                            {backendError}
+                        </span>
+                    }
 
                     <SubmitButton text='Add' isSubmitting={isSubmitting} />
 

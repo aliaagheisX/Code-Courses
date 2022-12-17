@@ -12,11 +12,12 @@ const { canCreateArticle, canAddTopic, canEditArticle } = require('../permission
 router.get('/', articleController.getAllArticles);
 router.get('/getbyarticleid/:a_id', articleController.getArticleById);
 router.get('/getbyname/:fname/:sname', articleController.getArticlesByAuthorName);
+router.get('/getinstructorarticles/:i_id', articleController.getArticlesOfInstructor);
 router.get('/getbytopicid/:t_id', articleController.getArticlesByTopicId);
 router.get('/getarticletopics/:a_id', articleController.getArticleTopics);
 
 router.delete('/', [authToken, admin], articleController.deleteAllArticles);
-router.delete('/:a_id', [authToken, admin], articleController.deleteArticleById);
+router.delete('/:a_id', [authToken, canEditArticle], articleController.deleteArticleById);
 // router.delete('/removetopicfromarticle/:a_id/:t_id', [authToken, admin], articleController.removeTopicFromArticle);
 /**
  * @swagger
@@ -90,6 +91,10 @@ router.delete('/:a_id', [authToken, admin], articleController.deleteArticleById)
 router.post('/create', [authToken, canCreateArticle], upload.single('image'), articleController.createArticle);
 
 router.post('/editarticletopics/:a_id', [authToken, canEditArticle], articleController.editArticleTopics);
+
+router.post('/readarticle/:a_id', [authToken], articleController.readArticle);
+
+router.post('/likearticle/:a_id', [authToken], articleController.likeArticle);
 
 router.patch('/edit/:a_id', [authToken, canEditArticle], upload.single('image'), articleController.editArticle);
 

@@ -27,14 +27,3 @@ padding-bottom: 1rem;
 }
 
 
-.cont .danger form {
-    padding: 3rem 1rem;
-}
-.cont .danger button{
-    background-color: #CC2936;
-}
-
-.cont .danger button:hover {
-    background-color: #a0212c;
-
-}

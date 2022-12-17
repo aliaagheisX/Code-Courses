@@ -19,6 +19,15 @@ module.exports = {
             })
         })
     },
+    createStudent: (id) => {
+        return new Promise((resolve, reject) => {
+            let queryString = `INSERT INTO student (ID) VALUES (${id})`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows);
+            })
+        })
+    },
     deleteAllStudents: () => {
         return new Promise((resolve, reject) => {
             let queryString = `DELETE FROM student`;

@@ -4,7 +4,10 @@ import api from '../../api'
 import Tag from './Tag'
 import { useFormikContext, ErrorMessage } from 'formik'
 
-export default function TopicListSelection() {
+export default function TopicListSelection({ initialTopics }) {
+    if (initialTopics === undefined)
+        initialTopics = []
+
     const formikProps = useFormikContext()
     const [tagList, setTagList] = useState([])
     const addTag = (tag) => {
@@ -18,6 +21,19 @@ export default function TopicListSelection() {
         setTagList(temp)
     }
 
+    const isActive = (tag_id) => {
+        return (tagList.indexOf(tag_id) !== -1)
+    }
+
+
+    useEffect(() => {
+        const temp = []
+        initialTopics.map(({ NAME, TID }) => {
+            temp.push(TID)
+        })
+        setTagList(temp)
+
+    }, [])
     useEffect(() => {
         formikProps.setFieldValue('topics', tagList)
     }, [tagList])
@@ -33,12 +49,13 @@ export default function TopicListSelection() {
                         {Object.keys(topics).map(key => {
                             const tid = topics[key].ID
                             const tname = topics[key].NAME
-                            return <Tag key={key} topicName={tname} topicId={tid} removeTag={removeTag} addTag={addTag} />
+                            const active = isActive(tid)
+                            return <Tag active={active} key={key} topicName={tname} topicId={tid} removeTag={removeTag} addTag={addTag} />
                         })}
                         <ErrorMessage component="div" name='topics' />
                     </div>
                 )}
-                ErrorComp={<span>Can't add</span>}
+                ErrorComp={<div className='tag error'>No tags</div>}
 
             />
         </div>

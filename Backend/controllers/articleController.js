@@ -37,7 +37,13 @@ module.exports = {
 					.status(404)
 					.send({ message: "Article not found" });
 			}
-			return res.status(200).send({ article: article });
+			let numOfArticleReads = await articleRepo.readCountArticle(id);
+			let numOfArticleLikes = await articleRepo.likeCountArticle(id);
+			return res.status(200).send({
+				article: article,
+				articleReadCount: numOfArticleReads,
+				likes: numOfArticleLikes,
+			});
 		} catch (err) {
 			return res
 				.status(500)
@@ -61,6 +67,22 @@ module.exports = {
 			return res
 				.status(500)
 				.send({ message: "Internal server error getting articles by author name " + err });
+		}
+	},
+	getArticlesOfInstructor: async (req, res) => {
+		try {
+			const instructor_id = req.params.i_id;
+			let articles = await articleRepo.getArticlesOfInstructor(instructor_id);
+			if (!articles.length) {
+				return res
+					.status(404)
+					.send({ message: "Looks like you have no articles" });
+			}
+			return res.status(200).send({ articles: articles });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting all articles" + err });
 		}
 	},
 	getArticlesByTopicId: async (req, res) => {
@@ -141,7 +163,7 @@ module.exports = {
 	editArticle: async (req, res) => {
 		const article = req.body;
 		let id = req.params.a_id;
-		if (article.title) {
+		if (article.title !== '') {
 			try {
 				let edit_title = await elementRepo.editElementTitle(article)
 			} catch (err) {
@@ -150,7 +172,7 @@ module.exports = {
 					.send({ message: "Internal server error posting article " + err });
 			}
 		}
-		if (article.description) {
+		if (article.description !== '') {
 			try {
 				let edit_description = await elementRepo.editElementDescription(article)
 			} catch (err) {
@@ -159,7 +181,7 @@ module.exports = {
 					.send({ message: "Internal server error posting article " + err });
 			}
 		}
-		if (article.body) {
+		if (article.body !== '') {
 			try {
 				let edit_body = await articleRepo.editArticleBody(article)
 			} catch (err) {
@@ -255,5 +277,54 @@ module.exports = {
 				.status(500)
 				.send({ message: "Internal server error getting article topics " + err });
 		}
-	}
+	},
+	readArticle: async (req, res) => {
+		try {
+			let a_id = parseInt(req.params.a_id);
+			let u_id = req.user.ID;
+			let response = await articleRepo.readArticle(a_id, u_id);
+			let numOfArticlesReadByStudent = await articleRepo.readCountUser(u_id);
+			let numOfArticleReads = await articleRepo.readCountArticle(a_id);
+			return res
+				.status(200)
+				.send({
+					message: "Student has read article",
+					userReadCount: numOfArticlesReadByStudent,
+					articleReadCount: numOfArticleReads,
+				});
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error reading article " + err });
+		}
+	},
+	likeArticle: async (req, res) => {
+		try {
+			let a_id = parseInt(req.params.a_id);
+			let u_id = req.user.ID;
+			let row = await articleRepo.getLikeOnArticle(a_id, u_id);
+			if (row) {
+				await articleRepo.dislikeArticle(a_id, u_id);
+				let likeCount = await articleRepo.likeCountArticle(a_id);
+				return res
+					.status(200)
+					.send({
+						message: "Student disliked article",
+						likeCount: likeCount,
+					});
+			}
+			let response = await articleRepo.likeArticle(a_id, u_id);
+			let likeCount = await articleRepo.likeCountArticle(a_id);
+			return res
+				.status(200)
+				.send({
+					message: "Student liked article",
+					likeCount: likeCount,
+				});
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error liking article " + err });
+		}
+	},
 };
