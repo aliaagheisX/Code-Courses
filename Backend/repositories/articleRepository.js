@@ -19,6 +19,15 @@ module.exports = {
 			})
 		})
 	},
+	getNumberOfArticlesByAuthor: (id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `SELECT COUNT(*) AS count FROM article WHERE INSTRUCTORID=${id}`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows[0].count);
+			})
+		})
+	},
 	getArticlesByAuthorUsername: (username) => {
 		return new Promise((resolve, reject) => {
 			let queryString = ``;
