@@ -15,11 +15,10 @@ import Articles from './Layouts/Articles';
 import AddArticle from './Layouts/Articles/AddArticle';
 import ShowArticle from './Layouts/Articles/ShowArticle';
 import Topics from './Layouts/Topics';
-<<<<<<< HEAD
+
 import QuizQuestions from './Layouts/Quiz/QuizQuestions';
-=======
 import EditeArticle from './Layouts/Articles/EditeArticle';
->>>>>>> 5afeb22f6d8516c667223966abd75f6143df2532
+// >>>>>>> 5afeb22f6d8516c667223966abd75f6143df2532
 
 const ProtectedRoute = ({ children }) => {
   const { token } = useToken();
