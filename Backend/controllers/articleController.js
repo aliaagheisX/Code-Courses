@@ -37,7 +37,13 @@ module.exports = {
 					.status(404)
 					.send({ message: "Article not found" });
 			}
-			return res.status(200).send({ article: article });
+			let numOfArticleReads = await article.readCountArticle(id);
+			let numOfArticleLikes = await article.likeCount(id);
+			return res.status(200).send({ 
+				article: article,
+				articleReadCount: numOfArticleReads,
+				likes: numOfArticleLikes,
+			});
 		} catch (err) {
 			return res
 				.status(500)
@@ -274,6 +280,35 @@ module.exports = {
 			return res
 				.status(500)
 				.send({ message: "Internal server error reading article " + err });
+		}
+	},
+	likeArticle: async (req, res) => {
+		try {
+			let a_id = parseInt(req.params.a_id);
+			let u_id = req.user.ID;
+			let row = await articleRepo.getLikeOnArticle(a_id, u_id);
+			if (row) {
+				await articleRepo.dislikeArticle(a_id, u_id);
+				let likeCount = await articleRepo.likeCountArticle(a_id);
+				return res	
+					.status(200)
+					.send({
+						message: "Student disliked article",
+						likeCount: likeCount,
+					});
+			} 
+			let response = await articleRepo.likeArticle(a_id, u_id);
+			let likeCount = await articleRepo.likeCountArticle(a_id);
+			return res
+				.status(200)
+				.send({
+					message: "Student liked article",
+					likeCount: likeCount,
+				});
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error liking article " + err });
 		}
 	},
 };
