@@ -27,9 +27,13 @@ module.exports = {
         .send({ message: "Student not found" });
       }
       let readCount = await articleRepo.readCountUser(id);
+      let articlesRead = await articleRepo.getArticlesReadByUser(id);
+      let articlesLiked = await articleRepo.getArticlesLikedByUser(id);
       return res.status(200).send({ 
         student: student,
         readCount: readCount,
+        articlesRead: articlesRead,
+        articlesLiked: articlesLiked,
       });
     } catch (err) {
       return res

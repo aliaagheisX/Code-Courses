@@ -93,6 +93,8 @@ router.post('/editarticletopics/:a_id', [authToken, canEditArticle], articleCont
 
 router.post('/readarticle/:a_id', [authToken], articleController.readArticle);
 
+router.post('/likearticle/:a_id', [authToken], articleController.likeArticle);
+
 router.patch('/edit/:a_id', [authToken, canEditArticle], upload.single('image'), articleController.editArticle);
 
 module.exports = router;

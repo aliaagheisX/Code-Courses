@@ -161,5 +161,61 @@ module.exports = {
 				return resolve(rows[0].count);
 			})
 		})
-	}	
+	},
+	likeArticle: (a_id, u_id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `INSERT INTO likeonarticle (UID, AID) VALUES (${u_id}, ${a_id})`;
+			DBconnection.query(queryString, (err, rows) => {
+				DBconnection.query(queryString, (err, rows) => {
+					if (err) return reject(err);
+					return resolve(rows);
+				})
+			})
+		})
+	},	
+	likeCountArticle: (a_id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `SELECT COUNT(*) AS count FROM likeonarticle WHERE AID=${a_id}`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows[0].count);
+			})
+		})
+	},
+	getLikeOnArticle: (a_id, u_id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `SELECT * FROM likeonarticle WHERE AID=${a_id} AND UID=${u_id}`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows[0]);
+			})
+		})
+	},
+	dislikeArticle: (a_id, u_id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `DELETE FROM likeonarticle WHERE AID=${a_id} AND UID=${u_id}`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows);
+			})
+		})
+	},
+	getArticlesLikedByUser: (u_id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `SELECT a.AUTHORFNAME, a.AUTHORSNAME, a.INSTRUCTORID, e.* FROM likeonarticle la, article a, element e WHERE la.AID=a.ID AND a.ID=e.ID AND la.UID=${u_id}`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows);
+			})
+		})
+	},
+	getArticlesReadByUser: (u_id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `SELECT a.AUTHORFNAME, a.AUTHORSNAME, a.INSTRUCTORID, e.* FROM readarticle ra, article a, element e WHERE ra.AID=a.ID AND a.ID=e.ID AND ra.UID=${u_id}`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows);
+			})
+		})
+	}
 }
