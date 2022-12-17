@@ -14,6 +14,7 @@ module.exports = {
   getCommentsOfArticle: (article_id) => {
     return new Promise((resolve, reject) => {
       let queryString = `SELECT c.*, 
+      u._IMAGE, 
       u.USERNAME, 
       u.FNAME, 
       u.SNAME, 

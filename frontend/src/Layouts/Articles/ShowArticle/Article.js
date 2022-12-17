@@ -68,9 +68,9 @@ export default function Article({ article }) {
                     <h4>By {AUTHORFNAME === null ? 'Unknown' : `${AUTHORFNAME} ${AUTHORSNAME}`}</h4>
                     <div>at {create_date}</div>
                 </div>
+                <Comments />
             </div>
 
-            <Comments />
 
         </section>
     )
