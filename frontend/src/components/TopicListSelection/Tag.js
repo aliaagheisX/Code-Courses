@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 
-export default function Tag({ topicName, topicId, addTag, removeTag }) {
-    const [active, setActive] = useState(0)
+export default function Tag({ active: activeIn, topicName, topicId, addTag, removeTag }) {
+    if (activeIn === undefined)
+        activeIn = 0
+    const [active, setActive] = useState(activeIn)
 
     const handelClick = () => {
         if (active) {

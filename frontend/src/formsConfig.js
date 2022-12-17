@@ -37,13 +37,13 @@ export const addArticleInitialValues = (id) => ({
   'instructor_id': id
 });
 
-export const editArticleInitialValues = (id) => ({
+export const editArticleInitialValues = (id, body) => ({
   image: null,
-  title: null,
-  description: null,
-  body: null,
+  title: '',
+  description: '',
+  body: body,
   topics: [],
-  'instructor_id': id
+  'id': id
 });
 
 export const changePasswordInitialValues = {

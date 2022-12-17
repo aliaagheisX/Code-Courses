@@ -153,11 +153,22 @@ a:hover {
     width: 0.5em;
 }
    
-.tag-list::-webkit-scrollbar-thumb {
+textarea::-webkit-scrollbar-thumb {
     border-radius: 50px;
     background-color: darkgrey;
     outline: 1px solid slategrey;
 }
+
+textarea::-webkit-scrollbar {
+    width: 0.5em;
+}
+   
+textarea::-webkit-scrollbar-thumb {
+    border-radius: 50px;
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+}
+
 
 .tag {
     padding: 2px 9px;

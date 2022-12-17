@@ -4,11 +4,12 @@ import api from '../../api'
 import Tag from './Tag'
 import { useFormikContext, ErrorMessage } from 'formik'
 
-export default function TopicListSelection({ InitialTags }) {
+export default function TopicListSelection({ initialTopics }) {
+    if (initialTopics === undefined)
+        initialTopics = []
+
     const formikProps = useFormikContext()
-    if (InitialTags === undefined) InitialTags = []
-    const [tagList, setTagList] = useState(InitialTags)
-    console.log(tagList)
+    const [tagList, setTagList] = useState([])
     const addTag = (tag) => {
         const temp = tagList
         temp.push(tag)
@@ -19,9 +20,23 @@ export default function TopicListSelection({ InitialTags }) {
         const temp = tagList.splice(tagList.indexOf(tag), 1)
         setTagList(temp)
     }
+
+    const isActive = (tag_id) => {
+        return (tagList.indexOf(tag_id) !== -1)
+    }
+
+
     useEffect(() => {
-        setTagList(InitialTags)
+        const temp = []
+        initialTopics.map(({ NAME, TID }) => {
+            temp.push(TID)
+        })
+        setTagList(temp)
+
     }, [])
+    useEffect(() => {
+        formikProps.setFieldValue('topics', tagList)
+    }, [tagList])
 
     return (
         <div>
@@ -34,12 +49,13 @@ export default function TopicListSelection({ InitialTags }) {
                         {Object.keys(topics).map(key => {
                             const tid = topics[key].ID
                             const tname = topics[key].NAME
-                            return <Tag key={key} topicName={tname} topicId={tid} removeTag={removeTag} addTag={addTag} />
+                            const active = isActive(tid)
+                            return <Tag active={active} key={key} topicName={tname} topicId={tid} removeTag={removeTag} addTag={addTag} />
                         })}
                         <ErrorMessage component="div" name='topics' />
                     </div>
                 )}
-                ErrorComp={<span>Can't add</span>}
+                ErrorComp={<div className='tag error'>No tags</div>}
 
             />
         </div>

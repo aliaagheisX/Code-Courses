@@ -20,8 +20,6 @@ export default function ShowArticle() {
                     ID, TITLE, AUTHORFNAME, AUTHORSNAME,
                     BODY, CREATIONDATE, DESCRIPTION, IMAGE, INSTRUCTORID, likes
                 } = article
-                console.log(likes)
-
                 return (
                     <section className={styles.sec}>
                         <Likes likes={likes} />
