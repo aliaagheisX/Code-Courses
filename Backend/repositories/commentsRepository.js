@@ -13,7 +13,13 @@ module.exports = {
 
   getCommentsOfArticle: (article_id) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM _comment c WHERE c.AID=${article_id};`;
+      let queryString = `SELECT c.*, 
+      u.USERNAME, 
+      u.FNAME, 
+      u.SNAME, 
+      (SELECT COUNT(*) FROM likeoncomment L WHERE c.ID = L.CID) as likes 
+      FROM _comment c, _user u
+      WHERE c.AID=${article_id} AND c.UID = u.ID;`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);

@@ -10,6 +10,7 @@ import Likes from './Likes';
 import useToken from '../../../useToken'
 import { json } from 'react-router-dom';
 import Options from './Options';
+import Comments from './Comments';
 
 export default function Article({ article }) {
     console.log(article)
@@ -68,6 +69,8 @@ export default function Article({ article }) {
                     <div>at {create_date}</div>
                 </div>
             </div>
+
+            <Comments />
 
         </section>
     )
