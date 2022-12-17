@@ -37,9 +37,9 @@
     gap: 0 7px;
     cursor: pointer;
 }
-.lkCont:hover span, .liActive .lkCont span{
-    font-variation-settings: 'FILL' 1;
-    color: rgb(162, 45, 45);
+.lkCont:hover span, .liActive .lkCont span, .liActive span{
+    font-variation-settings: 'FILL' 1 !important;
+    color: rgb(162, 45, 45) !important;
 }
 .stLike  .stl {
     color: #5e5e86;

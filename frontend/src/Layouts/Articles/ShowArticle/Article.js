@@ -11,13 +11,12 @@ import useToken from '../../../useToken'
 import { json } from 'react-router-dom';
 
 export default function Article({ article }) {
-    const { counts, setCounts } = useState({})
-
+    console.log(article)
     const { token } = useToken()
     const {
         ID, TITLE, AUTHORFNAME, AUTHORSNAME,
-        BODY, CREATIONDATE, DESCRIPTION, IMAGE, INSTRUCTORID, likes
-    } = article
+        BODY, CREATIONDATE, DESCRIPTION, IMAGE, INSTRUCTORID
+    } = article.article
     const create_date = new Date(CREATIONDATE).toDateString().split(' ').slice(1).join(' ');
 
     useEffect(() => {
@@ -33,7 +32,6 @@ export default function Article({ article }) {
                 if (!res.ok) throw data.message
 
                 console.log("success", data)
-                setCounts(data)
             }
             catch (err) {
                 console.log("error", err)
@@ -46,7 +44,7 @@ export default function Article({ article }) {
 
     return (
         <section className={styles.sec}>
-            <Likes likes={likes} />
+            <Likes likes={article.likes} views={article.articleReadCount} a_id={ID} />
             <h3>{TITLE}</h3>
             <p className={styles.desc}>{DESCRIPTION}</p>
             <div className='tag-list'>

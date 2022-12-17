@@ -41,6 +41,13 @@ export default function useToken() {
         }
         console.log(isInstructor)
     }
+
+    const setInstructor = (isInstructor) => {
+        localStorage.setItem('isInstructor', isInstructor);
+        setIsInstructor(isInstructor)
+    }
+
+
     const saveToken = userdata => {
         try {
             const { token, user } = userdata
@@ -66,6 +73,7 @@ export default function useToken() {
         token,
         userdata,
         isAdmin,
-        isInstructor
+        isInstructor,
+        setInstructor
     }
 }

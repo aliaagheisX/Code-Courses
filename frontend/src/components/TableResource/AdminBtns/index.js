@@ -9,7 +9,22 @@ export default function AdminBtns({ id }) {
     const [isLoadingS, setIsLoadingS] = useState(0)
     const [isLoadingD, setIsLoadingD] = useState(0)
 
-    const AddAdmin = () => {
+    const AddAdmin = async () => {
+        setIsLoadingS(1)
+        try {
+            const res = await fetch(api.addAdmin(id), {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'token': token }
+            })
+            const data = await res.json()
+            if (!res.ok) throw data.message
+
+            console.log("succuss", data)
+            setIsLoadingS(0)
+        } catch (err) {
+            console.log("error", err)
+            setIsLoadingS(0)
+        }
     }
 
     const DeleteUser = async () => {

@@ -12,21 +12,21 @@ export default function Resource({ path, render, ErrorComp }) {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        fetch(path)
-            .then((res) => {
-                if (res.ok) return res.json();
-                throw Error;
-            })
-            .then(
-                (result) => {
-                    setLoadeding(false);
-                    setItems(result);
-                },
-                (error) => {
-                    setLoadeding(false);
-                    setError(error);
-                }
-            )
+        const fetchData = async () => {
+            try {
+                setLoadeding(1)
+                const res = await fetch(path)
+                const data = await res.json()
+                if (!res.ok) throw data.message
+                setLoadeding(0)
+                setItems(data)
+            } catch (err) {
+                setLoadeding(0)
+                setError(err)
+            }
+        }
+        fetchData()
+
 
     }, [])
 

@@ -33,7 +33,7 @@ module.exports = {
         return res.status(404).send({ message: "Instructor not found" });
       }
       let writtenCount = await articleRepo.getNumberOfArticlesByAuthor(id);
-      return res.status(200).send({ 
+      return res.status(200).send({
         instructor: instructor,
         writtenCount: writtenCount,
       });

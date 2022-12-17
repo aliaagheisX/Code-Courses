@@ -48,7 +48,7 @@ module.exports = {
   },
   deleteAllInstructors: () => {
     return new Promise((resolve, reject) => {
-      let queryString = `DELETE FROM ARTICLE;`;
+      let queryString = `DELETE FROM INSTRUCTOR;`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) {
           return reject(err);

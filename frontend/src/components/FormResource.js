@@ -8,8 +8,8 @@ import { Formik, Form } from 'formik';
 
 import SubmitButton from './Fields/SubmitButton';
 
-export default function FormResource({ token, method, ContentType, url, initialValues, validationSchema, children, submitBtnText }) {
-
+export default function FormResource({ token, method, ContentType, url, initialValues, validationSchema, children, submitBtnText, isSaveToken }) {
+    if (isSaveToken === undefined) isSaveToken = true
     if (!method) method = 'POST'
 
     const [backendError, setBackendError] = useState(null); //handeling backend validations
@@ -40,8 +40,6 @@ export default function FormResource({ token, method, ContentType, url, initialV
             if (token)
                 myHeader.append('token', token)
 
-            console.log(values)
-
 
             const res = await fetch(url, {
                 method: method,
@@ -54,7 +52,7 @@ export default function FormResource({ token, method, ContentType, url, initialV
             if (!res.ok) {
                 throw new Error(data.message)
             }
-            else {
+            else if (isSaveToken) {
                 setToken(data)
                 window.location.reload()
 
