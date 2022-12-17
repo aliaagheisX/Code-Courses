@@ -43,7 +43,7 @@ module.exports = {
 			return res.status(200).send({
 =======
 			let numOfArticleLikes = await articleRepo.likeCount(id);
-			return res.status(200).send({ 
+			return res.status(200).send({
 >>>>>>> 1d05fcc44d5424c8652b52c26c4fc8de424fd368
 				article: article,
 				articleReadCount: numOfArticleReads,
@@ -73,6 +73,9 @@ module.exports = {
 				.status(500)
 				.send({ message: "Internal server error getting articles by author name " + err });
 		}
+	},
+	getArticlesByInstructor: async (req, res) => {
+
 	},
 	getArticlesByTopicId: async (req, res) => {
 		try {

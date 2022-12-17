@@ -3,7 +3,8 @@ import TableResource from '../../components/TableResource/TableResource'
 import Resource from '../../Resource'
 import api from '../../api'
 import AdminProtectedComponent from '../../components/AdminProtectedComponent'
-import DeleteAll from './DeleteAll'
+import DeleteAll from '../../DeleteAll'
+
 export default function Students() {
     const headers = ['Name', 'join at', 'about', 'score', 'type']
     return (
@@ -14,7 +15,7 @@ export default function Students() {
             render={({ items: { students } }) => (
                 <>
                     <AdminProtectedComponent
-                        render={<DeleteAll />}
+                        render={<DeleteAll txt='Delete All' />}
                         replace={<></>}
                     />
                     <TableResource

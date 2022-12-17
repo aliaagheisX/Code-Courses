@@ -9,6 +9,7 @@ import remarkGfm from 'https://esm.sh/remark-gfm@3'
 import Likes from './Likes';
 import useToken from '../../../useToken'
 import { json } from 'react-router-dom';
+import Options from './Options';
 
 export default function Article({ article }) {
     console.log(article)
@@ -44,6 +45,7 @@ export default function Article({ article }) {
 
     return (
         <section className={styles.sec}>
+            <Options id={ID} instructor_id={INSTRUCTORID} />
             <Likes likes={article.likes} views={article.articleReadCount} a_id={ID} />
             <h3>{TITLE}</h3>
             <p className={styles.desc}>{DESCRIPTION}</p>

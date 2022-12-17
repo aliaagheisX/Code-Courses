@@ -1,6 +1,5 @@
 .sec {
     text-align: center;
-    width: 85%;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -11,11 +10,18 @@
     margin: auto;
     text-align: center;
 }
-.stLike {
-    position: sticky;
+.opt {
+    display: flex;
     margin: 0;
-    top:180px;
-    right: 0;
+    justify-content: flex-end;
+    gap: 3rem;
+}
+
+.stLike {
+    position: fixed;
+    margin: 0;
+    top:300px;
+    right: 8%;
     display: flex;
     justify-content: flex-end;
     border-left: 1px solid #bebebe;

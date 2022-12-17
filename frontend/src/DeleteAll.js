@@ -1,8 +1,8 @@
 import React from 'react'
-import useToken from '../../useToken'
+import useToken from './useToken'
 import { useNavigate } from 'react-router-dom'
 
-export default function DeleteAll({ path, afterDelete }) {
+export default function DeleteAll({ path, afterDelete, txt }) {
     const navigate = useNavigate()
     const { token } = useToken()
     const handelDelete = async () => {
@@ -24,6 +24,6 @@ export default function DeleteAll({ path, afterDelete }) {
         }
     }
     return (
-        <button className='btnDanger' onClick={handelDelete}>Delete all</button>
+        <button className='btnDanger' onClick={handelDelete}>{txt}</button>
     )
 }
