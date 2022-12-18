@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Resource from '../../../Resource'
 import { useParams } from 'react-router-dom'
 import api from '../../../api';
