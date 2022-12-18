@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import styles from './index.module.css'
 import Thumb from '../../../components/Thumb'
 import Resource from '../../../Resource'
@@ -8,7 +8,6 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'https://esm.sh/remark-gfm@3'
 import Likes from './Likes';
 import useToken from '../../../useToken'
-import { json } from 'react-router-dom';
 import Options from './Options';
 import Comments from './Comments';
 
@@ -68,7 +67,8 @@ export default function Article({ article }) {
                     <h4>By {AUTHORFNAME === null ? 'Unknown' : `${AUTHORFNAME} ${AUTHORSNAME}`}</h4>
                     <div>at {create_date}</div>
                 </div>
-                <Comments />
+
+                <Comments id={ID} />
             </div>
 
 
