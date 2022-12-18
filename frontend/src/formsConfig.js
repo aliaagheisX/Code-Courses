@@ -178,8 +178,13 @@ export const EditArticleSchema = Yup.object().shape({
 
 
 export const AddCommentSchema = Yup.object().shape({
-  comment: Yup.string().min(6).max(255),
+  comment: Yup.string().min(6).max(255).required(),
   r_id: Yup.number().nullable()
+});
+
+
+export const EditeCommentSchema = Yup.object().shape({
+  new_comment: Yup.string().min(6).max(255).required()
 });
 
 

@@ -30,5 +30,8 @@ const api = {
     userLikeArticle: (id) => `http://localhost:4000/articles/likearticle/${id}`,
     getArticlComments: (id) => `http://localhost:4000/comments/articles/${id}`,
     addArticlComments: (id) => `http://localhost:4000/comments/create/${id}`,//article_id
+    editeComment: (id) => `http://localhost:4000/comments/edit/${id}`,//comment_id
+    deleteComment: (id) => `http://localhost:4000/comments/${id}`,//comment_id
+
 }
 export default api

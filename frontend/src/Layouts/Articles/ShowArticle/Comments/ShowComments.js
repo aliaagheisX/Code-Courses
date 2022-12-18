@@ -26,10 +26,24 @@ export default function ShowComments({ article_id, Initialcomments }) {
 
         const temp = { ...comments };
         temp[new_comment.ID] = new_comment
-        console.log(new_comment.RID)
-        if (new_comment.RID !== null)
-            temp[new_comment.RID].replies.unshift(new_comment.ID)
-        else window.scrollTo(0, document.body.scrollHeight);
+        const rid = new_comment.RID
+        if (rid !== null) {
+            temp[rid].replies.unshift(new_comment.ID)
+        }
+        else { window.scrollTo(0, document.body.scrollHeight); }
+        setComments(temp)
+        return comments
+    }
+
+    const removeComment = (id) => {
+        debugger;
+        const temp = { ...comments };
+        const rid = temp[id].RID
+        if (rid !== null) {
+            const ind = temp[rid].replies.indexOf(id)
+            temp[rid].replies.splice(ind, 1)
+        }
+        delete temp[id]
         setComments(temp)
         return temp
     }
@@ -42,7 +56,7 @@ export default function ShowComments({ article_id, Initialcomments }) {
                     Object.keys(comments).map((comment_id) => {
                         if (comments[comment_id].RID !== null) return;
 
-                        return <Comment comments={comments} id={comment_id} addComment={addComment} key={comment_id} />
+                        return <Comment comments={comments} id={comment_id} addComment={addComment} removeComment={removeComment} key={comment_id} />
 
                     })
                 }

@@ -1,9 +1,21 @@
 import React, { useState } from 'react'
 import AddComment from './AddComment'
+import EditeComment from './EditeComment'
 import styles from './index.module.css'
 import Likes from './Likes'
 import Summary from './Summary'
-export default function Comment({ comments, id, addComment }) {
+import UserOptions from './UserOptions'
+export default function Comment({ comments, id, addComment, removeComment }) {
+
+    const [isEditing, setIsEditing] = useState(0)
+    const [body, setBody] = useState(comments[id].BODY)
+    const toggleEditing = () => {
+        setIsEditing(!isEditing)
+    }
+    const handelEditingBody = (value) => {
+        setBody(value)
+        toggleEditing()
+    }
     const [replies, setReplies] = useState(comments[id].replies)
     const addReply = (comment) => {
         const temp = addComment(comment)
@@ -13,12 +25,25 @@ export default function Comment({ comments, id, addComment }) {
     const toggleReply = () => {
         setReply(!reply);
     }
+
+    const removeReply = (id) => {
+        debugger
+        const temp = removeComment(id)
+        setReplies(temp[id].replies)
+    }
     console.log()
     return (
         <div className={styles.comment}>
             <div className={styles.mainComment}>
-                <Summary comment={comments[id]} />
-                <div className={styles.body}>{comments[id].BODY}</div>
+                <div className={styles.optHeader}>
+                    <Summary comment={comments[id]} />
+                    <UserOptions id={id} toggleEditing={toggleEditing} removeComment={removeComment} />
+                </div>
+                {
+                    isEditing ?
+                        <EditeComment id={id} body={body} handelEditingBody={handelEditingBody} /> :
+                        <div className={styles.body}>{body}</div>
+                }
                 <Likes toggleReply={toggleReply} likes={comments[id].likes} />
             </div>
             {!reply ? <></> : <AddComment addComment={addReply} reply_id={id} />}
@@ -27,7 +52,7 @@ export default function Comment({ comments, id, addComment }) {
                 replies.length === 0 ? <></> :
                     <div className={styles.comment_list}>
                         {
-                            replies.map((id) => <Comment addComment={addComment} comments={comments} id={id} key={id} />)
+                            replies.map((id) => <Comment removeComment={removeReply} addComment={addComment} comments={comments} id={id} key={id} />)
                         }
                     </div>
             }

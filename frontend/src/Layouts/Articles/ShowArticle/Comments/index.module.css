@@ -3,6 +3,16 @@
     flex-direction: column;
     text-align: left;
 }
+.optHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+.UserOptions {
+    gap: 20px;
+}
 
 .comment_sec form {
     padding: 30px 0;

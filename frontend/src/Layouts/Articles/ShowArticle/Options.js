@@ -17,7 +17,9 @@ export default function Options({ id, instructor_id }) {
             <DeleteAll
                 txt='Delete'
                 path={api.deleteArticle(id)}
-                afterDelete={() => navigate('/articles')}
+                isNavigate={1}
+                where={'/articles'}
+                afterDelete={() => { }}
             />
         </div >)
     }

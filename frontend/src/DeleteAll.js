@@ -2,7 +2,10 @@ import React from 'react'
 import useToken from './useToken'
 import { useNavigate } from 'react-router-dom'
 
-export default function DeleteAll({ path, afterDelete, txt }) {
+export default function DeleteAll({ path, afterDelete, txt, isNavigate, where }) {
+    if (isNavigate === undefined) isNavigate = 1
+    if (where === undefined) where = '/user'
+
     const navigate = useNavigate()
     const { token } = useToken()
     const handelDelete = async () => {
@@ -17,7 +20,8 @@ export default function DeleteAll({ path, afterDelete, txt }) {
             if (!res.ok) throw data.message;
 
             afterDelete()
-            navigate('/users');
+            if (isNavigate)
+                navigate(where);
 
         } catch (err) {
             console.log("err", err)
