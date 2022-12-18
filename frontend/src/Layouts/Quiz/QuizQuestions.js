@@ -4,14 +4,18 @@ import ViewQuiz from './ViewQuiz';
 const  Questions =  () => {
 const instructorName='Dr.hamada';
 const [Topics]=useState([{Name:'favfood'},{Name:'favcolor'}]);
+// const [choices] =useState();
     
 const [Ques] = useState([
-    { body:'What is your favorite color?' ,choice1:'red',choice2:'green',choice3:'white',choice4:'black',grade:1, id:1 },
-    { body:'What is your favorite food?' ,choice1:'mango',choice2:'salad',choice3:'fruit',choice4:'meat',grade:0.5,id:2 },
-    { body:'What is your favorite drink?' ,choice1:'lemon',choice2:'apple',choice3:'soda',choice4:'fanta',grade:3,id:3 } 
+    { body:'What is your favorite color?' ,choices:[{body:"orange",istrue:1,id:0},{body:"RED",istrue:1},{body:"GREEN",istrue:1,id:1},{body:"orange",istrue:1,id:2},{body:"orange",istrue:1,id:3} ],grade:1, id:1 },
+    { body:'What is your favorite food?' ,choices:[{body:'mango',istrue:1,id:0},{body:'salad',istrue:2,id:1},{body:'fruit',istrue:0,id:2},{body:'meat',istrue:0,id:3} ],grade:0.5,id:2,id:4 },
+    { body:'What is your favorite drink?' ,choices:[{body:'lemon',istrue:1,id:0},{body:'apple',istrue:1,id:1},{body:'soda',istrue:1,id:2},{body:'fanta',istrue:1,id:3} ],grade:3,id:4 } 
 ]);
 
-//console.log(Ques);
+// console.log(Ques[0].choices);
+// console.log(Ques);
+// console.log(choices);
+
     return (
         <div className="questions">
 <ViewQuiz Ques={Ques} Name={instructorName} Topics={Topics}/>
