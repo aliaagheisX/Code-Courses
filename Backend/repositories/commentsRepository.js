@@ -29,7 +29,14 @@ module.exports = {
   },
   getCommentByID: (id) => {
     return new Promise((resolve, reject) => {
-      const query = `SELECT * FROM _COMMENT WHERE ID = ${id}`;
+      const query = `SELECT c.*, 
+      u._IMAGE, 
+      u.USERNAME, 
+      u.FNAME, 
+      u.SNAME, 
+      (SELECT COUNT(*) FROM likeoncomment L WHERE c.ID = L.CID) as likes 
+      FROM _comment c, _user u
+      WHERE c.ID=${id} AND c.UID = u.ID;`;
       DBconnection.query(query, (error, rows) => {
         if (error) return reject(error);
         return resolve(rows);
@@ -37,8 +44,10 @@ module.exports = {
     });
   },
   addComment: (a_id, u_id, r_id, comment) => {
+    const comment_body = comment.replace(/'/g, "`");
+
     return new Promise((resolve, reject) => {
-      const query = `INSERT INTO _COMMENT(AID,UID,RID,BODY) VALUES(${a_id},${u_id},${r_id},'${comment}')`;
+      const query = `INSERT INTO _COMMENT(AID,UID,RID,BODY) VALUES(${a_id},${u_id},${r_id},'${comment_body}')`;
       DBconnection.query(query, (error, rows) => {
         if (error) return reject(error);
         return resolve(rows);

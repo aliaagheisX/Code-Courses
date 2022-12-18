@@ -3,26 +3,31 @@ import AddComment from './AddComment'
 import styles from './index.module.css'
 import Likes from './Likes'
 import Summary from './Summary'
-
-export default function Comment({ MapComments, id }) {
+export default function Comment({ comments, id, addComment }) {
+    const [replies, setReplies] = useState(comments[id].replies)
+    const addReply = (comment) => {
+        const temp = addComment(comment)
+        setReplies(temp[id].replies)
+    }
     const [reply, setReply] = useState(0)
     const toggleReply = () => {
         setReply(!reply);
     }
+    console.log()
     return (
         <div className={styles.comment}>
             <div className={styles.mainComment}>
-                <Summary comment={MapComments[id]} />
-                <div className={styles.body}>{MapComments[id].BODY}</div>
-                <Likes toggleReply={toggleReply} likes={MapComments[id].likes} />
+                <Summary comment={comments[id]} />
+                <div className={styles.body}>{comments[id].BODY}</div>
+                <Likes toggleReply={toggleReply} likes={comments[id].likes} />
             </div>
-            {!reply ? <></> : <AddComment />}
+            {!reply ? <></> : <AddComment addComment={addReply} reply_id={id} />}
 
             {
-                MapComments[id].replies.length === 0 ? <></> :
+                replies.length === 0 ? <></> :
                     <div className={styles.comment_list}>
                         {
-                            MapComments[id].replies.map((id) => <Comment MapComments={MapComments} id={id} key={id} />)
+                            replies.map((id) => <Comment addComment={addComment} comments={comments} id={id} key={id} />)
                         }
                     </div>
             }

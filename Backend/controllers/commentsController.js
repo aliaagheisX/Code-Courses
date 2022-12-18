@@ -68,7 +68,8 @@ module.exports = {
         r_id,
         (comment = comment_body)
       );
-      return res.status(201).send({ message: "Comment created" });
+      const new_comment = await commentsRepo.getCommentByID(createComment.insertId)
+      return res.status(201).send({ message: "Comment created", comment: new_comment[0] });
     } catch (error) {
       return res
         .status(500)

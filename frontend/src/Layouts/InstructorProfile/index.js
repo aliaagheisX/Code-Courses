@@ -22,7 +22,6 @@ export default function InstructorProfile() {
             path={api.instructor(id)}
             render={({ items }) => {
                 const { instructor, writtenCount } = items
-                console.log(items)
                 return (
                     <section className={styles.body} >
                         <Options />
