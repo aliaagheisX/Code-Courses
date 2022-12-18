@@ -36,9 +36,9 @@ module.exports = {
       });
     });
   },
-  addComment: (a_id, u_id, comment) => {
+  addComment: (a_id, u_id, r_id, comment) => {
     return new Promise((resolve, reject) => {
-      const query = `INSERT INTO _COMMENT(AID,UID,BODY) VALUES(${a_id},${u_id},'${comment}')`;
+      const query = `INSERT INTO _COMMENT(AID,UID,RID,BODY) VALUES(${a_id},${u_id},${r_id},'${comment}')`;
       DBconnection.query(query, (error, rows) => {
         if (error) return reject(error);
         return resolve(rows);

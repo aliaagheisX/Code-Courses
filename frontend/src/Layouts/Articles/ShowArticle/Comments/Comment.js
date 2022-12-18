@@ -14,7 +14,7 @@ export default function Comment({ MapComments, id }) {
             <div className={styles.mainComment}>
                 <Summary comment={MapComments[id]} />
                 <div className={styles.body}>{MapComments[id].BODY}</div>
-                <Likes toggleReply={toggleReply} />
+                <Likes toggleReply={toggleReply} likes={MapComments[id].likes} />
             </div>
             {!reply ? <></> : <AddComment />}
 

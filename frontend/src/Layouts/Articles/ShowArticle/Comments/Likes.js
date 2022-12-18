@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from './index.module.css'
-export default function Likes({ toggleReply }) {
-    const [count, setCount] = useState(5)
+export default function Likes({ toggleReply, likes }) {
+    const [count, setCount] = useState(likes)
     const [isActive, setIsActive] = useState(0)
     const handelClick = () => {
         if (isActive) {

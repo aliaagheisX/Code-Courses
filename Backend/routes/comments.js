@@ -29,7 +29,7 @@ router.delete(
   commentsController.deleteCommentsByArticle
 );
 
-router.post("/create/:u_id/:a_id", commentsController.addCommentToArticle);
+router.post("/create/:a_id", [authToken], commentsController.addCommentToArticle);
 
 router.put("/edit/:c_id", commentsController.editComment);
 

@@ -51,6 +51,11 @@ export const changePasswordInitialValues = {
   confirmPassword: null,
 };
 
+export const addCommentInitialValues = {
+  comment: '',
+  r_id: null
+}
+
 export const emptyInitialValues = {};
 
 /* validation schemas */
@@ -136,6 +141,7 @@ export const ChangePasswordSchema = Yup.object().shape({
 export const EmptySchema = Yup.object().shape({
 })
 
+
 export const AddArticleSchema = Yup.object().shape({
   image: Yup.mixed(),
   title: Yup.string().required('must enter')
@@ -169,3 +175,11 @@ export const EditArticleSchema = Yup.object().shape({
 
   topics: Yup.array().min(1, "at least 1")
 });
+
+
+export const AddCommentSchema = Yup.object().shape({
+  comment: Yup.string().min(6).max(255),
+  r_id: Yup.number().nullable()
+});
+
+

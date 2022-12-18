@@ -4,6 +4,7 @@ const Joi = require("joi");
 function validateComment(comment) {
   const schema = Joi.object({
     comment: Joi.string().min(6).max(255).required(),
+    r_id: Joi.number().allow(null)
   });
   return schema.validate(comment);
 }
@@ -56,12 +57,15 @@ module.exports = {
         return res
           .status(403)
           .send({ message: "Validation error" + error.details[0].message });
-      let a_id = parseInt(req.params.a_id);
-      let u_id = parseInt(req.params.u_id);
-      let comment_body = req.body.comment;
+
+      let a_id = parseInt(req.params.a_id); //article id
+      let u_id = parseInt(req.user.ID);   //user id
+      let comment_body = req.body.comment;  //comment body
+      let r_id = req.body.r_id;             //commment that reply on
       let createComment = await commentsRepo.addComment(
         (a_id = a_id),
         (u_id = u_id),
+        r_id,
         (comment = comment_body)
       );
       return res.status(201).send({ message: "Comment created" });
