@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import useToken from '../../../../useToken'
 import AddComment from './AddComment'
 import EditeComment from './EditeComment'
 import styles from './index.module.css'
@@ -6,7 +7,7 @@ import Likes from './Likes'
 import Summary from './Summary'
 import UserOptions from './UserOptions'
 export default function Comment({ comments, id, addComment, removeComment }) {
-
+    const { token, userdata } = useToken()
     const [isEditing, setIsEditing] = useState(0)
     const [body, setBody] = useState(comments[id].BODY)
     const toggleEditing = () => {
@@ -37,7 +38,9 @@ export default function Comment({ comments, id, addComment, removeComment }) {
             <div className={styles.mainComment}>
                 <div className={styles.optHeader}>
                     <Summary comment={comments[id]} />
-                    <UserOptions id={id} toggleEditing={toggleEditing} removeComment={removeComment} />
+                    {token && userdata.ID == comments[id].UID &&
+                        <UserOptions id={id} toggleEditing={toggleEditing} removeComment={removeComment} />
+                    }
                 </div>
                 {
                     isEditing ?

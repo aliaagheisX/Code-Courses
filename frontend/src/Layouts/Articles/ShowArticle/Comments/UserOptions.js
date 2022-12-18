@@ -14,7 +14,6 @@ export default function UserOptions({ toggleEditing, id, removeComment }) {
             const data = await res.json()
 
             if (!res.ok) throw data.message;
-            debugger;
             removeComment(id)
 
         } catch (err) {

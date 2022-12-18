@@ -30,7 +30,7 @@ export default function AddComment({ reply_id, addComment }) {
             console.log(typeof (err))
         }
     }
-    return (
+    if (token) return (
         <Formik
             initialValues={addCommentInitialValues}
             validationSchema={AddCommentSchema}
@@ -45,5 +45,6 @@ export default function AddComment({ reply_id, addComment }) {
                 </div>
             </Form>
         </Formik>
-    )
+    );
+    else return <></>
 }

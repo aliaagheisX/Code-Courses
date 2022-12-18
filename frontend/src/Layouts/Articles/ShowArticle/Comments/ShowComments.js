@@ -4,6 +4,7 @@ import Comment from './Comment'
 import AddComment from './AddComment'
 
 export default function ShowComments({ article_id, Initialcomments }) {
+
     const getGraphOfComments = (comments) => {
         const gp = {}
         for (const i in comments) {
@@ -36,7 +37,6 @@ export default function ShowComments({ article_id, Initialcomments }) {
     }
 
     const removeComment = (id) => {
-        debugger;
         const temp = { ...comments };
         const rid = temp[id].RID
         if (rid !== null) {
