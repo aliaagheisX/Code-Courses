@@ -48,9 +48,10 @@ module.exports = {
 	},
 	getArticlesByTopicId: (id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT A.ID, A.BODY, A.INSTRUCTORID 
-													FROM article A, article_topic AT 
-													WHERE A.ID=AT.AID AND AT.TID=${id}`;
+			let queryString = `SELECT A.AUTHORFNAME, A.AUTHORSNAME, A.INSTRUCTORID, E.*, 
+				(SELECT COUNT(L.UID) FROM likeonarticle L WHERE L.AID = A.ID ) as likes 
+				FROM article A, article_topic t, element E 
+				WHERE A.ID=t.AID AND E.ID = A.ID AND t.TID=${id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
@@ -220,6 +221,18 @@ module.exports = {
 	getArticlesReadByUser: (u_id) => {
 		return new Promise((resolve, reject) => {
 			let queryString = `SELECT a.AUTHORFNAME, a.AUTHORSNAME, a.INSTRUCTORID, e.* FROM readarticle ra, article a, element e WHERE ra.AID=a.ID AND a.ID=e.ID AND ra.SID=${u_id}`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows);
+			})
+		})
+	},
+	getArticlesByLesson: (l_id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `SELECT A.AUTHORFNAME, A.AUTHORSNAME, A.INSTRUCTORID, E.*, 
+				(SELECT COUNT(L.UID) FROM likeonarticle L WHERE L.AID = A.ID ) as likes 
+				FROM article A, element E 
+				WHERE E.ID = A.ID AND A.LID=${l_id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
