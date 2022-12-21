@@ -91,28 +91,28 @@ module.exports = {
       if (error)
         return res.status(403).send({ message: "Validation error" + error.details[0].message });
 
-      if (columns["firstName"] != null) {
+      if (columns["firstName"] != null && columns["firstName"] != "") {
         await userRepo.editfname(username, columns["firstName"]);
       }
-      if (columns["lastName"] != null) {
+      if (columns["lastName"] != null && columns["lastName"] != "") {
         await userRepo.editsname(username, columns["lastName"]);
       }
-      if (columns["about"] != null) {
+      if (columns["about"] != null && columns["about"] != "") {
         await userRepo.editAbout(username, columns["about"]);
       }
-      if (req.file?.path != null) {
+      if (req.file?.path != null && req.file?.path != "") {
         let imagePath = req.file.path
         imagePath = "http://localhost:4000/" + imagePath.replace('\\', '/')
         await userRepo.editImage(username, imagePath);
 
       }
-      if (columns["email"] != null) {
+      if (columns["email"] != null && columns["email"] != "") {
         await userRepo.editEmail(username, columns["email"]);
         email = columns["email"];
         payload = { email: email };
         token = jwt.sign({ payload }, process.env.PRIMARY_KEY);
       }
-      if (columns["password"] != null) {
+      if (columns["password"] != null && columns["password"] != "") {
         if (columns["confirmPassword"] == null) {
           return res
             .status(500)
@@ -123,7 +123,7 @@ module.exports = {
           await userRepo.editPassword(username, hash);
         }
       }
-      if (columns["username"] != null) {
+      if (columns["username"] != null && columns["username"] != "") {
 
         // The username should be edited the last because the rest of the queries depend on the username
         await userRepo.editUsername(username, columns["username"]);
