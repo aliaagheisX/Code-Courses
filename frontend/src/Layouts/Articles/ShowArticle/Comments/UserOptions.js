@@ -21,6 +21,7 @@ export default function UserOptions({ toggleEditing, id, removeComment }) {
         }
     }
     return (
+
         <div className={`btnIconList ${styles.UserOptions}`}>
             <div className='btnIcon success' onClick={toggleEditing}>
                 <span className="material-symbols-outlined">
