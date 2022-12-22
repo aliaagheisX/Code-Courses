@@ -71,17 +71,15 @@ module.exports = {
 
 			imagePath = "http://localhost:4000/" + imagePath.replace('\\', '/')
 
-			///// instructor /////
-			let fname = req.user.FNAME;
-			let lname = req.user.SNAME;
 
-			let element_id = await elementRepo.createElement(course, imagePath);
-			let response = await courseRepo.createCourse(course, element_id, fname, lname);
+			let response = await courseRepo.createCourse(course, imagePath);
+			const c_id = response['@course_id']
+
 			//add topics to course
-			await courseRepo.addTopicsToCourse(element_id, course.topics)
+			await courseRepo.addTopicsToCourse(c_id, course.topics)
 			return res
 				.status(200)
-				.send({ message: "Course created successfully", course_id: element_id });
+				.send({ message: "Course created successfully", course_id: c_id });
 		} catch (err) {
 			return res
 				.status(500)

@@ -59,18 +59,28 @@ module.exports = {
         })
     },
 
-    createCourse: (course, element_id, fname, lname) => {
-        const course_pre = course.pre.replace(/'/g, "`");
-        const instructor_id = course.instructor_id
-        // Creating an element and returning the 
+    createCourse: (course, imagePath) => {
+        const {
+            title,
+            description,
+            pre,
+            instructor_id,
+        } = course;
+        const ch = (str) => str.replace(/'/g, "`");
+
         return new Promise((resolve, reject) => {
-            let queryString = `
-            INSERT INTO course(ID,INSTRUCTORID, INSTRUCTORFNAME, INSTRUCTORSNAME, PREREQUISITES) 
-            VALUES(${element_id},${instructor_id}, '${fname}', '${lname}', '${course_pre}') 
-            `;
+            let queryString = `CALL add_course(
+				'${ch(title)}',
+				'${ch(description)}',
+				'${imagePath}',
+				'${ch(pre)}',
+				${instructor_id},
+				@course_id
+			); 
+			SELECT @course_id;`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
-                return resolve(rows);
+                return resolve(rows[1][0]);
             })
         })
 

@@ -43,11 +43,9 @@ export default function AddArticleForm() {
             if (!res1.ok)
                 throw dataE.message
 
-            console.log('added Article', dataE)
-            /* 
-            
-            */
-            const res2 = await fetch(api.addArticleTopics(dataE.article.ID), {
+
+            const article_id = dataE.id['@article_id']
+            const res2 = await fetch(api.addArticleTopics(article_id), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'token': token },
                 body: JSON.stringify({ topics: values.topics })
@@ -57,7 +55,7 @@ export default function AddArticleForm() {
             if (!res2.ok)
                 throw dataT.message
 
-            window.location.assign(`/articles/${dataE.article.ID}`)
+            window.location.assign(`/articles/${article_id}`)
 
         }
         catch (err) {

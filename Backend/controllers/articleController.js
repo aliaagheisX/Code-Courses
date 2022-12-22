@@ -145,14 +145,12 @@ module.exports = {
 			let imagePath = req.file.path
 			imagePath = "http://localhost:4000/" + imagePath.replace('\\', '/')
 
-			let element_id = await elementRepo.createElement(article, imagePath);
-			let response = await articleRepo.createArticle(article, element_id);
-			let newArticle = await articleRepo.getArticleById(element_id);
+			let response = await articleRepo.createArticle(article, imagePath);
 			return res
 				.status(200)
 				.send({
 					message: "Article created successfully",
-					article: newArticle,
+					id: response,
 				});
 		} catch (err) {
 			return res

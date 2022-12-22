@@ -42,3 +42,49 @@ BEGIN
     );
 END &&  
 DELIMITER ;
+
+
+DELIMITER &&  
+CREATE PROCEDURE add_course
+	(IN title Varchar(50), 
+     IN description Varchar(800), 
+     IN image Varchar(400),
+     IN pre Varchar(256),
+     IN i_id INT(10),
+     OUT course_id INT(10) )   
+BEGIN    
+    INSERT INTO ELEMENT(TITLE,DESCRIPTION,IMAGE) VALUES (title, description, image);
+    SET course_id = LAST_INSERT_ID();
+    INSERT INTO COURSE(ID,PREREQUISITES,INSTRUCTORID, AUTHORFNAME, AUTHORSNAME) 
+    VALUES(
+        course_id, 
+        pre, 
+        i_id,
+        (SELECT FNAME from _user WHERE _user.ID =  i_id), 
+        (SELECT SNAME from _user WHERE _user.ID =  i_id)
+    );
+END &&  
+DELIMITER ;
+
+
+DELIMITER &&  
+CREATE PROCEDURE add_quiz
+	(IN title Varchar(50), 
+     IN description Varchar(800), 
+     IN image Varchar(400),
+     IN max_score INT(10),
+     IN i_id INT(10),
+     OUT quiz_id INT(10) )   
+BEGIN    
+    INSERT INTO ELEMENT(TITLE,DESCRIPTION,IMAGE) VALUES (title, description, image);
+    SET quiz_id = LAST_INSERT_ID();
+    INSERT INTO quiz(ID,MAXSCORE,INSTRUCTORID, AUTHORFNAME, AUTHORSNAME) 
+    VALUES(
+        quiz_id, 
+        max_score, 
+        i_id,
+        (SELECT FNAME from _user WHERE _user.ID =  i_id), 
+        (SELECT SNAME from _user WHERE _user.ID =  i_id)
+    );
+END &&  
+DELIMITER ;

@@ -87,18 +87,27 @@ module.exports = {
 	},
 	createArticle: (article, imagePath) => {
 		const {
-			body,
-			instructor_id,
 			title,
 			description,
-			image
+			body,
+			instructor_id,
 		} = article;
+		const ch = (str) => str.replace(/'/g, "`");
+
 		// Creating an element and returning the 
 		return new Promise((resolve, reject) => {
-			let queryString = `INSERT INTO ARTICLE(ID,BODY,INSTRUCTORID) VALUES(${element_id},'${article_body}',${instructor_id}) `;
+			let queryString = `CALL add_article(
+				'${ch(title)}',
+				'${ch(description)}',
+				'${imagePath}',
+				'${ch(body)}',
+				${instructor_id},
+				@article_id
+			); 
+			SELECT @article_id;`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
-				return resolve(rows);
+				return resolve(rows[1][0]);
 			})
 		})
 
