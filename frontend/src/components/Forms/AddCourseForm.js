@@ -49,7 +49,7 @@ export default function AddCourseForm() {
 
             console.log('added Course', data)
 
-            navigate('/')
+            navigate(`/courses/${data.course_id}`)
 
         }
         catch (err) {

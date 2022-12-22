@@ -34,6 +34,7 @@ const api = {
     deleteComment: (id) => `http://localhost:4000/comments/${id}`,//comment_id
 
     getCourse: (id) => `http://localhost:4000/courses/${id}`,
+    getAllCourses: `http://localhost:4000/courses/`,
     addCourse: `http://localhost:4000/courses/create`,
     deleteCourse: (id) => `http://localhost:4000/courses/${id}`,
 

@@ -25,6 +25,21 @@ function courseValidate(columns) {
 
 
 module.exports = {
+	getAllCourses: async (req, res) => {
+		try {
+			let courses = await courseRepo.getAllCourses();
+			if (!courses.length) {
+				return res
+					.status(404)
+					.send({ message: "Looks like you have no courses" });
+			}
+			return res.status(200).send({ courses: courses });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting all courses" + err });
+		}
+	},
 	getCourseById: async (req, res) => {
 		try {
 			let id = parseInt(req.params.id);

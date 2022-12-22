@@ -1,5 +1,18 @@
 const { DBconnection } = require('../config/database');
 module.exports = {
+    getAllCourses: () => {
+        return new Promise((resolve, reject) => {
+            let queryString = `
+            SELECT 
+                C.INSTRUCTORFNAME, C.INSTRUCTORSNAME, E.*, 
+                (SELECT COUNT(L.SID) FROM enroll L WHERE L.CID = C.ID ) as enrolls_count 
+            FROM course C, element E WHERE E.ID = C.ID;`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows);
+            })
+        })
+    },
     getCourseById: (id) => {
         return new Promise((resolve, reject) => {
             let queryString = `
