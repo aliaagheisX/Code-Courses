@@ -3,9 +3,9 @@ module.exports = {
     getCourseById: (id) => {
         return new Promise((resolve, reject) => {
             let queryString = `
-            SELECT C.*, E.* 
-            FROM course C, element E
-            WHERE C.ID=${id} AND E.ID = C.ID`;
+            SELECT C.*, E.*, COUNT(S.SID) AS enrolls_count
+            FROM course C, element E, enroll S
+            WHERE C.ID=${id} AND E.ID = C.ID AND S.CID = C.ID`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows[0]);
@@ -25,9 +25,9 @@ module.exports = {
 
     getCourseRating: (c_id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `SELECT REVIEWRATING, COUNT(*) 
+            let queryString = `SELECT REVIEWRATING AS rate, COUNT(*) as count 
             FROM enroll 
-            WHERE CID = ${c_id}
+            WHERE CID = ${c_id} AND REVIEWRATING IS NOT NULL
             GROUP BY REVIEWRATING;`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
@@ -36,9 +36,22 @@ module.exports = {
         })
     },
 
-    getCourseEnrolls: (c_id) => {
+    getCourseReviews: (c_id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `SELECT * FROM enroll  WHERE CID=${c_id} ;`;
+            let queryString = `SELECT E.*, U.USERNAME, U.FNAME, U.SNAME,U._IMAGE, U.EMAIL FROM enroll E, _user U  WHERE E.CID=${c_id} AND REVIEWRATING IS NOT NULL AND U.ID=E.SID;`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows);
+            })
+        })
+    },
+
+    getCourseTopics: (c_id) => {
+        return new Promise((resolve, reject) => {
+            let queryString = `
+            SELECT NAME, TID 
+            FROM course_topic, topic 
+            WHERE CID=${c_id} AND TID=ID`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -86,4 +99,15 @@ module.exports = {
             });
         })
     },
+    deleteCourseById: (id) => {
+        return new Promise((resolve, reject) => {
+            let queryString = `DELETE FROM course WHERE ID=${id}`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows);
+            })
+        })
+    },
+
+
 }

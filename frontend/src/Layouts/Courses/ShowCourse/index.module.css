@@ -79,11 +79,11 @@
 
 .markW {
     max-width: 75%;
+    min-width: 62%;
     padding-top: 25px;
     text-align: left;
     color: #818182;
     font-size: 14px;
-    min-width: 62%;
 }
 .markW h1, .markW h2,.markW h3,.markW h4 {
     margin: 50px 0 10px 0;

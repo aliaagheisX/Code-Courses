@@ -15,6 +15,7 @@ import Articles from './Layouts/Articles';
 import AddArticle from './Layouts/Articles/AddArticle';
 import AddCourse from './Layouts/Courses/AddCourse';
 import ShowArticle from './Layouts/Articles/ShowArticle';
+import ShowCourse from './Layouts/Courses/ShowCourse';
 import Topics from './Layouts/Topics';
 import EditeArticle from './Layouts/Articles/EditeArticle';
 
@@ -83,6 +84,7 @@ root.render(
         } />
 
 
+        <Route path='/courses/:id' element={<ShowCourse />} />
         <Route path='/courses/add' element={
           <InstructorRoute>
             <AddCourse />

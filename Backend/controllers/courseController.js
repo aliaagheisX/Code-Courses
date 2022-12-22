@@ -25,6 +25,36 @@ function courseValidate(columns) {
 
 
 module.exports = {
+	getCourseById: async (req, res) => {
+		try {
+			let id = parseInt(req.params.id);
+			let course = await courseRepo.getCourseById(id);
+
+
+			if (!course.ID) {
+				return res
+					.status(404)
+					.send({ message: "Course not found" });
+			}
+			let is_enrolled = null;
+			if (req.body.id !== undefined)
+				is_enrolled = await courseRepo.getUserEnrolled(req.body.id, course.ID);
+			let rating = await courseRepo.getCourseRating(id);
+			let reviews = await courseRepo.getCourseReviews(id);
+			const topics = await courseRepo.getCourseTopics(id);
+			return res.status(200).send({
+				course: course,
+				rating: rating,
+				reviews: reviews,
+				topics: topics,
+				is_enrolled: is_enrolled
+			});
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting article by id" + err });
+		}
+	},
 	createCourse: async (req, res) => {
 		try {
 			let course = req.body;
@@ -58,32 +88,22 @@ module.exports = {
 				.send({ message: "Internal server error creating course " + err });
 		}
 	},
-	editCourseTopics: async (req, res) => {
+	deleteCourseById: async (req, res) => {
 		try {
-			let c_id = req.params.c_id;
-			let columns = req.body;
-			const { error } = topicListValidate(columns);
-			if (error) {
+			let id = parseInt(req.params.c_id);
+			let rows = await courseRepo.deleteCourseById(id);
+			if (!rows.affectedRows) {
 				return res
-					.status(403)
-					.send({ message: "Validation error " + error.details[0].message });
+					.status(404)
+					.send({ message: "Course not found" });
 			}
-			await courseRepo.deleteCourseTopics(c_id);
-			for (let index in columns.topics) {
-				let t_id = columns.topics[index];
-				await courseRepo.addTopicToArticle(c_id, t_id);
-			}
-			let topics = await courseRepo.getArticleTopics(c_id);
 			return res
-				.status(201)
-				.send({
-					message: "Course topics edited successfully",
-					topics: topics,
-				});
+				.status(200)
+				.send({ message: "Course deleted successfully" });
 		} catch (err) {
 			return res
 				.status(500)
-				.send({ message: "Internal server error adding topic to course " + err });
+				.send({ message: "Internal server error deleting Course by id" + err });
 		}
 	},
 };

@@ -10,8 +10,9 @@ const courseController = require('../controllers/courseController');
 const { canCreateCourse, canEditCourse } = require('../permissions/coursePermissions');
 
 
-router.post('/create', [authToken, canCreateCourse], upload.single('image'), courseController.createCourse);
+router.get('/:id', courseController.getCourseById);
+router.delete('/:id', courseController.deleteCourseById);
 
-router.post('/editcoursetopics/:c_id', [authToken, canEditCourse], courseController.editCourseTopics);
+router.post('/create', [authToken, canCreateCourse], upload.single('image'), courseController.createCourse);
 
 module.exports = router;

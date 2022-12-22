@@ -85,9 +85,14 @@ module.exports = {
 			})
 		})
 	},
-	createArticle: (article, element_id) => {
-		const article_body = article.body.replace(/'/g, "`");
-		const instructor_id = article.instructor_id
+	createArticle: (article, imagePath) => {
+		const {
+			body,
+			instructor_id,
+			title,
+			description,
+			image
+		} = article;
 		// Creating an element and returning the 
 		return new Promise((resolve, reject) => {
 			let queryString = `INSERT INTO ARTICLE(ID,BODY,INSTRUCTORID) VALUES(${element_id},'${article_body}',${instructor_id}) `;
