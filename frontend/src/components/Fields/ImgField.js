@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useFormikContext } from 'formik'
 
@@ -56,6 +56,7 @@ export default function ImgField({ defaultImg, ChooseFileBtn, Avatar, name, mode
         }
 
     }
+
 
     const styleMode = mode === 'avatar' ?
         { display: 'flex', alignItems: 'end' } :

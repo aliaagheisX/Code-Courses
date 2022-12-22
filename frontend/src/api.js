@@ -33,5 +33,7 @@ const api = {
     editeComment: (id) => `http://localhost:4000/comments/edit/${id}`,//comment_id
     deleteComment: (id) => `http://localhost:4000/comments/${id}`,//comment_id
 
+    addCourse: `http://localhost:4000/courses/create`
+
 }
 export default api

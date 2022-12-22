@@ -2,6 +2,7 @@ import React from 'react'
 import styles from './index.module.css'
 import useToken from '../../useToken'
 import { NavLink } from 'react-router-dom'
+import AdminProtectedComponent from '../AdminProtectedComponent'
 export default function SideNav() {
     const { userdata: { ID } } = useToken()
     return (
@@ -15,13 +16,18 @@ export default function SideNav() {
 
                 </NavLink></li>
 
-                <li><NavLink to={`/topics`}>
-                    <span className="material-symbols-outlined">
-                        category
-                    </span>
-                    <span className={styles.overlay}>Topics</span>
+                <AdminProtectedComponent
+                    render={
+                        <li><NavLink to={`/topics`}>
+                            <span className="material-symbols-outlined">
+                                category
+                            </span>
+                            <span className={styles.overlay}>Topics</span>
+                        </NavLink></li>
+                    }
+                    replace={<></>}
+                />
 
-                </NavLink></li>
 
                 <li><NavLink to="/articles">
                     <span className="material-symbols-outlined">feed</span>

@@ -20,11 +20,11 @@ export const signupInitialValues = {
 
 export const editProfileInitialValues = () => ({
   image: null,
-  username: null,
-  firstName: null,
-  lastName: null,
-  email: null,
-  bio: null,
+  username: '',
+  firstName: '',
+  lastName: '',
+  email: '',
+  bio: '',
 });
 
 
@@ -46,9 +46,19 @@ export const editArticleInitialValues = (id, body) => ({
   'id': id
 });
 
+
+export const addCourseInitialValues = (id) => ({
+  image: '',
+  title: '',
+  description: '',
+  pre: '',
+  topics: [],
+  'instructor_id': id
+});
+
 export const changePasswordInitialValues = {
-  password: null,
-  confirmPassword: null,
+  password: '',
+  confirmPassword: '',
 };
 
 export const addCommentInitialValues = {
@@ -176,7 +186,22 @@ export const EditArticleSchema = Yup.object().shape({
   topics: Yup.array().min(1, "at least 1")
 });
 
+export const AddCourseSchema = Yup.object().shape({
+  image: Yup.mixed(),
+  title: Yup.string().required('must enter')
+    .min(2, "at least 2 characters")
+    .max(25, "at most 25 characters"),
 
+  description: Yup.string().required('must enter')
+    .min(20, "at least 20 characters")
+    .max(150, "at most 150 characters"),
+
+  pre: Yup.string()
+    .min(3, "at least 3 characters")
+    .max(256, "at most 256 characters"),
+
+  topics: Yup.array().min(1, "at least 1").required("required")
+});
 export const AddCommentSchema = Yup.object().shape({
   comment: Yup.string().min(6).max(255).required(),
   r_id: Yup.number().nullable()

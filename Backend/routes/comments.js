@@ -3,6 +3,7 @@ const router = express.Router();
 const commentsController = require("../controllers/commentsController");
 const { authToken } = require("../middleware/auth");
 const admin = require("../middleware/admin");
+const { canDeleteUserComment, canDeleteArticleComments } = require("../permissions/commentPermissions");
 
 router.get("/articles/replies/:c_id", commentsController.getRepliesToComment);
 router.get("/articles/:a_id", commentsController.getCommentsOfArticle);
@@ -14,23 +15,23 @@ router.delete(
   commentsController.deleteAllComments
 );
 router.delete(
-  "/articles/comments/:u_id",
-  [authToken],
+  "/articles/commentsbyuser/:u_id",
+  [authToken, admin],
   commentsController.deleteCommentsByUser
 );
 router.delete(
   "/:c_id",
-  [authToken],
+  [authToken, canDeleteUserComment],
   commentsController.deleteCommentById
 );
 router.delete(
-  "/articles/comments/:a_id",
-  [authToken /*, canDeleteArticleComments*/],
+  "/articles/commentsbyarticle/:a_id",
+  [authToken , canDeleteArticleComments],
   commentsController.deleteCommentsByArticle
 );
 
 router.post("/create/:a_id", [authToken], commentsController.addCommentToArticle);
 
-router.put("/edit/:c_id", commentsController.editComment);
+router.put("/edit/:c_id", [authToken, canDeleteUserComment], commentsController.editComment);
 
 module.exports = router;

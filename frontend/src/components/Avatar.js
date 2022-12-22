@@ -6,6 +6,6 @@ export default function Avatar({ avatar }) {
         //border: '5px solid #383848',
     }
     return (
-        <img src={avatar} width='70px' style={styles} alt='avatar' />
+        <img src={avatar} width='70px' height='70px' style={styles} alt='avatar' />
     )
 }

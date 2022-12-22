@@ -13,6 +13,7 @@ import Students from './Layouts/Users/Students';
 import Instructors from './Layouts/Users/Instructors';
 import Articles from './Layouts/Articles';
 import AddArticle from './Layouts/Articles/AddArticle';
+import AddCourse from './Layouts/Courses/AddCourse';
 import ShowArticle from './Layouts/Articles/ShowArticle';
 import Topics from './Layouts/Topics';
 import EditeArticle from './Layouts/Articles/EditeArticle';
@@ -82,7 +83,13 @@ root.render(
         } />
 
 
+        <Route path='/courses/add' element={
+          <InstructorRoute>
+            <AddCourse />
+          </InstructorRoute>
+        } />
+
       </Route>
     </Routes>
-  </BrowserRouter >
+  </BrowserRouter>
 ); 
