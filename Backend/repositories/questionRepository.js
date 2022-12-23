@@ -1,9 +1,9 @@
 const { DBconnection } = require("../config/database");
 
 module.exports = {
-  getQuestionById: (l_id) => {
+  getQuestionById: () => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM Question WHERE LID=${l_id}`;
+      let queryString = `SELECT * FROM Question WHERE `;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows[0]);
@@ -19,9 +19,9 @@ module.exports = {
       });
     });
   },
-  getQuestionsByCourse: (c_id) => {
+  getQuestionsByCourse: () => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM Question WHERE CID=${c_id}`;
+      let queryString = ``;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows[0]);
@@ -30,7 +30,16 @@ module.exports = {
   },
   deleteAllQuestions: () => {
     return new Promise((resolve, reject) => {
-      let queryString = `DELETE FROM Question`;
+      let queryString = ``;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows);
+      });
+    });
+  },
+  getQuestionsByQuiz: (Q_ID) => {
+    return new Promise((resolve, reject) => {
+      let queryString = `SELECT * FROM Question WHERE ID = ${Q_ID}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
