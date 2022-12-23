@@ -163,7 +163,7 @@ module.exports = {
 		let id = req.params.a_id;
 		if (article.title !== '') {
 			try {
-				let edit_title = await elementRepo.editElementTitle(article)
+				let edit_title = await elementRepo.editElementTitle(article, id)
 			} catch (err) {
 				return res
 					.status(500)
@@ -172,7 +172,7 @@ module.exports = {
 		}
 		if (article.description !== '') {
 			try {
-				let edit_description = await elementRepo.editElementDescription(article)
+				let edit_description = await elementRepo.editElementDescription(article, id)
 			} catch (err) {
 				return res
 					.status(500)
@@ -181,7 +181,7 @@ module.exports = {
 		}
 		if (article.body !== '') {
 			try {
-				let edit_body = await articleRepo.editArticleBody(article)
+				let edit_body = await articleRepo.editArticleBody(article, id)
 			} catch (err) {
 				return res
 					.status(500)

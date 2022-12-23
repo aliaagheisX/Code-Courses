@@ -112,9 +112,8 @@ module.exports = {
 		})
 
 	},
-	editArticleBody: (article) => {
+	editArticleBody: (article, id) => {
 		const body = article.body.replace(/'/g, "`");
-		const id = article.id;
 		return new Promise((resolve, reject) => {
 			let queryString = `UPDATE ARTICLE SET body = '${body}' WHERE ID = ${id} `;
 			DBconnection.query(queryString, (err, rows) => {

@@ -16,9 +16,8 @@ module.exports = {
 			})
 		});
 	},
-	editElementTitle: (article) => {
+	editElementTitle: (article, id) => {
 		const title = article.title;
-		const id = article.id;
 		return new Promise((resolve, reject) => {
 			let queryString = `UPDATE ELEMENT SET TITLE = '${title}' WHERE ID = ${id} `;
 			DBconnection.query(queryString, (err, rows) => {
@@ -27,9 +26,8 @@ module.exports = {
 			})
 		})
 	},
-	editElementDescription: (article) => {
+	editElementDescription: (article, id) => {
 		const description = article.description;
-		const id = article.id;
 		return new Promise((resolve, reject) => {
 			let queryString = `UPDATE ELEMENT SET description = '${description}' WHERE ID = ${id} `;
 			DBconnection.query(queryString, (err, rows) => {
