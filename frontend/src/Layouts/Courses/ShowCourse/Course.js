@@ -21,7 +21,7 @@ export default function Course({ course }) {
 
     return (
         <section className={styles.sec}>
-            <Options id={ID} instructor_id={INSTRUCTORID} />
+            <Options id={ID} instructor_id={INSTRUCTORID} is_enrolled={course.is_enrolled} />
             <div className={styles.stLike}>
 
                 <span className={`${styles.vsCont}`}>
