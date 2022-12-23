@@ -1,0 +1,37 @@
+.review{
+    padding-top: 25px;
+}
+.summary {
+    display: flex;
+    flex-direction: row;
+
+}
+.summary img {
+    width: 50px;
+    height: 50px;
+}
+.strs {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    margin-left: 62px;
+    margin-top: -29px;
+    align-items: center;
+    margin-bottom: 17px;
+    gap: 8px;
+}
+
+.strs div:first-child {
+    margin-top: -7px;
+}
+.body {
+    margin-left: 62px;
+    margin-top: 10px;
+    margin-bottom: 3px;
+    width: 80%;
+    font-weight: 600;
+    font-size: 18px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 30px;
+
+}

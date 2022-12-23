@@ -7,6 +7,7 @@ import remarkGfm from 'https://esm.sh/remark-gfm@3'
 import useToken from '../../../useToken'
 import Options from './Options';
 import StudentFeedBack from './StudentFeedBack'
+import Reviews from './Reviews'
 
 export default function Course({ course }) {
     const {
@@ -16,7 +17,7 @@ export default function Course({ course }) {
     const create_date = new Date(CREATIONDATE).toDateString().split(' ').slice(1).join(' ');
 
 
-
+    console.log(course)
 
     return (
         <section className={styles.sec}>
@@ -45,17 +46,7 @@ export default function Course({ course }) {
                     <div>at {create_date}</div>
                 </div>
                 <StudentFeedBack totalCount={enrolls_count} ratingData={course.rating} />
-                {/* comments */}
-                {/* <section className={styles.comment_sec}>
-                        <h5>Comments</h5>
-                        <Resource
-                            path={api.getArticlComments(ID)}
-                            ErrorComp={<ShowComments article_id={ID} Initialcomments={[]} />}
-                            render={({ items: { comments } }) => <ShowComments article_id={ID} Initialcomments={comments} />}
-                        />
-
-
-                    </section> */}
+                <Reviews reviews={course.reviews} />
             </div>
 
 

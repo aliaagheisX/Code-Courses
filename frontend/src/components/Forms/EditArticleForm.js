@@ -55,13 +55,13 @@ export default function EditArticleForm({ article }) {
             const dataT = await res2.json()
 
             if (!res2.ok)
-                throw dataT.message
+                throw Error(dataT.message)
 
             window.location.assign(`/articles/${article.ID}`)
         }
         catch (err) {
             console.log(err)
-            setBackendError(err)
+            setBackendError(err.message)
         }
     }
     return (

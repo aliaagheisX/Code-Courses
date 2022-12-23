@@ -30,9 +30,11 @@ export default function EditeComment({ id, body, handelEditingBody }) {
         >
             <Form className='form'>
                 <div className={styles.frm}>
-                    <Field name='new_comment' type='text' placeholder='Add your comment here...' />
-                    <ErrorMessage component="div" name='new_comment' />
+                    <div className='group'>
 
+                        <Field name='new_comment' type='text' placeholder='Add your comment here...' />
+                        <ErrorMessage component="div" name='new_comment' />
+                    </div>
                 </div>
             </Form>
 

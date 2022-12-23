@@ -19,7 +19,7 @@
 }
 .stars span {
     color: #e59819;
-    font-size: var(--medium-font);
+    font-size: 17px;
 }
 
 /* special texts(spans) */

@@ -38,10 +38,18 @@ export default function AddComment({ reply_id, addComment }) {
             <Form className='form'>
                 <div className={styles.frm}>
                     <Avatar avatar={userdata._IMAGE} />
-                    <Field name='comment' type='text' placeholder='Add your comment here...' />
-                    <ErrorMessage component="div" name='comment' />
+                    <div className='group'>
 
+                        <Field name='comment' type='text' placeholder='Add your comment here...' />
+                        <ErrorMessage component="div" name='comment' />
+                    </div>
                 </div>
+                {/* backend error */}
+                {backendError &&
+                    <span className='errorForm'>
+                        {backendError}
+                    </span>
+                }
             </Form>
         </Formik>
     );
