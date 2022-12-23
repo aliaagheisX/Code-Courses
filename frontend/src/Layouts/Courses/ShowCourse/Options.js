@@ -10,6 +10,20 @@ export default function Options({ id, instructor_id, is_enrolled }) {
     const navigate = useNavigate()
 
     const enroll = async () => {
+        try {
+            const res = await fetch(api.enrollCourse(id), {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'token': token }
+            });
+
+            const data = await res.json();
+
+            if (!res.ok)
+                throw Error(data.message)
+
+        } catch (err) {
+            console.log("error", err.message)
+        }
 
     }
 
