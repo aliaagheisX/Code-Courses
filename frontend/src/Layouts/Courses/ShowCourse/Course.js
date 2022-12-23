@@ -6,16 +6,17 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'https://esm.sh/remark-gfm@3'
 import useToken from '../../../useToken'
 import Options from './Options';
+import StudentFeedBack from './StudentFeedBack'
 
 export default function Course({ course }) {
-
+    console.log(course)
     const {
         ID, TITLE, INSTRUCTORFNAME, INSTRUCTORSNAME,
         PREREQUISITES, CREATIONDATE, DESCRIPTION, IMAGE, INSTRUCTORID, enrolls_count
     } = course.course
     const create_date = new Date(CREATIONDATE).toDateString().split(' ').slice(1).join(' ');
 
-    console.log(course)
+    console.log(enrolls_count)
 
 
 
@@ -45,7 +46,7 @@ export default function Course({ course }) {
                     <h4>By {INSTRUCTORFNAME === null ? 'Unknown' : `${INSTRUCTORFNAME} ${INSTRUCTORSNAME}`}</h4>
                     <div>at {create_date}</div>
                 </div>
-
+                <StudentFeedBack totalCount={enrolls_count} ratingData={course.rating} />
                 {/* comments */}
                 {/* <section className={styles.comment_sec}>
                         <h5>Comments</h5>

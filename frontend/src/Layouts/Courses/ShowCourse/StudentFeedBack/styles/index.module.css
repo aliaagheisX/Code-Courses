@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 10px;
+}
+.dist {
+    display: flex;
+    flex-direction: column-reverse;
+    flex-grow: 1;
+}
+
+.ratings {
+    display: flex;
+    justify-content: space-between;
+}

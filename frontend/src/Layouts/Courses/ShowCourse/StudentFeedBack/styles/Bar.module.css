@@ -1,0 +1,9 @@
+.mainBar {
+    flex-grow: 1;
+    background-color: rgb(193, 193, 193);
+    margin: 8px 22px;
+}
+.above {
+    background-color: #444;
+    height: 100%;
+}

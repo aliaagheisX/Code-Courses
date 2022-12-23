@@ -1,0 +1,16 @@
+.cont {
+    display: flex;
+    align-items: center;
+    width: 14rem;
+    gap: 1rem;
+}
+
+.cont > div * {
+    font-size: 1.9rem;
+}
+
+.cont > span {
+    color: var(--purple);
+    text-decoration: underline;
+    font-size: var(--medium-font);
+}

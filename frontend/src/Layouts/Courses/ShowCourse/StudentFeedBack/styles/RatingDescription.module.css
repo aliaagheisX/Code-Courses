@@ -1,0 +1,37 @@
+.rating {
+    font-weight: var(--bold-weight);
+    font-size: var(--large-font);
+}
+
+.ratingDescription {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.ratingDescription .rating {
+    color: #b4690e;
+}
+
+.emptyStar {
+    font-variation-settings: "FILL" 0;
+}
+.stars span {
+    color: #e59819;
+    font-size: var(--medium-font);
+}
+
+/* special texts(spans) */
+.utiltiyComment {
+    color: var(--grey);
+}
+
+.link {
+    text-decoration: underline;
+}
+
+.link,
+.students {
+    font-size: var(--medium-font);
+}
