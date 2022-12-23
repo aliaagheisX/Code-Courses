@@ -9,7 +9,10 @@ export default function Options({ id, instructor_id }) {
     const { token, userdata, isAdmin, isInstructor } = useToken()
     if (token && (isAdmin || (isInstructor && userdata.ID === instructor_id))) {
 
-        return (< div className={styles.opt} >
+        return (
+            <div className={styles.Buttons}>
+            <button className='btnG'>Enroll</button>
+        < div className={styles.opt} >
             <Link to={`/courses/edite/${id}`} className='btnE'>Edite</Link>
             <DeleteAll
                 txt='Delete'
@@ -18,7 +21,10 @@ export default function Options({ id, instructor_id }) {
                 where={'/courses'}
                 afterDelete={() => { }}
             />
-        </div >)
+            
+        </div >
+            </div>
+            )
     }
     else return <></>
 
