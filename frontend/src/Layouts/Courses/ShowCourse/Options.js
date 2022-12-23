@@ -20,6 +20,7 @@ export default function Options({ id, instructor_id, is_enrolled }) {
 
             if (!res.ok)
                 throw Error(data.message)
+            console.log(data)
 
         } catch (err) {
             console.log("error", err.message)

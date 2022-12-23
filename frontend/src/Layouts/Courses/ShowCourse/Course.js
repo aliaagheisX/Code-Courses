@@ -9,14 +9,12 @@ import Options from './Options';
 import StudentFeedBack from './StudentFeedBack'
 
 export default function Course({ course }) {
-    console.log(course)
     const {
         ID, TITLE, INSTRUCTORFNAME, INSTRUCTORSNAME,
         PREREQUISITES, CREATIONDATE, DESCRIPTION, IMAGE, INSTRUCTORID, enrolls_count
     } = course.course
     const create_date = new Date(CREATIONDATE).toDateString().split(' ').slice(1).join(' ');
 
-    console.log(enrolls_count)
 
 
 

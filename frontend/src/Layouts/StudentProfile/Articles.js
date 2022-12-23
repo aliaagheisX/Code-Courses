@@ -3,10 +3,8 @@ import ArticleComponent from '../../components/ArticleComponent'
 import CustomCarsoul from '../../components/CustomCarsoul'
 
 export default function Articles({ articlesRead, articlesLiked }) {
-    console.log(articlesLiked, articlesRead)
     const [likedArticles, setLikedArticles] = useState(0)
     const [readArticles, setReadArticles] = useState(1)
-    console.log(readArticles, likedArticles)
     const handelClick = () => {
         setReadArticles(!readArticles)
         setLikedArticles(!likedArticles)

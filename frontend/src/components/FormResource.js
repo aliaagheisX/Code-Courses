@@ -17,7 +17,6 @@ export default function FormResource({ token, method, ContentType, url, initialV
 
 
     const onSubmit = async (values) => {
-        console.log(values)
         try {
             /* send request */
             /* header */

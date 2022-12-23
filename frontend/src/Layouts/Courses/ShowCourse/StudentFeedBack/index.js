@@ -21,7 +21,6 @@ export default function StudentFeedBack({ ratingData }) {
             ratingDistribution[rate] = count;
             averageRating += rate * count;
             cnt += count;
-            console.log(ratingDistribution[rate])
         })
         averageRating = cnt !== 0 ? averageRating / cnt : 0;
 
