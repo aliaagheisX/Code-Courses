@@ -36,7 +36,7 @@ export default function Options({ id }) {
             <div>
                 {token && (isAdmin || userdata.ID === id) ?
                     <>
-                        <Link to='/edit/me' className='btnE'>Edite</Link>
+                        <Link to='/edit/me' className='btnE'>Edit</Link>
 
                         <section className={styles.danger}>
                             <DeletMe />

@@ -32,7 +32,7 @@ export default function Options({ id }) {
             <div>
                 {token && (isAdmin || userdata.ID === id) ?
                     <>
-                        <Link to='/edit/me' className='btnE'>Edite</Link>
+                        <Link to='/edit/me' className='btnE'>Edit</Link>
                         <button className='btnDanger' onClick={handelDeleteIns}>Delete Instructor</button>
 
                     </> : <></>}
