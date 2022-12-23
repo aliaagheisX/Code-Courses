@@ -29,4 +29,23 @@ module.exports = {
         .send({ message: "Internal server error getting all lessons " + err });
     }
   },
+  getQuestionsByQuiz: async (req, res) => {
+    try {
+      let Q_ID = req.body.Q_ID;
+      if (!Q_ID) {
+        return res
+          .status(403)
+          .send({ message: "Pleases Insert the QUIZ ID as Q_ID  " });
+      }
+      let questions = await questionRepo.getQuestionsByQuiz(Q_ID);
+      return res.status(201).send({
+        message: "questions retrieved",
+        Questions: questions,
+      });
+    } catch (err) {
+      return res
+        .status(500)
+        .send({ message: "Internal server error getting all lessons " + err });
+    }
+  },
 };

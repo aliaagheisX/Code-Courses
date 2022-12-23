@@ -10,4 +10,13 @@ module.exports = {
       });
     });
   },
+  getQuestionsByQuiz: (Q_ID) => {
+    return new Promise((resolve, reject) => {
+      let queryString = `SELECT * FROM CHOICES WHERE ID = ${Q_ID}`;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows);
+      });
+    });
+  },
 };
