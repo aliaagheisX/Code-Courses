@@ -24,20 +24,10 @@ export default function CustomCarsoul({ items }) {
     return (
         <Swiper
             breakpoints={{
-                0: {
-                    slidesPerView: 1,
-                    slidesPerGroup: 1,
-                    spaceBetween: 10,
 
-                },
-                658: {
-                    slidesPerView: 2,
-                    slidesPerGroup: 1,
-                    spaceBetween: 20,
-                },
                 1090: {
                     slidesPerView: 3,
-                    slidesPerGroup: 4,
+                    slidesPerGroup: 2,
                     spaceBetween: 20,
                 },
             }}

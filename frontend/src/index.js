@@ -43,7 +43,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />}>
-        
+        <Route path='/' element={<Home />} />
 
         <Route path='/students/:id' element={<StudentProfile />} />
         <Route path='/instructors/:id' element={<InstructorProfile />} />
@@ -55,7 +55,7 @@ root.render(
           <Route path='admins' element={<Students />} />
         </Route>
 
-<Route path="/" element={<Home/>}></Route>
+        <Route path="/" element={<Home />}></Route>
 
         <Route path='/Topics' element={
           <AdminRoute >

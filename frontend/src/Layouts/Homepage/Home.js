@@ -4,27 +4,25 @@ import api from '../../api'
 import CustomCarsoul from '../../components/CustomCarsoul'
 
 const Home = () => {
-    return ( <div>
-<Resource
-        path={api.getArticles}
-        render={({ items: { articles } }) => (
-          <div className='elementCont' >
-            {
-              <CustomCarsoul
-              items={
-                  articles.map((article) => (
-                      <ArticleComponent article={article} key={article.ID} />
-                  ))
-              }
-          />
-            }
-          </div>
-        )}
-        ErrorComp={<></>}
-      />
+  return (<div>
+    <Resource
+      path={api.getArticles}
+      render={({ items: { articles } }) => (
+
+        <CustomCarsoul
+          items={
+            articles.map((article) => (
+              <ArticleComponent article={article} key={article.ID} />
+            ))
+          }
+        />
+
+      )}
+      ErrorComp={<></>}
+    />
 
 
-    </div> );
+  </div>);
 }
- 
+
 export default Home;
