@@ -55,7 +55,7 @@ export default function Options({ id, instructor_id, is_enrolled }) {
             {
                 (token && (isAdmin || (isInstructor && userdata.ID === instructor_id))) &&
                 <div className={styles.opt} >
-                    <Link to={`/courses/edite/${id}`} className='btnE'>Edite</Link>
+                    <Link to={`/courses/edite/${id}`} className='btnE'>Edit</Link>
                     <DeleteAll
                         txt='Delete'
                         path={api.deleteCourse(id)}
