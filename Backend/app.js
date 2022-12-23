@@ -55,6 +55,7 @@ app.use("/instructors", require("./routes/instructor"));
 app.use("/topics", require("./routes/topics"));
 app.use("/comments", require("./routes/comments"));
 app.use("/courses", require("./routes/courses"));
+app.use("/questions", require("./routes/questions"));
 // app.use("/lessons", require("./routes/lessons"));
 
 const PORT = process.env.PORT || 3000;
