@@ -17,7 +17,6 @@ export default function Likes({ likes, views, a_id }) {
             })
             const data = await res.json()
             if (!res.ok) throw data.message
-            console.log(data.message, (data.message === 'Student liked article'))
 
             setActive((data.message === 'Student liked article'));
             setCount(data.likeCount)

@@ -27,7 +27,6 @@ export default function AddComment({ reply_id, addComment }) {
         } catch (err) {
             console.log("error", err)
             setBackenError(err)
-            console.log(typeof (err))
         }
     }
     if (token) return (

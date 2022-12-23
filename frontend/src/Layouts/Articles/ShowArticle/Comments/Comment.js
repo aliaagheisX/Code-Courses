@@ -32,7 +32,6 @@ export default function Comment({ comments, id, addComment, removeComment }) {
         const temp = removeComment(id)
         setReplies(temp[id].replies)
     }
-    console.log()
     return (
         <div className={styles.comment}>
             <div className={styles.mainComment}>

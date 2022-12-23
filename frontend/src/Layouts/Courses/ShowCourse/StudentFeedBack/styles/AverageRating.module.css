@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.rating,
+.title {
+    font-weight: bold;
+    color: #b4690e;
+}
+.rating {
+    font-size: 6.4rem;
+    line-height: 5rem;
+}
+.title {
+    font-size: 1.4rem;
+}
+.container div > * {
+    font-size: 1.9rem;
+}

@@ -30,7 +30,6 @@ export default function InstructorProfile() {
                     courses,
                     coursesCount
                 } = items
-                console.log(items)
                 return (
                     <section className={styles.body} >
                         <Options id={instructor.ID} />

@@ -39,7 +39,6 @@ export default function useToken() {
             localStorage.setItem('isInstructor', 0);
             setIsInstructor(0)
         }
-        console.log(isInstructor)
     }
 
     const setInstructor = (isInstructor) => {
