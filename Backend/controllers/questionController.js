@@ -29,7 +29,7 @@ module.exports = {
         .send({ message: "Internal server error getting all lessons " + err });
     }
   },
-  getQuestionsByInstructor: async (req, res) => {
+  getQuestionsByQuiz: async (req, res) => {
     try {
       let Q_ID = req.body.Q_ID;
       if (!Q_ID) {
