@@ -89,6 +89,17 @@ module.exports = {
         })
     },
 
+    getReview: (c_id, u_id) => {
+        return new Promise((resolve, reject) => {
+            let queryString = `SELECT E.*, U.USERNAME, U.FNAME, U.SNAME, U._IMAGE, U.EMAIL FROM enroll E, _user U 
+                WHERE E.CID=${c_id} AND E.SID=${u_id} AND REVIEWRATING IS NOT NULL AND U.ID=E.SID`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows[0]);
+            })
+        })
+    },
+
     getCourseTopics: (c_id) => {
         return new Promise((resolve, reject) => {
             let queryString = `
@@ -161,6 +172,54 @@ module.exports = {
             })
         })
     },
-
-
+    createReview: (c_id, u_id, body, rating) => {
+        body = ch(body);
+        return new Promise((resolve, reject) => {
+            let queryString = `UPDATE enroll SET REVIEWBODY='${body}', REVIEWRATING=${rating}
+                WHERE CID=${c_id} AND SID=${u_id}`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows);
+            })
+        })
+    },
+    editReviewBody: (body, c_id, u_id) => {
+        body = ch(body);
+        return new Promise((resolve, reject) => {
+            let queryString = `UPDATE enroll SET REVIEWBODY='${body}' WHERE CID=${c_id} AND SID=${u_id}`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows);
+            })
+        })
+    },
+    editReviewRating: (rating, c_id, u_id) => {
+        return new Promise((resolve, reject) => {
+            let queryString = `UPDATE enroll SET REVIEWRATING=${rating} WHERE CID=${c_id} AND SID=${u_id}`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows);
+            })
+        })
+    },
+    deleteOneReview: (c_id, u_id) => {
+        return new Promise((resolve, reject) => {
+            let queryString = `UPDATE enroll SET REVIEWBODY=NULL, REVIEWRATING=NULL
+                WHERE CID=${c_id} AND SID=${u_id}`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows);
+            })
+        })
+    },
+    deleteCourseReviews: (c_id) => {
+        return new Promise((resolve, reject) => {
+            let queryString = `UPDATE enroll SET REVIEWRATING=NULL, REVIEWBODY=NULL
+                WHERE CID=${c_id}`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows);
+            })
+        })
+    }
 }

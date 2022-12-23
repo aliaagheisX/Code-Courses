@@ -11,6 +11,24 @@ function topicListValidate(columns) {
 	return schema.validate(columns);
 }
 
+function validateReview(review) {
+	const schema = Joi.object({
+		body: Joi.string().min(1).max(256).message("Body can't exceed 256 characters")
+			.required().message("Body is required"),
+		rating: Joi.number().min(0).max(5).message("rating can't exceed 5")
+			.required().message("Rating is required"),
+	});
+	return schema.validate(review);
+}
+
+function patchReviewValidate(review) {
+	const schema = Joi.object({
+		body: Joi.string().min(1).max(256).message("Body can't exceed 256 characters"),
+		rating: Joi.number().min(0).max(5).message("rating can't exceed 5"),
+	});
+	return schema.validate(review);
+}
+
 function courseValidate(columns) {
 	const schema = Joi.object({
 		topics: Joi.array().items(Joi.number()).min(1).required(),
@@ -151,4 +169,97 @@ module.exports = {
 				.send({ message: "Internal server error deleting Course by id" + err });
 		}
 	},
+	createReview: async (req, res) => {
+		try {
+			let c_id = parseInt(req.params.c_id);
+			let u_id = parseInt(req.user.ID);
+			let review = req.body;
+			const { error } = validateReview(review);
+			if (error) {
+				return res
+					.status(403)
+					.send({ message: "Validation error " + error.details[0].message });
+			}
+			const { body, rating } = review;
+			await courseRepo.createReview(c_id, u_id, body, rating);
+			let reviews = await courseRepo.getCourseReviews(c_id);
+			return res
+				.status(201)
+				.send({
+					message: "Review added successfully",
+					reviews: reviews,
+				})
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error creating review " + err });
+		}
+	},
+	editReview: async (req, res) => {
+		try {
+			let c_id = parseInt(req.params.c_id);
+			let u_id = parseInt(req.params.u_id);
+			let newReview = req.body;
+			const { error } = patchReviewValidate(newReview);
+			if (error) {
+				return res
+					.status(403)
+					.send({ message: "Validation error " + error.details[0].message });
+			}
+			if (newReview["body"] !== null && newReview["body"] !== "") {
+				await courseRepo.editReviewBody(newReview["body"], c_id, u_id);
+			}
+			if (newReview["rating"] !== null && newReview["rating"] !== "") {
+				await courseRepo.editReviewRating(newReview["rating"], c_id, u_id);
+			}
+			let review = await courseRepo.getReview(c_id, u_id);
+			return res
+				.status(200)
+				.send({
+					message: "Review edited successfully",
+					review: review,
+				});
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error editing review " + err });
+		}
+	},
+	deleteOneReview: async (req, res) => {
+		try {
+			let c_id = parseInt(req.params.c_id);
+			let u_id = parseInt(req.params.u_id);
+			let response = await courseRepo.deleteOneReview(c_id, u_id);
+			if (!response.affectedRows) {
+				return res
+					.status(404)
+					.send({ message: "Review doesn't exist" });
+			}
+			return res
+				.status(200)
+				.send({ message: "Review deleted successfully" });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error deleting review " + err });
+		}
+	},
+	deleteCourseReviews: async (req, res) => {
+		try {
+			let c_id = parseInt(req.params.c_id);
+			let response = await courseRepo.deleteCourseReviews(c_id);
+			if (!response.affectedRows) {
+				return res
+					.status(404)
+					.send({ message: "Course has no reviews" });
+			}
+			return res
+				.status(200)
+				.send({ message: "Course reviews deleted successfully "});
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error deleting course reviews " + err });
+		}
+	}
 };

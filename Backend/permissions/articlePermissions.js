@@ -17,7 +17,14 @@ module.exports = {
 		let id = req.user.ID;
 		let a_id = req.params.a_id;
 		if (isInstructor(id)) {
-			let article = await articleRepo.getArticleById(a_id);
+			let article = null;
+			try {
+				article = await articleRepo.getArticleById(a_id);
+			} catch (err) {
+				return res
+					.status(500)
+					.send({ message: "Internal server error getting article by id " + err });
+			}
 			if (article.INSTRUCTORID === id) {
 				next();
 			} else {

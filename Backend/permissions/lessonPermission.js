@@ -6,8 +6,16 @@ module.exports = {
         let id = req.user.ID;
 		let l_id = req.params.l_id;
 		if (isInstructor(id)) {
-			let lesson = await lessonRepo.getLessonById(l_id);
-            let course = await courseRepo.getCourseById(lesson.CID);
+			let lesson = null;
+			let course = null;
+			try {
+				lesson = await lessonRepo.getLessonById(l_id);
+            	course = await courseRepo.getCourseById(lesson.CID);
+			} catch (err) {
+				return res	
+					.status(500)
+					.send({ message: "Internal server error getting lesson and course " + err });
+			}
 			if (course.INSTRUCTORID === id) {
 				next();
 			} else {
