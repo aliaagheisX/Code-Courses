@@ -13,6 +13,36 @@ module.exports = {
             })
         })
     },
+
+    getCoursesOfInstructor: (id) => {
+        return new Promise((resolve, reject) => {
+            let queryString = `
+            SELECT 
+                    C.INSTRUCTORFNAME, C.INSTRUCTORSNAME, E.*, 
+                    (SELECT COUNT(L.SID) FROM enroll L WHERE L.CID = C.ID ) as enrolls_count 
+            FROM    course C, element E 
+            WHERE   C.INSTRUCTORID=${id}  AND E.ID = C.ID;`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows);
+            })
+        })
+    },
+
+    getCoursesOfStudent: (id) => {
+        return new Promise((resolve, reject) => {
+            let queryString = `
+            SELECT 
+                    C.INSTRUCTORFNAME, C.INSTRUCTORSNAME, E.*, 
+                    (SELECT COUNT(L.SID) FROM enroll L WHERE L.CID = C.ID ) as enrolls_count 
+            FROM    course C, enroll L, element E 
+            WHERE   L.CID=C.ID AND L.SID = ${id} AND   E.ID = C.ID;`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows);
+            })
+        })
+    },
     getCourseById: (id) => {
         return new Promise((resolve, reject) => {
             let queryString = `

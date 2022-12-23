@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import ArticleComponent from '../../components/ArticleComponent'
+import CustomCarsoul from '../../components/CustomCarsoul'
 
 export default function Articles({ articlesRead, articlesLiked }) {
+    console.log(articlesLiked, articlesRead)
     const [likedArticles, setLikedArticles] = useState(0)
     const [readArticles, setReadArticles] = useState(1)
     console.log(readArticles, likedArticles)
@@ -19,17 +21,24 @@ export default function Articles({ articlesRead, articlesLiked }) {
                 >read</div>
                 <div className={`tag ${likedArticles ? 'active' : ''}`} onClick={handelClick}>liked</div>
             </div>
-            <div className='elementCont' >
-                {
-                    readArticles ?
-                        articlesRead.map((article) => (
-                            <ArticleComponent article={article} key={article.ID} />
-                        )) :
-                        articlesLiked.map((article) => (
-                            <ArticleComponent article={article} key={article.ID} />
-                        ))
-                }
-            </div>
+            {
+                readArticles ?
+                    <CustomCarsoul
+                        items={
+                            articlesRead.map((article) => (
+                                <ArticleComponent article={article} key={article.ID} />
+                            ))
+                        }
+                    /> :
+                    <CustomCarsoul
+                        items={
+                            articlesLiked.map((article) => (
+                                <ArticleComponent article={article} key={article.ID} />
+                            ))
+                        }
+                    />
+
+            }
         </section>
     )
 }

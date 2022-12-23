@@ -6,10 +6,7 @@ import api from '../../../api'
 import useToken from '../../../useToken'
 
 export default function Options({ id, instructor_id }) {
-    const navigate = useNavigate()
     const { token, userdata, isAdmin, isInstructor } = useToken()
-    console.log(isAdmin || (isInstructor && userdata.ID === instructor_id))
-
     if (token && (isAdmin || (isInstructor && userdata.ID === instructor_id))) {
 
         return (< div className={styles.opt} >

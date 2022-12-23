@@ -5,8 +5,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import useToken from '../../useToken'
 import api from '../../api'
 
-export default function Options() {
-    const { userdata, token, setInstructor } = useToken()
+export default function Options({ id }) {
+    const { userdata, token, setInstructor, isAdmin } = useToken()
     const navigate = useNavigate();
 
     const handelDeleteIns = async () => {
@@ -27,11 +27,15 @@ export default function Options() {
     }
     return (
         <div className={styles.optsCont}>
-            <Link to={`/students/${userdata.ID}`} className='btnG'>as Student</Link>
-            <div>
-                <Link to='/edit/me' className='btnE'>Edite</Link>
-                <button className='btnDanger' onClick={handelDeleteIns}>Delete Instructor</button>
+            <Link to={`/students/${id}`} className='btnG'>as Student</Link> :
 
+            <div>
+                {token && (isAdmin || userdata.ID === id) ?
+                    <>
+                        <Link to='/edit/me' className='btnE'>Edite</Link>
+                        <button className='btnDanger' onClick={handelDeleteIns}>Delete Instructor</button>
+
+                    </> : <></>}
             </div>
         </div>
     )

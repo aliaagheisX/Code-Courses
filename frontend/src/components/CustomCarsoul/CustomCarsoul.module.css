@@ -1,0 +1,30 @@
+.next,
+.before {
+    position: absolute;
+    top: 38%;
+    --size: 3rem;
+    width: var(--size);
+    height: var(--size);
+    background: #424261;
+    border-radius: 100%;
+    color: white;
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.next {
+    right: 1px;
+}
+
+.before {
+    left: 1px;
+}
+
+.next *,
+.before * {
+    color: white;
+    text-align: center;
+}

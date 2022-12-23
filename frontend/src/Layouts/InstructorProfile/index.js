@@ -12,6 +12,8 @@ import { useParams } from 'react-router-dom'
 import ArticleComponent from '../../components/ArticleComponent'
 
 import Options from './Options'
+import CustomCarsoul from '../../components/CustomCarsoul'
+import CourseComponent from '../../components/CourseComponent'
 export default function InstructorProfile() {
 
     let { id } = useParams();
@@ -21,16 +23,23 @@ export default function InstructorProfile() {
         < Resource
             path={api.instructor(id)}
             render={({ items }) => {
-                const { instructor, writtenCount } = items
+                const {
+                    instructor,
+                    writtenCount,
+                    writtenArticles: articles,
+                    courses,
+                    coursesCount
+                } = items
+                console.log(items)
                 return (
                     <section className={styles.body} >
-                        <Options />
+                        <Options id={instructor.ID} />
                         <main>
                             <ProfileBar userdata={instructor} />
                             <div className={styles.stats}>
 
                                 <ProfileCharts
-                                    nCourses={3}
+                                    nCourses={coursesCount}
                                     nArticles={writtenCount}
                                     nQuizzes={3}
                                 />
@@ -38,23 +47,24 @@ export default function InstructorProfile() {
                             </div>
                         </main>
 
-                        <Resource
-                            path={api.getInstructorArticles(id)}
-                            ErrorComp={<></>}
-                            render={({ items: { articles } }) => (
-                                <section>
-                                    <h3>Articles</h3>
+                        <section>
+                            <h3>Articles</h3>
+                            <CustomCarsoul
+                                items={
+                                    articles.map((article) => <ArticleComponent article={article} key={article.ID} />)
 
-                                    <div className='elementCont' >
-                                        {
+                                } />
+                        </section>
 
-                                            articles.map((article) => <ArticleComponent article={article} key={article.ID} />)
-                                        }
-                                    </div>
-                                </section>
-                            )}
-                        />
-                        {/* <Articles articlesRead={items.articlesRead} articlesLiked={items.articlesLiked} /> */}
+                        <section>
+                            <h3>Courses</h3>
+                            <CustomCarsoul
+                                items={
+                                    courses.map((course) => <CourseComponent course={course} key={course.ID} />)
+
+                                } />
+                        </section>
+
                     </section>
                 )
             }} />

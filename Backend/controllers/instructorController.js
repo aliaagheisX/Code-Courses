@@ -1,6 +1,7 @@
 const instructorRepo = require("../repositories/instructorRepo");
 const Joi = require("joi");
 const articleRepo = require("../repositories/articleRepository");
+const courseRepo = require("../repositories/courseRepository");
 
 function ratingValidate(columns) {
   const schema = Joi.object({
@@ -33,9 +34,15 @@ module.exports = {
         return res.status(404).send({ message: "Instructor not found" });
       }
       let writtenCount = await articleRepo.getNumberOfArticlesByAuthor(id);
+      const writtenArticles = await articleRepo.getArticlesOfInstructor(id);
+      const courses = await courseRepo.getCoursesOfInstructor(id);
+      const coursesCount = courses.length
       return res.status(200).send({
         instructor: instructor,
         writtenCount: writtenCount,
+        writtenArticles: writtenArticles,
+        courses: courses,
+        coursesCount: coursesCount
       });
     } catch (err) {
       return res.status(500).send({

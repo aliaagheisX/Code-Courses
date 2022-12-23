@@ -40,6 +40,38 @@ module.exports = {
 				.send({ message: "Internal server error getting all courses" + err });
 		}
 	},
+	getCoursesOfInstructor: async (req, res) => {
+		try {
+			let id = parseInt(req.params.id);
+			let courses = await courseRepo.getCoursesOfInstructor(id);
+			if (!courses.length) {
+				return res
+					.status(404)
+					.send({ message: "Looks like you have no courses" });
+			}
+			return res.status(200).send({ courses: courses });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting all courses" + err });
+		}
+	},
+	getCoursesOfStudent: async (req, res) => {
+		try {
+			let id = parseInt(req.params.id);
+			let courses = await courseRepo.getCoursesOfStudent(id);
+			if (!courses.length) {
+				return res
+					.status(404)
+					.send({ message: "Looks like you have no courses" });
+			}
+			return res.status(200).send({ courses: courses });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting all courses" + err });
+		}
+	},
 	getCourseById: async (req, res) => {
 		try {
 			let id = parseInt(req.params.id);

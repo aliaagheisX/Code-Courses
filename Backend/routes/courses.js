@@ -13,7 +13,7 @@ const { canCreateCourse, canEditCourse } = require('../permissions/coursePermiss
 router.get('/:id', courseController.getCourseById);
 router.get('/', courseController.getAllCourses);
 
-router.delete('/:id', courseController.deleteCourseById);
+router.delete('/:c_id', courseController.deleteCourseById);
 
 router.post('/create', [authToken, canCreateCourse], upload.single('image'), courseController.createCourse);
 

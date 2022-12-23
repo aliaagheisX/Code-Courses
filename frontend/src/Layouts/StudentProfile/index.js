@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ProfileCharts from './ProfileCharts'
 import ProfileBar from './ProfileBar'
 
@@ -12,6 +12,7 @@ import RankBar from './RankBar'
 import { useParams } from 'react-router-dom'
 import Articles from './Articles'
 import Options from './Options'
+import Courses from './Courses'
 
 
 export const ranks = ['Newbie', 'Pupil', 'Specialist', 'Expert', 'CM', 'IM', 'GM', 'IGM', 'LGM'];
@@ -58,16 +59,17 @@ export default function StudentProfile() {
                 const rank = ranks[rank_ind]
                 const [rem, percent] = getPercentileOfNxtRating(student.SCORE)
                 const nxtRank = rank_ind === 8 ? 'Thousands' : ranks[rank_ind + 1];
+
                 return (
                     <section className={styles.body} >
-                        <Options />
+                        <Options id={student.ID} />
                         <main>
                             <ProfileBar userdata={student} rank_ind={rank_ind} rank={rank} />
                             <div className={styles.stats}>
 
                                 <RankBar percent={percent} nxtRank={nxtRank} remenderPts={rem} />
                                 <ProfileCharts
-                                    nCourses={3}
+                                    nCourses={items.coursesCount}
                                     nArticles={items.readCount}
                                     nQuizzes={3}
                                 />
@@ -75,7 +77,9 @@ export default function StudentProfile() {
                             </div>
                         </main>
 
+
                         <Articles articlesRead={items.articlesRead} articlesLiked={items.articlesLiked} />
+                        <Courses coursesEnrolled={items.coursesEnrolled} />
                     </section>
                 )
             }} />
