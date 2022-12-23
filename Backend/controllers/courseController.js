@@ -169,6 +169,36 @@ module.exports = {
 				.send({ message: "Internal server error deleting Course by id" + err });
 		}
 	},
+	enrollCourse: async (req, res) => {
+		try {
+			let c_id = parseInt(req.params.c_id);
+			let u_id = parseInt(req.user.ID);
+
+			await courseRepo.enrollCourse(u_id, c_id);
+			return res
+				.status(200)
+				.send({ message: "successfully enrolled" })
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error enrolling in course " + err });
+		}
+	},
+	disenrollCourse: async (req, res) => {
+		try {
+			let c_id = parseInt(req.params.c_id);
+			let u_id = parseInt(req.user.ID);
+
+			await courseRepo.disenrollCourse(u_id, c_id);
+			return res
+				.status(200)
+				.send({ message: "successfully disenrolled" })
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error disenrolling in course " + err });
+		}
+	},
 	createReview: async (req, res) => {
 		try {
 			let c_id = parseInt(req.params.c_id);
@@ -255,7 +285,7 @@ module.exports = {
 			}
 			return res
 				.status(200)
-				.send({ message: "Course reviews deleted successfully "});
+				.send({ message: "Course reviews deleted successfully " });
 		} catch (err) {
 			return res
 				.status(500)

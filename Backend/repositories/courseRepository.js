@@ -140,6 +140,27 @@ module.exports = {
 
     },
 
+    enrollCourse: (u_id, c_id) => {
+        return new Promise((resolve, reject) => {
+            let queryString = `INSERT INTO enroll (SID, CID) VALUES (${u_id}, ${c_id})`;
+
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows);
+            })
+        })
+    },
+
+    disenrollCourse: (u_id, c_id) => {
+        return new Promise((resolve, reject) => {
+            let queryString = `DELETE FROM enroll WHERE CID=${c_id} AND SID=${u_id}`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows);
+            })
+        })
+    },
+
 
     deleteCourseTopics: (id) => {
         return new Promise((resolve, reject) => {

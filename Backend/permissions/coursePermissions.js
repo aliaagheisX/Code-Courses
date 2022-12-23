@@ -54,7 +54,7 @@ module.exports = {
 		let is_enrolled = null;
 		try {
 			is_enrolled = await courseRepo.getUserEnrolled(u_id, c_id);
-		} catch(err) {
+		} catch (err) {
 			return res
 				.status(500)
 				.send({ message: "Internal server error getting user enrolled " + err });
@@ -65,5 +65,41 @@ module.exports = {
 				.send({ message: "Unauthorized. You are not enrolled in this course" });
 		}
 		next();
-	}
+	},
+	canEnroll: async (req, res, next) => {
+		let u_id = req.user.ID;
+		let c_id = parseInt(req.params.c_id);
+		let is_enrolled = null;
+		try {
+			is_enrolled = await courseRepo.getUserEnrolled(u_id, c_id);
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting user enrolled " + err });
+		}
+		if (is_enrolled) {
+			return res
+				.status(401)
+				.send({ message: "Unauthorized. You are already enrolled in this course" });
+		}
+		next();
+	},
+	canDisenroll: async (req, res, next) => {
+		let u_id = req.user.ID;
+		let c_id = parseInt(req.params.c_id);
+		let is_enrolled = null;
+		try {
+			is_enrolled = await courseRepo.getUserEnrolled(u_id, c_id);
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting user enrolled " + err });
+		}
+		if (!is_enrolled) {
+			return res
+				.status(401)
+				.send({ message: "Unauthorized. You are already not enrolled in this course" });
+		}
+		next();
+	},
 }
