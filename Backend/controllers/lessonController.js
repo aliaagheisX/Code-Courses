@@ -1,5 +1,30 @@
 const articleRepo = require('../repositories/articleRepository');
 const lessonRepo = require('../repositories/lessonRepository');
+const Joi = require('joi');
+
+function lessonValidate(lesson) {
+    const schema = Joi.object({
+        name: Joi.string().min(1).max(32)
+            .message("Name cannot exceed 32 characters and cannot be empty")
+            .required().message("Name is required"),
+        description: Joi.string().min(1).max(256)
+            .message("Description cannot exceed 256 characters and cannot be empty")
+            .required().message("Description is required"),
+        cid: Joi.number().required().message("Course id (cid) is required"),
+    });
+    return schema.validate(lesson);
+}
+
+function patchLessonValidate(lesson) {
+    const schema = Joi.object({
+        name: Joi.string().min(1).max(32)
+            .message("Name cannot exceed 32 characters and cannot be empty"),
+        description: Joi.string().min(1).max(256)
+            .message("Description cannot exceed 256 characters and cannot be empty"),
+        cid: Joi.number(),
+    });
+    return schema.validate(lesson);
+}
 
 module.exports = {
     getAllLessons: async (req, res) => {
@@ -80,10 +105,63 @@ module.exports = {
         }
     },
     postNewLesson: async (req, res) => {
-
+        try {
+            let lesson = req.body;
+            const { error } = lessonValidate(lesson);
+            if (error) {
+                return res
+                    .status(403)
+                    .send({ message: "Validation error " + error.details[0].message });
+            }
+            let { id, newLesson } = await lessonRepo.postNewLesson(lesson);
+            return res
+                .status(201)
+                .send({
+                    message: "Lesson added successfully",
+                    id: id,
+                    lesson: newLesson,
+                });
+        } catch (error) {
+            return res
+                .status(500)
+                .send({ message: "Internal server error creating new lesson " + err });
+        }
     },
     editLesson: async (req, res) => {
-
+        try {
+            let columns = req.body;
+            let cid = null;
+            if (columns["cid"] !== null && columns["cid"] !== "") {
+                cid = parseInt(columns["cid"]);
+            }
+            let l_id = parseInt(req.params.l_id);
+            const { error } = patchLessonValidate(columns);
+            if (error) {
+                return res
+                    .status(403)
+                    .send({ message: "Validation error " + error.details[0].message });
+            }
+            if (columns["name"] !== null && columns["name"] !== "") {
+                await lessonRepo.editLessonName(columns["name"], l_id);
+            }
+            if (columns["description"] !== null && columns["description"] !== "") {
+                await lessonRepo.editLessonDescription(columns["description"], l_id);
+            }
+            if (cid !== null) {
+                await lessonRepo.editLessonCourseId(cid, l_id);
+            }
+            let newLesson = await lessonRepo.getLessonById(l_id);
+            return res  
+                .status(200)
+                .send({ 
+                    message: "Lesson edited successfully",
+                    lesson: newLesson,
+                });
+        } catch (err) {
+            return res
+                .status(500)
+                .send({ message: "Internal server error editing lesson " + err });
+        }
     },
     deleteAllLessons: async (req, res) => {
         try {

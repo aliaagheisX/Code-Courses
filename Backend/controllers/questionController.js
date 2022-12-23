@@ -1,27 +1,27 @@
-const choiceRepo = require("../repositories/choiceRepository");
+const questionRepo = require("../repositories/questionRepository");
 const Joi = require("joi");
 
-function choiceValidate(columns) {
+function questionValidate(columns) {
   const schema = Joi.object({
     body: Joi.string().required().min(2),
-    Q_ID: Joi.number().required().min(0), // Question ID
-    isCorrect: Joi.boolean().required(),
+    I_ID: Joi.number().required().min(0),
+    score: Joi.number().required().min(0),
   });
   return schema.validate(columns);
 }
 
 module.exports = {
-  postChoice: async (req, res) => {
+  postQuestion: async (req, res) => {
     try {
-      let choice = req.body;
-      const { error } = choiceValidate(choice);
+      let question = req.body;
+      const { error } = questionValidate(question);
       if (error) {
         return res.status(403).send({ message: "Validation Error:  " + error });
       }
-      createChoice = await choiceRepo.createChoice(choice);
+      createQ = await questionRepo.createQuestion(question);
       return res.status(201).send({
-        message: "choice Created",
-        createdChoice: createChoice,
+        message: "Question Created",
+        createdQuestion: createQ,
       });
     } catch (err) {
       return res
@@ -29,18 +29,18 @@ module.exports = {
         .send({ message: "Internal server error getting all lessons " + err });
     }
   },
-  getChoicesByQuestion: async (req, res) => {
+  getQuestionsByQuiz: async (req, res) => {
     try {
       let Q_ID = req.body.Q_ID;
       if (!Q_ID) {
         return res
           .status(403)
-          .send({ message: "Pleases Insert the QUESTION ID as Q_ID  " });
+          .send({ message: "Pleases Insert the QUIZ ID as Q_ID  " });
       }
-      let choices = await choiceRepo.getQuestionsByQuiz(Q_ID);
+      let questions = await questionRepo.getQuestionsByQuiz(Q_ID);
       return res.status(201).send({
-        message: "choices retrieved",
-        Choices: choices,
+        message: "questions retrieved",
+        Questions: questions,
       });
     } catch (err) {
       return res
