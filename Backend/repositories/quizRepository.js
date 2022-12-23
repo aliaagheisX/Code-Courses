@@ -1,9 +1,9 @@
 const { DBconnection } = require("../config/database");
 
 module.exports = {
-  createChoice: (choice) => {
+  createQuiz: (quiz) => {
     return new Promise((resolve, reject) => {
-      let queryString = `INSERT INTO CHOICES (ID,BODY,ISCORRECT) VALUES(${choice.Q_ID},'${choice.body}',${choice.isCorrect})`;
+      let queryString = `INSERT INTO QUiz (MAXSCORE,INSTRUCTORID) VALUES(${quiz.max_score},${quiz.I_ID})`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows[0]);
