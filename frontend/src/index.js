@@ -14,6 +14,7 @@ import Instructors from './Layouts/Users/Instructors';
 import Articles from './Layouts/Articles';
 import AddArticle from './Layouts/Articles/AddArticle';
 import AddCourse from './Layouts/Courses/AddCourse';
+import EditCourse from './Layouts/Courses/EditCourse';
 import ShowArticle from './Layouts/Articles/ShowArticle';
 import ShowCourse from './Layouts/Courses/ShowCourse';
 import Topics from './Layouts/Topics';
@@ -89,6 +90,7 @@ root.render(
 
         <Route path='/courses' element={<Courses />} />
         <Route path='/courses/:id' element={<ShowCourse />} />
+        <Route path='/courses/edit/:id' element={<EditCourse />} />
         <Route path='/courses/add' element={
           <InstructorRoute>
             <AddCourse />

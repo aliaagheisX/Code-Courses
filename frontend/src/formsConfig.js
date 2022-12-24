@@ -206,6 +206,23 @@ export const AddCourseSchema = Yup.object().shape({
 
   topics: Yup.array().min(1, "at least 1").required("required")
 });
+
+export const EditCourseSchema = Yup.object().shape({
+  image: Yup.mixed(),
+  title: Yup.string()
+    .min(2, "at least 2 characters")
+    .max(25, "at most 25 characters"),
+
+  description: Yup.string()
+    .min(20, "at least 20 characters")
+    .max(150, "at most 150 characters"),
+
+  pre: Yup.string()
+    .min(3, "at least 3 characters")
+    .max(256, "at most 256 characters"),
+
+  topics: Yup.array().min(1, "at least 1").required("required")
+});
 export const AddCommentSchema = Yup.object().shape({
   comment: Yup.string().min(6).max(255).required(),
   r_id: Yup.number().nullable()
@@ -219,7 +236,6 @@ export const EditeCommentSchema = Yup.object().shape({
 
 export const AddReviewSchema = Yup.object().shape({
   body: Yup.string().min(1).max(256, "Body can't exceed 256 characters").required("Body is required"),
-  rating: Yup.number().min(0).max(5, "rating can't exceed 5").required("Rating is required"),
 });
 
 

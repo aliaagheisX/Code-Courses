@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './index.module.css'
 import Thumb from '../../../components/Thumb'
 
@@ -10,6 +10,8 @@ import StudentFeedBack from './StudentFeedBack'
 import Reviews from './Reviews'
 
 export default function Course({ course }) {
+    const [courseRating, setCourseRating] = useState(course.rating)
+    console.log(course)
     const {
         ID, TITLE, INSTRUCTORFNAME, INSTRUCTORSNAME,
         PREREQUISITES, CREATIONDATE, DESCRIPTION, IMAGE, INSTRUCTORID, enrolls_count
@@ -44,8 +46,8 @@ export default function Course({ course }) {
                     <h4>By {INSTRUCTORFNAME === null ? 'Unknown' : `${INSTRUCTORFNAME} ${INSTRUCTORSNAME}`}</h4>
                     <div>at {create_date}</div>
                 </div>
-                <StudentFeedBack totalCount={enrolls_count} ratingData={course.rating} />
-                <Reviews id={ID} reviews={course.reviews} />
+                <StudentFeedBack totalCount={enrolls_count} ratingData={courseRating} />
+                <Reviews id={ID} reviews={course.reviews} setCourseRating={setCourseRating} />
             </div>
 
 

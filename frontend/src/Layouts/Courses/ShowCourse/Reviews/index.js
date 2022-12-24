@@ -4,7 +4,7 @@ import Review from './Review'
 import styles from './index.module.css'
 import UserOptions from './UserOptions'
 import AddReview from './AddReview'
-export default function Reviews({ reviews, id }) {
+export default function Reviews({ reviews, id, setCourseRating }) {
     const { token, userdata } = useToken()
     const [myReview, setMyReview] = useState(null)
     const [isEditing, setIsEditing] = useState(0)
@@ -16,16 +16,24 @@ export default function Reviews({ reviews, id }) {
             })
         }
     }, [])
+
+    const chReview = (review, rating) => {
+        setMyReview(review)
+        setIsEditing(0)
+        setCourseRating(rating)
+    }
     return (
         <section>
             <h4>Reviews</h4>
             {
-                myReview ?
-                    <div className={styles.myReview}>
-                        <Review review={myReview} />
-                        <UserOptions toggleEditing={toggleEditing} id={id} setMyReview={setMyReview} />
-                    </div> :
-                    <AddReview review={myReview} setReview={setMyReview} />
+                token && (
+                    isEditing || !myReview ?
+                        <AddReview id={id} review={myReview} chReview={chReview} /> :
+                        <div className={styles.myReview}>
+                            <Review review={myReview} />
+                            <UserOptions toggleEditing={toggleEditing} id={id} chReview={chReview} />
+                        </div>
+                )
             }
             {
                 reviews.map((review) => {

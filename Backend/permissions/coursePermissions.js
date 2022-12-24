@@ -13,18 +13,23 @@ module.exports = {
 				.send({ message: "Unauthorized. Must be instructor" });
 		}
 	},
-	canEditCourse: async (req, res, next) => {
+	canControllCourse: async (req, res, next) => {
 		let id = req.user.ID;
 		let c_id = req.params.c_id;
-		if (isInstructor(id)) {
-			let course = null;
-			try {
-				course = await courseRepo.getCourseById(c_id);
-			} catch (err) {
-				return res
-					.status(500)
-					.send({ message: "Internal server error getting course by id " + err });
-			}
+		let course = null;
+		try {
+			course = await courseRepo.getCourseById(c_id);
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting course by id " + err });
+		}
+
+		if (req.user.ISADMIN[0]) {	//if admin
+			next();
+		}
+		else if (isInstructor(id)) {
+
 			if (course.INSTRUCTORID === id) {
 				next();
 			} else {
@@ -35,9 +40,11 @@ module.exports = {
 		} else {
 			return res
 				.status(401)
-				.send({ message: "Unauthorized. Must be instructor" })
+				.send({ message: "Unauthorized. Must be instructor or admin" })
 		}
 	},
+
+
 	canEditReview: async (req, res, next) => {
 		let u_id = parseInt(req.params.u_id);
 		let userID = req.user.ID;

@@ -3,7 +3,7 @@ import api from '../../../../api'
 import useToken from '../../../../useToken'
 import styles from './index.module.css'
 
-export default function UserOptions({ toggleEditing, id, setMyReview }) {
+export default function UserOptions({ toggleEditing, id, chReview }) {
     const { token, userdata } = useToken()
     const deleteComment = async () => {
         try {
@@ -15,7 +15,7 @@ export default function UserOptions({ toggleEditing, id, setMyReview }) {
 
             if (!res.ok) throw data.message;
             console.log("success", data.message)
-            setMyReview(null)
+            chReview(null, data.rating)
 
         } catch (err) {
             console.log("err", err)

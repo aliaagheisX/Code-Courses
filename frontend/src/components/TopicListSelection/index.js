@@ -17,7 +17,8 @@ export default function TopicListSelection({ initialTopics }) {
     }
 
     const removeTag = (tag) => {
-        const temp = tagList.splice(tagList.indexOf(tag), 1)
+        const temp = tagList;
+        temp.splice(tagList.indexOf(tag), 1)
         setTagList(temp)
     }
 

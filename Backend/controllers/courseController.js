@@ -42,6 +42,18 @@ function courseValidate(columns) {
 	return schema.validate(columns);
 }
 
+
+function coursePatchValidate(columns) {
+	const schema = Joi.object({
+		topics: Joi.array().items(Joi.number()).min(1).required(),
+		image: Joi.any(),
+		title: Joi.string().allow(null, '').min(2).max(25),
+		description: Joi.string().allow(null, '').min(20).max(150),
+		pre: Joi.string().min(3).max(256).allow(null, '')
+	});
+	return schema.validate(columns);
+}
+
 const getUser = async (req) => {
 	const token = req.header('token');
 	if (!token) return null;
@@ -167,6 +179,71 @@ module.exports = {
 				.send({ message: "Internal server error creating course " + err });
 		}
 	},
+
+	editCourse: async (req, res) => {
+		try {
+			let id = req.params.c_id;
+			let course = req.body;
+			//parse topics
+			course.topics = JSON.parse(course.topics);
+			const { error } = coursePatchValidate(course);
+			if (error) {
+				return res
+					.status(403)
+					.send({ message: "Validation error " + error.details[0].message });
+			}
+			if (course.title !== '') {
+				try {
+					let edit_title = await elementRepo.editElementTitle(course, id)
+				} catch (err) {
+					return res
+						.status(500)
+						.send({ message: "Internal server error posting course " + err });
+				}
+			}
+			if (course.description !== '') {
+				try {
+					let edit_description = await elementRepo.editElementDescription(course, id)
+				} catch (err) {
+					return res
+						.status(500)
+						.send({ message: "Internal server error posting course " + err });
+				}
+			}
+			if (course.pre !== '') {
+				try {
+					let edit_pre = await courseRepo.editCoursePre(course.pre, id)
+				} catch (err) {
+					return res
+						.status(500)
+						.send({ message: "Internal server error posting course " + err });
+				}
+			}
+			if (req.file?.path != null) {
+				let imagePath = req.file.path
+				imagePath = "http://localhost:4000/" + imagePath.replace('\\', '/')
+				try {
+					await elementRepo.editImage(id, imagePath);
+				} catch (err) {
+					return res
+						.status(500)
+						.send({ message: "Internal server error editing article " + err });
+				}
+
+			}
+			//add topics to course
+			await courseRepo.removeTopicsFromCourse(id)
+			await courseRepo.addTopicsToCourse(id, course.topics)
+
+			return res
+				.status(200)
+				.send({ message: "Course edited successfully" });
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error creating course " + err });
+		}
+	},
 	deleteCourseById: async (req, res) => {
 		try {
 			let id = parseInt(req.params.c_id);
@@ -259,11 +336,13 @@ module.exports = {
 				await courseRepo.editReviewRating(newReview["rating"], c_id, u_id);
 			}
 			let review = await courseRepo.getReview(c_id, u_id);
+			let rating = await courseRepo.getCourseRating(c_id);
 			return res
 				.status(200)
 				.send({
 					message: "Review edited successfully",
 					review: review,
+					rating: rating
 				});
 		} catch (err) {
 			return res
@@ -276,14 +355,16 @@ module.exports = {
 			let c_id = parseInt(req.params.c_id);
 			let u_id = parseInt(req.params.u_id);
 			let response = await courseRepo.deleteOneReview(c_id, u_id);
+
 			if (!response.affectedRows) {
 				return res
 					.status(404)
 					.send({ message: "Review doesn't exist" });
 			}
+			let rating = await courseRepo.getCourseRating(c_id);
 			return res
 				.status(200)
-				.send({ message: "Review deleted successfully" });
+				.send({ message: "Review deleted successfully", rating: rating });
 		} catch (err) {
 			return res
 				.status(500)

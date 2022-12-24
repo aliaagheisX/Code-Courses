@@ -36,6 +36,7 @@ const api = {
     getAllCourses: `http://localhost:4000/courses/`,
     addCourse: `http://localhost:4000/courses/create`,
     deleteCourse: (id) => `http://localhost:4000/courses/${id}`,
+    editCourse: (id) => `http://localhost:4000/courses/${id}`,
     enrollCourse: (id) => `http://localhost:4000/courses/enroll/${id}`,
     disenrollCourse: (id) => `http://localhost:4000/courses/disenroll/${id}`,
     editReview: (c_id, u_id) => `http://localhost:4000/courses/review/edit/${c_id}/${u_id}`,

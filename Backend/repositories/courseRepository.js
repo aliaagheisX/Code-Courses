@@ -1,4 +1,5 @@
 const { DBconnection } = require('../config/database');
+const ch = (str) => str.replace(/'/g, "`");
 module.exports = {
     getAllCourses: () => {
         return new Promise((resolve, reject) => {
@@ -122,6 +123,15 @@ module.exports = {
             })
         })
     },
+    editCoursePre: (pre, id) => {
+        return new Promise((resolve, reject) => {
+            let queryString = `UPDATE COURSE SET PREREQUISITES = '${ch(pre)}' WHERE ID = ${id} `;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows);
+            })
+        })
+    },
 
     createCourse: (course, imagePath) => {
         const {
@@ -130,7 +140,6 @@ module.exports = {
             pre,
             instructor_id,
         } = course;
-        const ch = (str) => str.replace(/'/g, "`");
 
         return new Promise((resolve, reject) => {
             let queryString = `CALL add_course(
@@ -168,6 +177,16 @@ module.exports = {
                 if (err) return reject(err);
                 return resolve(rows);
             })
+        })
+    },
+
+    removeTopicsFromCourse: (c_id) => {
+        return new Promise((resolve, reject) => {
+            let queryString = `DELETE FROM course_topic WHERE CID=${c_id}`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows);
+            });
         })
     },
 

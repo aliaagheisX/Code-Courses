@@ -7,13 +7,15 @@ const upload = multer({ dest: 'images/' });
 
 
 const courseController = require('../controllers/courseController');
-const { canCreateCourse, canEditCourse, canEnroll, canDisenroll, canEditReview, canReview } = require('../permissions/coursePermissions');
+const { canCreateCourse, canControllCourse, canEnroll, canDisenroll, canEditReview, canReview } = require('../permissions/coursePermissions');
 
 
-router.get('/:id', courseController.getCourseById);
 router.get('/', courseController.getAllCourses);
 
-router.delete('/:c_id', courseController.deleteCourseById);
+router.get('/:id', courseController.getCourseById);
+//delete and edit isAdmin || instructor of course
+router.delete('/:c_id', [authToken, canControllCourse], courseController.deleteCourseById);
+router.patch('/:c_id', [authToken, canControllCourse], upload.single('image'), courseController.editCourse);
 
 router.post('/create', [authToken, canCreateCourse], upload.single('image'), courseController.createCourse);
 router.post('/enroll/:c_id', [authToken, canEnroll], courseController.enrollCourse);

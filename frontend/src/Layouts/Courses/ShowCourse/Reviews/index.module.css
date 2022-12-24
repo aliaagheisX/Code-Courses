@@ -71,3 +71,18 @@
 .frm input {
     flex-grow: 1;
 }
+
+
+
+.emptyStar {
+    font-variation-settings: "FILL" 0;
+}
+.stars {
+    margin-top: -20px;
+    margin-left: 60px;
+}
+.stars span {
+    color: #e59819;
+    font-size: 21px;
+    cursor: pointer;
+}
