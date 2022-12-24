@@ -25,7 +25,7 @@ const Home = () => {
       />
       </section>
       <div className='space'>
-      <section className={styles.space}>
+      <section className={styles}>
   <h2>Courses</h2>
     <Resource
                 path={api.getAllCourses}
