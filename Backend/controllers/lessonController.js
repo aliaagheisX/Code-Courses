@@ -11,6 +11,8 @@ function lessonValidate(lesson) {
             .message("Description cannot exceed 256 characters and cannot be empty")
             .required().message("Description is required"),
         cid: Joi.number().required().message("Course id (cid) is required"),
+        quizze: Joi.number().min(1).required(),
+        article: Joi.number().min(1).required(),
     });
     return schema.validate(lesson);
 }
@@ -18,10 +20,12 @@ function lessonValidate(lesson) {
 function patchLessonValidate(lesson) {
     const schema = Joi.object({
         name: Joi.string().min(1).max(32)
-            .message("Name cannot exceed 32 characters and cannot be empty"),
+            .message("Name cannot exceed 32 characters and cannot be empty").allow('', null),
         description: Joi.string().min(1).max(256)
-            .message("Description cannot exceed 256 characters and cannot be empty"),
-        cid: Joi.number(),
+            .message("Description cannot exceed 256 characters and cannot be empty").allow('', null),
+        cid: Joi.number().allow('', null),
+        quizze: Joi.number().min(1).allow('', null),
+        article: Joi.number().min(1).allow('', null),
     });
     return schema.validate(lesson);
 }
@@ -44,7 +48,7 @@ module.exports = {
             }
             return res
                 .status(200)
-                .send({ 
+                .send({
                     lessons: lessons,
                     articles: articles,
                 });
@@ -94,7 +98,7 @@ module.exports = {
             }
             return res
                 .status(200)
-                .send({ 
+                .send({
                     lessons: lessons,
                     articles: articles,
                 });
@@ -151,9 +155,9 @@ module.exports = {
                 await lessonRepo.editLessonCourseId(cid, l_id);
             }
             let newLesson = await lessonRepo.getLessonById(l_id);
-            return res  
+            return res
                 .status(200)
-                .send({ 
+                .send({
                     message: "Lesson edited successfully",
                     lesson: newLesson,
                 });

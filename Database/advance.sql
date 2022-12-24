@@ -94,10 +94,12 @@ CREATE PROCEDURE add_lesson
     (IN name varchar(32),
      IN description varchar(256),
      IN cid int(11),
+     IN qid int(11),
+     IN aid int(11),
      OUT lesson_id int(11)
     )
 BEGIN
-    INSERT INTO lesson(NAME, DESCRIPTION, CID) VALUES (name, description, cid);
+    INSERT INTO lesson(NAME, DESCRIPTION, CID, AID, QID) VALUES (name, description, cid, aid, qid);
     SET lesson_id = LAST_INSERT_ID();
 END &&
 DELIMITER ;
