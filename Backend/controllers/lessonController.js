@@ -11,8 +11,8 @@ function lessonValidate(lesson) {
             .message("Description cannot exceed 256 characters and cannot be empty")
             .required().message("Description is required"),
         cid: Joi.number().required().message("Course id (cid) is required"),
-        quizze: Joi.number().min(1).required(),
-        article: Joi.number().min(1).required(),
+        qid: Joi.number().min(1).required(),
+        aid: Joi.number().min(1).required(),
     });
     return schema.validate(lesson);
 }
@@ -24,8 +24,8 @@ function patchLessonValidate(lesson) {
         description: Joi.string().min(1).max(256)
             .message("Description cannot exceed 256 characters and cannot be empty").allow('', null),
         cid: Joi.number().allow('', null),
-        quizze: Joi.number().min(1).allow('', null),
-        article: Joi.number().min(1).allow('', null),
+        qid: Joi.number().min(1).allow(null),
+        aid: Joi.number().min(1).allow(null),
     });
     return schema.validate(lesson);
 }
