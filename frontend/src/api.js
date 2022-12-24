@@ -32,13 +32,14 @@ const api = {
     addArticlComments: (id) => `http://localhost:4000/comments/create/${id}`,//article_id
     editeComment: (id) => `http://localhost:4000/comments/edit/${id}`,//comment_id
     deleteComment: (id) => `http://localhost:4000/comments/${id}`,//comment_id
-
     getCourse: (id) => `http://localhost:4000/courses/${id}`,
     getAllCourses: `http://localhost:4000/courses/`,
     addCourse: `http://localhost:4000/courses/create`,
     deleteCourse: (id) => `http://localhost:4000/courses/${id}`,
     enrollCourse: (id) => `http://localhost:4000/courses/enroll/${id}`,
-    disenrollCourse: (id) => `http://localhost:4000/courses/disenroll/${id}`
-
+    disenrollCourse: (id) => `http://localhost:4000/courses/disenroll/${id}`,
+    editReview: (c_id, u_id) => `http://localhost:4000/courses/review/edit/${c_id}/${u_id}`,
+    deleteReview: (c_id, u_id) => `http://localhost:4000/courses/deleteonereview/${c_id}/${u_id}`,
+    deleteAllReviews: (c_id) => `http://localhost:4000/courses/deletecoursereviews/${c_id}`, //admin
 }
 export default api

@@ -68,6 +68,10 @@ export const addCommentInitialValues = {
 
 export const emptyInitialValues = {};
 
+
+
+
+
 /* validation schemas */
 export const LoginSchema = Yup.object().shape({
   /* email validation */
@@ -210,6 +214,12 @@ export const AddCommentSchema = Yup.object().shape({
 
 export const EditeCommentSchema = Yup.object().shape({
   new_comment: Yup.string().min(6).max(255).required()
+});
+
+
+export const AddReviewSchema = Yup.object().shape({
+  body: Yup.string().min(1).max(256, "Body can't exceed 256 characters").required("Body is required"),
+  rating: Yup.number().min(0).max(5, "rating can't exceed 5").required("Rating is required"),
 });
 
 

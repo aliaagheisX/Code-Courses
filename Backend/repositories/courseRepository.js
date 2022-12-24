@@ -89,6 +89,16 @@ module.exports = {
         })
     },
 
+    getCourseUserReview: (c_id, u_id) => {
+        return new Promise((resolve, reject) => {
+            let queryString = `SELECT E.*, U.USERNAME, U.FNAME, U.SNAME,U._IMAGE, U.EMAIL FROM enroll E, _user U  WHERE E.CID=${c_id} AND E.SID = ${u_id} AND REVIEWRATING IS NOT NULL AND U.ID=E.SID;`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows[0]);
+            })
+        })
+    },
+
     getReview: (c_id, u_id) => {
         return new Promise((resolve, reject) => {
             let queryString = `SELECT E.*, U.USERNAME, U.FNAME, U.SNAME, U._IMAGE, U.EMAIL FROM enroll E, _user U 

@@ -44,9 +44,11 @@ module.exports = {
 		if (u_id === userID) {
 			next();
 		}
-		return res
-			.status(401)
-			.send({ message: "Unauthorized. This isn't your review" });
+		else {
+			return res
+				.status(401)
+				.send({ message: "Unauthorized. This isn't your review" });
+		}
 	},
 	canReview: async (req, res, next) => {
 		let u_id = req.user.ID;

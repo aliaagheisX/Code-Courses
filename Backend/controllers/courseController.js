@@ -219,21 +219,21 @@ module.exports = {
 		try {
 			let c_id = parseInt(req.params.c_id);
 			let u_id = parseInt(req.user.ID);
-			let review = req.body;
-			const { error } = validateReview(review);
+			let review_b = req.body;
+			const { error } = validateReview(review_b);
 			if (error) {
 				return res
 					.status(403)
 					.send({ message: "Validation error " + error.details[0].message });
 			}
-			const { body, rating } = review;
+			const { body, rating } = review_b;
 			await courseRepo.createReview(c_id, u_id, body, rating);
-			let reviews = await courseRepo.getCourseReviews(c_id);
+			let review = await courseRepo.getCourseUserReview(c_id);
 			return res
 				.status(201)
 				.send({
 					message: "Review added successfully",
-					reviews: reviews,
+					review: review,
 				})
 		} catch (err) {
 			return res

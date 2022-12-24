@@ -17,7 +17,6 @@ export default function Course({ course }) {
     const create_date = new Date(CREATIONDATE).toDateString().split(' ').slice(1).join(' ');
 
 
-    console.log(course)
 
     return (
         <section className={styles.sec}>
@@ -46,7 +45,7 @@ export default function Course({ course }) {
                     <div>at {create_date}</div>
                 </div>
                 <StudentFeedBack totalCount={enrolls_count} ratingData={course.rating} />
-                <Reviews reviews={course.reviews} />
+                <Reviews id={ID} reviews={course.reviews} />
             </div>
 
 
