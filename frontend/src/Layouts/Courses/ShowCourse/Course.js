@@ -10,6 +10,7 @@ import StudentFeedBack from './StudentFeedBack'
 import Reviews from './Reviews'
 
 export default function Course({ course }) {
+    const [enrollState, setEnrollState] = useState(course.is_enrolled)
     const [courseRating, setCourseRating] = useState(course.rating)
     console.log(course)
     const {
@@ -22,7 +23,7 @@ export default function Course({ course }) {
 
     return (
         <section className={styles.sec}>
-            <Options id={ID} instructor_id={INSTRUCTORID} is_enrolled={course.is_enrolled} />
+            <Options id={ID} instructor_id={INSTRUCTORID} is_enrolled={enrollState} setEnrollState={setEnrollState} />
             <div className={styles.stLike}>
 
                 <span className={`${styles.vsCont}`}>
@@ -47,7 +48,7 @@ export default function Course({ course }) {
                     <div>at {create_date}</div>
                 </div>
                 <StudentFeedBack totalCount={enrolls_count} ratingData={courseRating} />
-                <Reviews id={ID} reviews={course.reviews} setCourseRating={setCourseRating} />
+                <Reviews is_enrolled={enrollState} id={ID} reviews={course.reviews} setCourseRating={setCourseRating} />
             </div>
 
 

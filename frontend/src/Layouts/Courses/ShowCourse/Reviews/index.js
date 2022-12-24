@@ -4,7 +4,7 @@ import Review from './Review'
 import styles from './index.module.css'
 import UserOptions from './UserOptions'
 import AddReview from './AddReview'
-export default function Reviews({ reviews, id, setCourseRating }) {
+export default function Reviews({ reviews, id, setCourseRating, is_enrolled }) {
     const { token, userdata } = useToken()
     const [myReview, setMyReview] = useState(null)
     const [isEditing, setIsEditing] = useState(0)
@@ -26,7 +26,7 @@ export default function Reviews({ reviews, id, setCourseRating }) {
         <section>
             <h4>Reviews</h4>
             {
-                token && (
+                token && is_enrolled && (
                     isEditing || !myReview ?
                         <AddReview id={id} review={myReview} chReview={chReview} /> :
                         <div className={styles.myReview}>

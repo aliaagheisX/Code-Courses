@@ -5,7 +5,7 @@ import DeleteAll from '../../../DeleteAll'
 import api from '../../../api'
 import useToken from '../../../useToken'
 
-export default function Options({ id, instructor_id, is_enrolled }) {
+export default function Options({ id, instructor_id, is_enrolled, setEnrollState }) {
     const { token, userdata, isAdmin, isInstructor } = useToken()
     const navigate = useNavigate()
 
@@ -21,6 +21,7 @@ export default function Options({ id, instructor_id, is_enrolled }) {
             if (!res.ok)
                 throw Error(data.message)
             console.log(data)
+            setEnrollState(1)
 
         } catch (err) {
             console.log("error", err.message)
