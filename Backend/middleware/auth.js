@@ -11,7 +11,7 @@ module.exports = {
             let user = await userRepo.getUser(email);
             req.user = user;
             console.log(user);
-            next();
+            next(); 
         } catch (err) {
             res.status(401).send({ message: "Unauthorized. Invalid token" });
         }

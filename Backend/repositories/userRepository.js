@@ -12,7 +12,7 @@ module.exports = {
   },
   getUser: (email) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM _user WHERE email='${email}'`;
+      let queryString = `SELECT * FROM _user WHERE EMAIL='${email}'`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows[0]);
