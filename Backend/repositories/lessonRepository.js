@@ -29,7 +29,7 @@ module.exports = {
             WHERE CID=${c_id}  AND Q.ID = L.QID AND A.ID = L.AID `;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
-                return resolve(rows[0]);
+                return resolve(rows);
             })
         })
     },

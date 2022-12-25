@@ -81,19 +81,8 @@ module.exports = {
                     .status(404)
                     .send({ message: "No lessons for this course" });
             }
-            let articles = [];
-            for (let lesson of lessons) {
-                let articleList = await articleRepo.getArticlesByLesson(lesson.LID);
-                for (let article of articleList) {
-                    articles.push(article);
-                }
-            }
             return res
-                .status(200)
-                .send({
-                    lessons: lessons,
-                    articles: articles,
-                });
+                .status(200).send({ lessons: lessons });
         } catch (err) {
             return res
                 .status(500)

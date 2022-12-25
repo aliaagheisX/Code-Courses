@@ -438,3 +438,29 @@ color: #fff;
     color: #cc2936;
 
 }
+
+/* accordion */
+.accordion-body {
+    padding: 1.6rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.accordion-item {
+    border-radius: 0;
+    border-width: 2px !important;
+}
+.accordion-button {
+    background: #f7f9fa !important;
+    justify-content: space-between;
+    padding: 1.7rem 3rem;
+    flex-wrap: wrap;
+}
+.accordion-button::after {
+    position: absolute;
+    left: 0.5rem;
+    --width: 13px;
+    width: var(--width);
+    height: var(--width);
+    background-size: var(--width);
+}

@@ -85,7 +85,7 @@
     color: #818182;
     font-size: 14px;
 }
-.markW h1, .markW h2,.markW h3,.markW h4 {
+.markW > h1, .markW> h2,.markW> h3,.markW> h4 {
     margin: 50px 0 10px 0;
     color: #424261;
 }

@@ -8,6 +8,9 @@ import useToken from '../../../useToken'
 import Options from './Options';
 import StudentFeedBack from './StudentFeedBack'
 import Reviews from './Reviews'
+import Resource from '../../../Resource'
+import api from '../../../api'
+import CourseContent from '../../../components/CourseContent'
 
 export default function Course({ course }) {
     const [enrollState, setEnrollState] = useState(course.is_enrolled)
@@ -42,7 +45,14 @@ export default function Course({ course }) {
             <Thumb avatar={IMAGE} />
             <div className={styles.markW}>
                 <h2>Prerequisite</h2>
+
                 <ReactMarkdown children={PREREQUISITES} remarkPlugins={[remarkGfm]} />
+
+                <Resource
+                    path={api.getCourseLessons(ID)}
+                    render={({ items: { lessons } }) => <CourseContent lessons={lessons} />}
+                    ErrorComp={<></>}
+                />
                 <div className={styles.footer}>
                     <h4>By {INSTRUCTORFNAME === null ? 'Unknown' : `${INSTRUCTORFNAME} ${INSTRUCTORSNAME}`}</h4>
                     <div>at {create_date}</div>
