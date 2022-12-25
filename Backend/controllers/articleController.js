@@ -142,8 +142,8 @@ module.exports = {
 		try {
 			let article = req.body;
 			///// image /////
-			let imagePath = req.file.path
-			imagePath = "http://localhost:4000/" + imagePath.replace('\\', '/')
+			let imagePath = req.file?.path || "images/4.jpg";
+			imagePath = "http://localhost:4000/" + imagePath.replace('\\', '/');			
 
 			let response = await articleRepo.createArticle(article, imagePath);
 			return res

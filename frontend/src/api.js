@@ -13,6 +13,7 @@ const api = {
     deleteInstructor: (id) => `http://localhost:4000/instructors/delete/${id}`,
     deleteAllInstrunctors: `http://localhost:4000/instructors/delete_all`,
     getStudents: 'http://localhost:4000/students',
+    getAdmins: 'https://localhost:4000/users/getadmins',
     getInstructors: 'http://localhost:4000/instructors',
     getTopics: 'http://localhost:4000/topics',
     editTopic: (id) => `http://localhost:4000/topics/editTopic/${id}`,

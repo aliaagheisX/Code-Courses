@@ -1,12 +1,21 @@
 const { DBconnection } = require("../config/database");
 
 module.exports = {
+  getAdmins: () => {
+    return new Promise((resolve, reject) => {
+      let queryString = `SELECT * FROM _user WHERE ISADMIN=1`;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows);
+      })
+    })
+  },
   checkEmailQuery: (email) => {
     return new Promise((resolve, reject) => {
       let queryString = `SELECT email FROM _user WHERE email='${email}'`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) reject(err);
-        resolve(rows[0]);
+        return resolve(rows[0]);
       });
     });
   },

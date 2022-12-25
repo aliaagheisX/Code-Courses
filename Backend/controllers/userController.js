@@ -39,6 +39,23 @@ function patchValidate(user) {
 }
 
 module.exports = {
+  getAdmins: async (req, res) => {
+    try {
+      let admins = userRepo.getAdmins();
+      if (!admins.length) {
+        return res
+          .status(404)
+          .send({ message: "No admins found" });
+      }
+      return res  
+        .status(200)
+        .send({ admins: users });
+    } catch (err) {
+      return res
+        .status(500)
+        .send({ message: "Internal server error getting admins " + err });
+    }
+  },
   getUserById: async (req, res) => {
     try {
       let id = parseInt(req.params.id);
