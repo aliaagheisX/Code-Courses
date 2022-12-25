@@ -8,7 +8,7 @@ import { Formik, Form } from 'formik';
 
 import SubmitButton from './Fields/SubmitButton';
 
-export default function FormResource({ token, method, ContentType, url, initialValues, validationSchema, children, submitBtnText, isSaveToken }) {
+export default function FormResource({ afterIt, token, method, ContentType, url, initialValues, validationSchema, children, submitBtnText, isSaveToken }) {
     if (isSaveToken === undefined) isSaveToken = true
     if (!method) method = 'POST'
 
@@ -51,10 +51,13 @@ export default function FormResource({ token, method, ContentType, url, initialV
             if (!res.ok) {
                 throw new Error(data.message)
             }
-            else if (isSaveToken) {
+            if (isSaveToken) {
                 setToken(data)
                 window.location.reload()
 
+            }
+            if (afterIt !== undefined) {
+                afterIt();
             }
 
         }
@@ -71,7 +74,7 @@ export default function FormResource({ token, method, ContentType, url, initialV
         >
 
             {({ isSubmitting }) => (
-                <Form encType='multipart/form-data' className='form'>
+                <Form encType='multipart/form-data' className='form smallTxtBox'>
 
                     {children}
 

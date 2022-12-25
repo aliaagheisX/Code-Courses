@@ -86,8 +86,9 @@ module.exports = {
 	},
 	getCoursesOfInstructor: async (req, res) => {
 		try {
-			let id = parseInt(req.params.id);
-			let courses = await courseRepo.getCoursesOfInstructor(id);
+			const instructor_id = req.params.i_id;
+
+			let courses = await courseRepo.getCoursesOfInstructor(instructor_id);
 			if (!courses.length) {
 				return res
 					.status(404)

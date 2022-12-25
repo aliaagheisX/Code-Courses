@@ -32,6 +32,7 @@
     justify-content: space-between;
     margin: 0px 27px;
     margin-bottom: -25px;
+    align-items: flex-start;
 }
 
 .optsCont div {
@@ -39,6 +40,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 3rem;
+    align-items:flex-start;
 }
 
 .danger form {

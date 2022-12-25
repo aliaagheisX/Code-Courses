@@ -27,7 +27,7 @@ export default function Options({ id }) {
     }
     return (
         <div className={styles.optsCont}>
-            <Link to={`/students/${id}`} className='btnG'>as Student</Link> :
+            <Link to={`/students/${id}`} className='btnG'>as Student</Link>
 
             <div>
                 {token && (isAdmin || userdata.ID === id) ?

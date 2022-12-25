@@ -12,7 +12,10 @@ module.exports = {
   },
   getQuizzesByInstructor: (I_ID) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM QUiz WHERE INSTRUCTORID = ${I_ID}`;
+      let queryString = `
+      SELECT E.*, Q.* 
+      FROM QUiz Q, element E 
+      WHERE Q.INSTRUCTORID = ${I_ID} AND E.ID = Q.ID`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);

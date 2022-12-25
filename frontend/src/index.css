@@ -79,7 +79,14 @@ a:hover {
     color: #646464;
 }
 
-.form input, .form textarea {
+.customSelect div {
+    border-color: #86A8E7;
+    border-radius: 8px;
+}
+.form label {
+    margin-bottom: 2px;
+}
+.form input, .form textarea{
     border-radius: 8px;
     background: #FFFFFF;
     border: 1px solid #86A8E7;  
@@ -143,6 +150,10 @@ a:hover {
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 3rem;
+}
+
+.form-group > div {
+    flex-grow: 1;
 }
 
 .errorForm {
@@ -415,4 +426,15 @@ color: #fff;
 
 .swiper-slide .component {
     margin: 0 20px;
+}
+
+.smallTxtBox textarea {
+    height: 100px;
+}
+
+.errorLink {
+    margin-top: 2px;
+    text-decoration: underline;
+    color: #cc2936;
+
 }

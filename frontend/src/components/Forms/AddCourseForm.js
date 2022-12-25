@@ -66,7 +66,7 @@ export default function AddCourseForm() {
         >
 
             {({ isSubmitting }) => (
-                <Form encType='multipart/form-data' className='form'>
+                <Form encType='multipart/form-data' className='form smallTxtBox'>
 
                     <div style={{ margin: '19px 0' }}>
                         <ImgField mode='thumb' defaultImg='/4.jpg' ChooseFileBtn={ChooseFileBtn} Avatar={Thumb} name='image' />

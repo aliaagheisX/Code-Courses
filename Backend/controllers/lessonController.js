@@ -4,13 +4,9 @@ const Joi = require('joi');
 
 function lessonValidate(lesson) {
     const schema = Joi.object({
-        name: Joi.string().min(1).max(32)
-            .message("Name cannot exceed 32 characters and cannot be empty")
-            .required().message("Name is required"),
-        description: Joi.string().min(1).max(256)
-            .message("Description cannot exceed 256 characters and cannot be empty")
-            .required().message("Description is required"),
-        cid: Joi.number().required().message("Course id (cid) is required"),
+        name: Joi.string().min(1).max(32).required(),
+        description: Joi.string().min(1).max(256).required(),
+        cid: Joi.number().required(),
         qid: Joi.number().min(1).required(),
         aid: Joi.number().min(1).required(),
     });
@@ -19,13 +15,11 @@ function lessonValidate(lesson) {
 
 function patchLessonValidate(lesson) {
     const schema = Joi.object({
-        name: Joi.string().min(1).max(32)
-            .message("Name cannot exceed 32 characters and cannot be empty").allow('', null),
-        description: Joi.string().min(1).max(256)
-            .message("Description cannot exceed 256 characters and cannot be empty").allow('', null),
+        name: Joi.string().min(1).max(32).allow('', null),
+        description: Joi.string().min(1).max(256).allow('', null),
         cid: Joi.number().allow('', null),
-        qid: Joi.number().min(1).allow(null),
-        aid: Joi.number().min(1).allow(null),
+        qid: Joi.number().min(1).allow('', null),
+        aid: Joi.number().min(1).allow('', null),
     });
     return schema.validate(lesson);
 }
@@ -67,12 +61,10 @@ module.exports = {
                     .status(404)
                     .send({ message: "Lesson not found" });
             }
-            let articles = await articleRepo.getArticlesByLesson(lesson.LID);
             return res
                 .status(200)
                 .send({
                     lesson: lesson,
-                    articles: articles,
                 });
         } catch (err) {
             return res
@@ -150,6 +142,12 @@ module.exports = {
             }
             if (columns["description"] !== null && columns["description"] !== "") {
                 await lessonRepo.editLessonDescription(columns["description"], l_id);
+            }
+            if (columns["qid"] !== null && columns["qid"] !== "") {
+                await lessonRepo.editLessonQuestion(columns["qid"], l_id);
+            }
+            if (columns["aid"] !== null && columns["aid"] !== "") {
+                await lessonRepo.editLessonArticle(columns["aid"], l_id);
             }
             if (cid !== null) {
                 await lessonRepo.editLessonCourseId(cid, l_id);

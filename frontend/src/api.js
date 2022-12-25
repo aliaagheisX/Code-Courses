@@ -42,5 +42,13 @@ const api = {
     editReview: (c_id, u_id) => `http://localhost:4000/courses/review/edit/${c_id}/${u_id}`,
     deleteReview: (c_id, u_id) => `http://localhost:4000/courses/deleteonereview/${c_id}/${u_id}`,
     deleteAllReviews: (c_id) => `http://localhost:4000/courses/deletecoursereviews/${c_id}`, //admin
+    getInstructorCourses: (i_id) => `http://localhost:4000/courses/instructors/${i_id}`,
+    getInstructorQuizzes: (i_id) => `http://localhost:4000/quizzes/getByInstructor/${i_id}`,
+    addLesson: `http://localhost:4000/lessons/newlesson`,
+    editLesson: (l_id) => `http://localhost:4000/lessons/editlesson/${l_id}`,
+    deleteLesson: (l_id) => `http://localhost:4000/lessons/deletelessonbyid/${l_id}`,
+    getCourseLessons: (c_id) => `http://localhost:4000/lessons/getlessonsbycourse/${c_id}`,
+    getLesson: (l_id) => `http://localhost:4000/lessons/getlessonbyid/${l_id}`,
+
 }
 export default api

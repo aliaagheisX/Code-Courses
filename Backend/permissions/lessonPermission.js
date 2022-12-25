@@ -2,6 +2,7 @@ const lessonRepo = require('../repositories/lessonRepository');
 const courseRepo = require('../repositories/courseRepository');
 const articleRepo = require('../repositories/articleRepository');
 const quizRepo = require('../repositories/quizRepository');
+const { isInstructor } = require('../helpers/instructorHelper');
 
 module.exports = {
 	canEditLesson: async (req, res, next) => {
@@ -49,7 +50,7 @@ module.exports = {
 		if (isInstructor(id)) {
 
 			if (course.INSTRUCTORID === id) {
-				const article = await articleRepo.getArticleById(q_id)
+				const article = await articleRepo.getArticleById(a_id)
 				//const quiz = await quizRepo.g
 				if (article.INSTRUCTORID !== id) {
 					return res

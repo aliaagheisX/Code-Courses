@@ -30,13 +30,18 @@ module.exports = {
   },
   getQuizzesByInstructor: async (req, res) => {
     try {
-      let I_ID = req.body.I_ID;
+      let I_ID = req.params.i_id;
       if (!I_ID) {
         return res
           .status(403)
           .send({ message: "Pleases Insert the instructor ID as I_ID  " });
       }
       let quizzes = await quizRepo.getQuizzesByInstructor(I_ID);
+      if (!quizzes.length) {
+        return res
+          .status(404)
+          .send({ message: "Looks like you have no quizzes" });
+      }
       return res.status(201).send({
         message: "quizzes retrieved",
         Quizzes: quizzes,

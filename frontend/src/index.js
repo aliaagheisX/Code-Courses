@@ -21,6 +21,8 @@ import Topics from './Layouts/Topics';
 import EditeArticle from './Layouts/Articles/EditeArticle';
 import Courses from './Layouts/Courses';
 import Home from './Layouts/Homepage/Home';
+import AddLesson from './Layouts/Lessons/AddLesson';
+import EditLesson from './Layouts/Lessons/EditLesson';
 
 const ProtectedRoute = ({ children }) => {
   const { token } = useToken();
@@ -94,6 +96,18 @@ root.render(
         <Route path='/courses/add' element={
           <InstructorRoute>
             <AddCourse />
+          </InstructorRoute>
+        } />
+
+        <Route path='/lessons/add' element={
+          <InstructorRoute>
+            <AddLesson />
+          </InstructorRoute>
+        } />
+
+        <Route path='/lessons/edit/:id' element={
+          <InstructorRoute>
+            <EditLesson />
           </InstructorRoute>
         } />
 

@@ -68,6 +68,16 @@ export const addCommentInitialValues = {
 
 export const emptyInitialValues = {};
 
+export const addLessonInitialValues = (cid) => {
+  return {
+    name: '',
+    description: '',
+    cid: cid,
+    qid: '',
+    aid: ''
+  }
+}
+
 
 
 
@@ -239,3 +249,19 @@ export const AddReviewSchema = Yup.object().shape({
 });
 
 
+
+export const AddLessonSchema = Yup.object().shape({
+  name: Yup.string().min(1).max(32, "Name cannot exceed 32 characters").required("Name is required"),
+  description: Yup.string().min(1).max(256).required(),
+  cid: Yup.number().required(),
+  qid: Yup.number().min(1).required(),
+  aid: Yup.number().min(1).required(),
+});
+
+export const EditLessonSchema = Yup.object().shape({
+  name: Yup.string().min(1).max(32, "Name cannot exceed 32 characters"),
+  description: Yup.string().min(1).max(256),
+  cid: Yup.number(),
+  qid: Yup.number().min(1),
+  aid: Yup.number().min(1),
+});
