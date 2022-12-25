@@ -41,7 +41,7 @@ function patchValidate(user) {
 module.exports = {
   getAdmins: async (req, res) => {
     try {
-      let admins = userRepo.getAdmins();
+      let admins = await userRepo.getAdmins();
       if (!admins.length) {
         return res
           .status(404)
@@ -49,7 +49,7 @@ module.exports = {
       }
       return res  
         .status(200)
-        .send({ admins: users });
+        .send({ admins: admins });
     } catch (err) {
       return res
         .status(500)

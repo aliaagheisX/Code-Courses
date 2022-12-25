@@ -11,6 +11,7 @@ import EditProfile from './Layouts/EditProfile';
 import Users from './Layouts/Users/Users';
 import Students from './Layouts/Users/Students';
 import Instructors from './Layouts/Users/Instructors';
+import Admins from './Layouts/Users/Admins';
 import Articles from './Layouts/Articles';
 import AddArticle from './Layouts/Articles/AddArticle';
 import AddCourse from './Layouts/Courses/AddCourse';
@@ -55,7 +56,7 @@ root.render(
           <Route path='' element={<Students />} />
           <Route path='students' element={<Students />} />
           <Route path='instructors' element={<Instructors />} />
-          <Route path='admins' element={<Students />} />
+          <Route path='admins' element={<Admins />} />
         </Route>
 
         <Route path="/" element={<Home />}></Route>

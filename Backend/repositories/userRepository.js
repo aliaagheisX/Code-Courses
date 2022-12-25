@@ -3,7 +3,7 @@ const { DBconnection } = require("../config/database");
 module.exports = {
   getAdmins: () => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM _user WHERE ISADMIN=1`;
+      let queryString = `SELECT * FROM _user WHERE ISADMIN=(1)`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);

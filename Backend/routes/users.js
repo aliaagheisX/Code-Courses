@@ -9,9 +9,9 @@ const userController = require("../controllers/userController");
 
 router.get("/", userController.getAllUsers);
 router.get("/me", [authToken], userController.getUserLoggedIn);
-router.get("/:id", userController.getUserById);
 router.get("/getbyusername/:username", userController.getUserByUsername);
-router.get("/getadmins", userController.getAdmins);
+router.get("/admins/getadmins", userController.getAdmins);
+router.get("/:id", userController.getUserById);
 
 router.delete("/delete/me", [authToken], userController.deleteSignedInUser);
 router.delete("/delete", [authToken, admin], userController.deleteAllUsers);
