@@ -22,6 +22,9 @@ export default function CourseContent({ lessons }) {
                                 <div className={styles.decLeft}>
                                     {NAME}
                                 </div>
+                                <div className={styles.decLeft}>
+                                    {NAME}
+                                </div>
                             </Accordion.Header>
 
                             <Accordion.Body>

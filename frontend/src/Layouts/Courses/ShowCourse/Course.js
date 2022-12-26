@@ -11,8 +11,10 @@ import Reviews from './Reviews'
 import Resource from '../../../Resource'
 import api from '../../../api'
 import CourseContent from '../../../components/CourseContent'
+import { Link } from 'react-router-dom'
 
 export default function Course({ course }) {
+    const { userdata } = useToken()
     const [enrollState, setEnrollState] = useState(course.is_enrolled)
     const [courseRating, setCourseRating] = useState(course.rating)
     console.log(course)
@@ -43,6 +45,13 @@ export default function Course({ course }) {
             </div>
 
             <Thumb avatar={IMAGE} />
+            {
+                userdata.ID === INSTRUCTORID &&
+                <div className={styles.opI}>
+                    <Link to={`/lessons/add/:${ID}`} className='btnG' >+ add lesson</Link>
+                </div>
+
+            }
             <div className={styles.markW}>
                 <h2>Prerequisite</h2>
 

@@ -106,6 +106,11 @@ root.render(
           </InstructorRoute>
         } />
 
+        <Route path='/lessons/add/:id' element={
+          <InstructorRoute>
+            <AddLesson />
+          </InstructorRoute>
+        } />
         <Route path='/lessons/edit/:id' element={
           <InstructorRoute>
             <EditLesson />

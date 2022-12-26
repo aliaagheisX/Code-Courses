@@ -136,3 +136,9 @@
 
 
 }
+
+.opI {
+    width: 65%;
+    display: flex;
+    justify-content: flex-end;
+}
