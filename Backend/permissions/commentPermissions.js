@@ -8,7 +8,7 @@ module.exports = {
 		let c_id = req.params.c_id;
 		let comment = null;
 		try {
-			comment = await commentsRepository.getCommentById(c_id);
+			comment = await commentsRepository.getCommentByID(c_id);
 		} catch (err) {
 			return res
 				.status(500)

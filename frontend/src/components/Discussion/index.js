@@ -1,14 +1,20 @@
 import "./discussion.css";
 import io from "socket.io-client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Chat from "../../Layouts/Chat/Chat";
+import useToken from "../../useToken";
+import { Navigate } from "react-router-dom";
+import api from "../../api";
 
 const socket = io.connect("http://localhost:4000");
 
 function Discussion() {
+    const { token, userdata } = useToken();
     const [username, setUsername] = useState("");
     const [room, setRoom] = useState("");
     const [showChat, setShowChat] = useState(false);
+    
+    if (!token) return <Navigate to={"/"} replace />
 
     const joinRoom = () => {
         if (username !== "" && room !== "") {
@@ -29,14 +35,14 @@ function Discussion() {
                             setUsername(event.target.value);
                         }}
                     />
-                    <input 
+                    
+                      <input 
                         type="text"
                         placeholder="Room ID..."
                         onChange={(event) => {
                             setRoom(event.target.value);
-                        }}
-                    />
-                    <button onClick={joinRoom}>Join A Room</button>
+                        }} />
+                    <button onClick={joinRoom}>Join A Room</button>                        
                 </div>
             ) : (
                 <Chat socket={socket} username={username} room={room} />
