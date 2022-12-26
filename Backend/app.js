@@ -7,6 +7,7 @@ const cors = require("cors");
 const swaggerUI = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");
 const db = require("./config/database");
+const { Server } = require("socket.io");
 
 const options = {
   definition: {
@@ -62,7 +63,31 @@ app.use("/lessons", require("./routes/lessons"));
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, (err) => {
+const server = app.listen(PORT, (err) => {
   if (err) return console.error("Error setting up server", err);
   console.log(`Server is listening at port ${PORT}`);
+});
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log(`User Connected: ${socket.id}`);
+
+  socket.on("join_room", (data) => {  // data = roomId
+    socket.join(data);
+    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+  });
+
+  socket.on("send_message", (data) => {   //data = message object
+    socket.to(data.room).emit("receive_message", data);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User Disconnected", socket.id);
+  });
 });
