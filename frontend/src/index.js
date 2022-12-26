@@ -24,6 +24,7 @@ import Courses from './Layouts/Courses';
 import Home from './Layouts/Homepage/Home';
 import AddLesson from './Layouts/Lessons/AddLesson';
 import EditLesson from './Layouts/Lessons/EditLesson';
+import Discussion from './components/Discussion';
 
 const ProtectedRoute = ({ children }) => {
   const { token } = useToken();
@@ -117,6 +118,7 @@ root.render(
           </InstructorRoute>
         } />
 
+        <Route path='/discussions' element={<Discussion />} />
       </Route>
     </Routes>
   </BrowserRouter>
