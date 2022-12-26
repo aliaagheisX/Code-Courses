@@ -14,6 +14,7 @@ export default function Comment({ comments, id, addComment, removeComment }) {
         setIsEditing(!isEditing)
     }
     const handelEditingBody = (value) => {
+        debugger;
         setBody(value)
         toggleEditing()
     }
@@ -28,7 +29,6 @@ export default function Comment({ comments, id, addComment, removeComment }) {
     }
 
     const removeReply = (id) => {
-        debugger
         const temp = removeComment(id)
         setReplies(temp[id].replies)
     }

@@ -50,12 +50,15 @@ export default function Options({ id, instructor_id, is_enrolled, setEnrollState
     return (
         <div className={styles.Buttons}>
             {
-                token ?
+                token && userdata.ID === instructor_id &&
+                <button className='btnG' >+ add lesson</button>
+            }
+            {
+                token && userdata.ID !== instructor_id && (
                     is_enrolled ?
                         <button className='btnG' onClick={disenroll}>Disenroll</button> :
                         <button className='btnG' onClick={enroll}>Enroll</button>
-                    :
-                    <></>
+                )
             }
             {
                 (token && (isAdmin || (isInstructor && userdata.ID === instructor_id))) &&

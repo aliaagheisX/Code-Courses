@@ -42,6 +42,15 @@ module.exports = {
             })
         })
     },
+    deleteLessonById: (l_id) => {
+        return new Promise((resolve, reject) => {
+            let queryString = `DELETE FROM lesson WHERE LID = ${l_id}`;
+            DBconnection.query(queryString, (err, rows) => {
+                if (err) return reject(err);
+                return resolve(rows);
+            })
+        })
+    },
     postNewLesson: (lesson) => {
         const { name, description, cid, qid, aid } = lesson;
 

@@ -22,7 +22,6 @@ export default function FormResource({ afterIt, token, method, ContentType, url,
             /* header */
             const myHeader = new Headers();
 
-            debugger;
             if (!ContentType) {
                 myHeader.append('Content-Type', 'application/json')
                 values = JSON.stringify(values)

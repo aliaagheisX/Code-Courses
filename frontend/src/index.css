@@ -440,6 +440,11 @@ color: #fff;
 }
 
 /* accordion */
+.accordion {
+    --bs-accordion-bg: transparent !important;
+    
+
+}
 .accordion-body {
     padding: 1.6rem 1rem;
     display: flex;
@@ -451,7 +456,6 @@ color: #fff;
     border-width: 2px !important;
 }
 .accordion-button {
-    background: #f7f9fa !important;
     justify-content: space-between;
     padding: 1.7rem 3rem;
     flex-wrap: wrap;

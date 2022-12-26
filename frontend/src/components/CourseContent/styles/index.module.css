@@ -3,7 +3,9 @@
     color: #424261;
     padding: 0;
 }
-
+.UserOptions {
+    gap: 25px;
+}
 .container {
     display: flex;
     align-items: flex-end;

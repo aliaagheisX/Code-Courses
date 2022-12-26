@@ -48,7 +48,7 @@ export default function Course({ course }) {
             {
                 userdata.ID === INSTRUCTORID &&
                 <div className={styles.opI}>
-                    <Link to={`/lessons/add/:${ID}`} className='btnG' >+ add lesson</Link>
+                    <Link to={`/lessons/add/${ID}`} className='btnG' >+ add lesson</Link>
                 </div>
 
             }
@@ -59,7 +59,7 @@ export default function Course({ course }) {
 
                 <Resource
                     path={api.getCourseLessons(ID)}
-                    render={({ items: { lessons } }) => <CourseContent lessons={lessons} />}
+                    render={({ items: { lessons } }) => <CourseContent instructor_id={INSTRUCTORID} lessons={lessons} />}
                     ErrorComp={<></>}
                 />
                 <div className={styles.footer}>
