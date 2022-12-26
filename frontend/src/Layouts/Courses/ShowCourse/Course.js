@@ -48,7 +48,7 @@ export default function Course({ course }) {
             {
                 userdata.ID === INSTRUCTORID &&
                 <div className={styles.opI}>
-                    <Link to={`/lessons/add/${ID}`} className='btnG' >+ add lesson</Link>
+                    <Link to={`/discussions/${ID}`} className='btnE' >chat room</Link>
                 </div>
 
             }

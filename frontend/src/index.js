@@ -118,7 +118,12 @@ root.render(
           </InstructorRoute>
         } />
 
-        <Route path='/discussions' element={<Discussion />} />
+
+        <Route path='/discussions' element={
+          <ProtectedRoute>
+            <Discussion />
+          </ProtectedRoute>
+        } />
       </Route>
     </Routes>
   </BrowserRouter>
