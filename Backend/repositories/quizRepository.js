@@ -100,5 +100,15 @@ module.exports = {
       });
     });
   },
+
+  getScoreStudent: (q_id, s_id) => {
+    return new Promise((resolve, reject) => {
+      let queryString = `SELECT * FROM studenttakesquiz WHERE QID=${q_id} AND SID=${s_id}`;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows[0]);
+      })
+    })
+  }
 };
 

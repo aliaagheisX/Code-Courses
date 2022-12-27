@@ -1,10 +1,8 @@
 const courseRepo = require('../repositories/courseRepository');
 const elementRepo = require('../repositories/elementRepository');
 const topicRepo = require('../repositories/topicRepository');
-const userRepo = require('../repositories/userRepository');
 const Joi = require('joi');
-const jwt = require('jsonwebtoken');
-
+const { getUserId } = require('../helpers/userHelper')
 function topicListValidate(columns) {
 	const schema = Joi.object({
 		topics: Joi.array().items(Joi.number()).min(1).required(),
@@ -54,18 +52,7 @@ function coursePatchValidate(columns) {
 	return schema.validate(columns);
 }
 
-const getUser = async (req) => {
-	const token = req.header('token');
-	if (!token) return null;
-	try {
-		const decoded = jwt.verify(token, process.env.PRIMARY_KEY);
-		let email = decoded.payload.email;
-		let user = await userRepo.getUser(email);
-		return user.ID;
-	} catch (err) {
-		return null;
-	}
-}
+
 
 
 module.exports = {
@@ -128,7 +115,7 @@ module.exports = {
 					.status(404)
 					.send({ message: "Course not found" });
 			}
-			const u_id = await getUser(req);
+			const u_id = await getUserId(req);
 			let is_enrolled = 0;
 			if (u_id !== null)
 				is_enrolled = await courseRepo.getUserEnrolled(u_id, course.ID);
