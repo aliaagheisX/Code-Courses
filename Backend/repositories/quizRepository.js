@@ -75,6 +75,16 @@ module.exports = {
       });
     });
   },
+  getQuizzesByStudent: (S_ID) => {
+    return new Promise((resolve, reject) => {
+      let queryString = `
+     SELECT * FROM STUDENTTAKESQUIZ WHERE SID = ${S_ID}`;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows);
+      });
+    });
+  },
   addTopicsToQuiz: (quiz_id, topics, questions) => {
     return new Promise((resolve, reject) => {
       let queryString = `INSERT INTO QUIZ_QUESTION_TOPIC(QID, TID,NID) VALUES `;
