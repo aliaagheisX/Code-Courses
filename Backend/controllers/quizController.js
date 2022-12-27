@@ -8,8 +8,7 @@ function quizValidate(columns) {
   const schema = Joi.object({
     title: Joi.string().min(4).required(),
     description: Joi.string().required(),
-    image: Joi.string().required(),
-    max_score: Joi.number().required().min(0),
+    image: Joi.any(),
     topics: Joi.array().items(Joi.number()).min(1).required(),
     questions: Joi.array().items(Joi.number()).min(1).required(),
     I_ID: Joi.number(),
@@ -61,14 +60,19 @@ module.exports = {
     try {
       let quiz = req.body;
       quiz.topics = JSON.parse(quiz.topics);
-      quiz.question = JSON.parse(quiz.questions);
+      quiz.questions = JSON.parse(quiz.questions);
       const instructor_id = req.user.ID;
       // const instructor_id = quiz.I_ID;
       const { error } = quizValidate(quiz);
       if (error) {
         return res.status(403).send({ message: "Validation Error:  " + error });
       }
-      createQ = await quizRepo.createQuiz(quiz, instructor_id);
+      //
+      let imagePath = req.file?.path || "images/4.jpg"
+      imagePath = "http://localhost:4000/" + imagePath.replace('\\', '/')
+
+      createQ = await quizRepo.createQuiz(quiz, instructor_id, imagePath);
+
       quiz_id = createQ["@quiz_id"];
       addTopic = await quizRepo.addTopicsToQuiz(
         quiz_id,
@@ -77,7 +81,7 @@ module.exports = {
       );
       return res.status(201).send({
         message: "quiz Created",
-        createdQuiz: createQ,
+        quiz_id: quiz_id,
       });
     } catch (err) {
       return res.status(500).send({ message: "Internal server error " + err });
@@ -129,6 +133,29 @@ module.exports = {
       return res
         .status(500)
         .send({ message: "Internal server error getting all lessons " + err });
+    }
+  },
+  takeQuiz: async (req, res) => {
+    try {
+      const quiz = req.q_id;
+      const student_id = req.body.s_id;
+      const { error } = quizValidate(quiz);
+      if (error) {
+        return res.status(403).send({ message: "Validation Error:  " + error });
+      }
+      createQ = await quizRepo.createQuiz(quiz, instructor_id);
+      quiz_id = createQ["@quiz_id"];
+      addTopic = await quizRepo.addTopicsToQuiz(
+        quiz_id,
+        quiz.topics,
+        quiz.questions
+      );
+      return res.status(201).send({
+        message: "quiz Created",
+        createdQuiz: createQ,
+      });
+    } catch (err) {
+      return res.status(500).send({ message: "Internal server error " + err });
     }
   },
 };

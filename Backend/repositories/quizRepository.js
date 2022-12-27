@@ -41,17 +41,16 @@ module.exports = {
       });
     });
   },
-  createQuiz: (quiz, instructor_id) => {
+  createQuiz: (quiz, instructor_id, imagePath) => {
     const title = quiz.title;
     const max_score = quiz.max_score;
     const description = quiz.description;
-    const imagePath = quiz.image;
     return new Promise((resolve, reject) => {
       let queryString = `CALL add_quiz(
 				'${ch(title)}',
 				'${ch(description)}',
 				'${imagePath}',
-				'${max_score}',
+				100,
 				${instructor_id},
 				@quiz_id
 			); 
@@ -111,3 +110,4 @@ module.exports = {
     })
   }
 };
+

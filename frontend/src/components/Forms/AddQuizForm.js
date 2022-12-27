@@ -12,7 +12,7 @@ import TopicListSelection from '../TopicListSelection';
 import TextAreaField from '../Fields/TextAreaField';
 import useToken from '../../useToken';
 import SubmitButton from '../Fields/SubmitButton'
-import { Formik, Form, FieldArray } from 'formik';
+import { Formik, Form } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import QuestionsSelectedForm from './QuestionsSelectedForm';
 
@@ -51,7 +51,7 @@ export default function AddQuizForm({ questions_data }) {
 
             console.log('added quiz', data)
 
-            //navigate(`/quizzes/${data.}`)
+            navigate(`/quizzes/${data.quiz_id}`)
 
         }
         catch (err) {

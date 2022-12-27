@@ -241,7 +241,7 @@ export const AddQuizSchema = Yup.object().shape({
 
 
   topics: Yup.array().min(1, "at least 1").required("required"),
-  questions: Yup.array().of(Yup.number()).min(1, "at least 1").required("required")
+  questions: Yup.array().min(1, "at least 1").required("required"),
 });
 
 export const EditCourseSchema = Yup.object().shape({
