@@ -7,8 +7,9 @@ import EmailField from "../Fields/EmailField";
 import PasswordField from "../Fields/PasswordField";
 import TextField from "../Fields/TextField";
 import api from '../../api'
-
+import { useNavigate } from 'react-router-dom'
 export default function Signup() {
+  const navigate = useNavigate()
   return (
     <div>
       <h2>Create an Account</h2>
@@ -17,6 +18,8 @@ export default function Signup() {
         initialValues={signupInitialValues}
         validationSchema={SignupSchema}
         submitBtnText="sign up"
+        isSaveToken={false}
+        afterIt={() => navigate(0)}
       >
         <div className="form-group">
           <TextField name="firstName" label="first name" placeholder="Joe" />
