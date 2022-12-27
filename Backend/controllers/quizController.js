@@ -1,7 +1,8 @@
 const quizRepo = require("../repositories/quizRepository");
 const elementRepo = require("../repositories/elementRepository");
-
+const { getUserQuizScore } = require("../helpers/userHelper")
 const Joi = require("joi");
+
 
 function quizValidate(columns) {
   const schema = Joi.object({
@@ -38,6 +39,7 @@ module.exports = {
       if (quiz === undefined) {
         return res.status(404).send({ message: "Quiz not found" });
       }
+      const score = await getUserQuizScore(req, q_id);
       return res
         .status(200)
         .send({
@@ -45,7 +47,8 @@ module.exports = {
           questions: questions,
           choices: choices,
           students: students,
-          topics: topics
+          topics: topics,
+          score: score
         });
     } catch (err) {
       return res
@@ -97,5 +100,6 @@ module.exports = {
         .send({ message: "Internal server error getting all lessons " + err });
     }
   },
+
 
 };

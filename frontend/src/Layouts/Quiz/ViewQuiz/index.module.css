@@ -79,14 +79,14 @@
 
 .markW {
     max-width: 75%;
-    padding-top: 25px;
+    min-width: 62%;
+    padding-top: 0;
     text-align: left;
     color: #818182;
     font-size: 14px;
-    min-width: 62%;
 }
-.markW h1, .markW h2,.markW h3,.markW h4 {
-    margin: 50px 0 10px 0;
+.markW > h1, .markW> h2,.markW> h3,.markW> h4 {
+    margin:  0;
     color: #424261;
 }
 
@@ -99,6 +99,15 @@
 
 .markW img {
     max-width: 250px;
+}
+.Buttons
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0px 27px;
+    margin-bottom: -25px;
+
 }
 
 .markW p code {
@@ -126,4 +135,10 @@
     color: #0F0F10;
 
 
+}
+
+.opI {
+    width: 65%;
+    display: flex;
+    justify-content: flex-end;
 }
