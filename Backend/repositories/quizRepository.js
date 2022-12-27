@@ -1,4 +1,5 @@
 const { DBconnection } = require("../config/database");
+const ch = (str) => str.replace(/'/g, "`");
 
 module.exports = {
   getAllQuizzes: () => {
@@ -10,8 +11,8 @@ module.exports = {
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
-      })
-    })
+      });
+    });
   },
   getQuizById: (q_id) => {
     return new Promise((resolve, reject) => {
@@ -25,23 +26,35 @@ module.exports = {
         SELECT CH.* FROM choices CH WHERE CH.ID IN (SELECT QU.ID FROM question QU, quiz_question_topic QQT WHERE QQT.NID=QU.ID AND QQT.QID=${q_id});
         
         SELECT U.* FROM _user U, studenttakesquiz STQ WHERE STQ.SID=U.ID AND STQ.QID=${q_id}`;
-        DBconnection.query(queryString, (err, rows) => {
-          if (err) return reject(err);
-          return resolve({
-            quiz: rows[0][0],
-            questions: rows[1],
-            choices: rows[2],
-            students: rows[3],
-          });
-        })
-    })
-  },
-  createQuiz: (quiz) => {
-    return new Promise((resolve, reject) => {
-      let queryString = `INSERT INTO QUiz (MAXSCORE,INSTRUCTORID) VALUES(${quiz.max_score},${quiz.I_ID})`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
-        return resolve(rows[0]);
+        return resolve({
+          quiz: rows[0][0],
+          questions: rows[1],
+          choices: rows[2],
+          students: rows[3],
+        });
+      });
+    });
+  },
+  createQuiz: (quiz, instructor_id) => {
+    const title = quiz.title;
+    const max_score = quiz.max_score;
+    const description = quiz.description;
+    const imagePath = quiz.image;
+    return new Promise((resolve, reject) => {
+      let queryString = `CALL add_quiz(
+				'${ch(title)}',
+				'${ch(description)}',
+				'${imagePath}',
+				'${max_score}',
+				${instructor_id},
+				@quiz_id
+			); 
+			SELECT @quiz_id;`;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows[1][0]);
       });
     });
   },
@@ -51,6 +64,19 @@ module.exports = {
       SELECT E.*, Q.* 
       FROM quiz Q, element E 
       WHERE Q.INSTRUCTORID = ${I_ID} AND E.ID = Q.ID`;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows);
+      });
+    });
+  },
+  addTopicsToQuiz: (q_id, topics) => {
+    return new Promise((resolve, reject) => {
+      let queryString = `INSERT INTO quiz_topic(QID, TID) VALUES `;
+      topics.forEach((t_id, ind) => {
+        queryString += `(${q_id}, ${t_id})`;
+        if (ind < topics.length - 1) queryString += ", ";
+      });
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);

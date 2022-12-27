@@ -27,6 +27,8 @@ import EditLesson from './Layouts/Lessons/EditLesson';
 import Discussion from './components/Discussion';
 import AddQuestion from './Layouts/Questions/AddQuestion';
 import Questions from './Layouts/Questions';
+import Quiz from './Layouts/Quiz';
+import AddQuiz from './Layouts/Quiz/AddQuiz';
 
 const ProtectedRoute = ({ children }) => {
   const { token } = useToken();
@@ -117,7 +119,7 @@ root.render(
         } />
 
 
-        <Route path='/discussions' element={
+        <Route path='/discussions/:id' element={
           <ProtectedRoute>
             <Discussion />
           </ProtectedRoute>
@@ -132,6 +134,18 @@ root.render(
         <Route path='/questions/add' element={
           <InstructorRoute>
             <AddQuestion />
+          </InstructorRoute>
+        } />
+
+        <Route path='/quizzes' element={
+          <InstructorRoute>
+            <Quiz />
+          </InstructorRoute>
+        } />
+
+        <Route path='/quizzes/add' element={
+          <InstructorRoute>
+            <AddQuiz />
           </InstructorRoute>
         } />
 

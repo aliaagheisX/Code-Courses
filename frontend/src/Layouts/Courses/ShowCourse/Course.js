@@ -46,7 +46,7 @@ export default function Course({ course }) {
 
             <Thumb avatar={IMAGE} />
             {
-                userdata.ID === INSTRUCTORID &&
+                (userdata.ID === INSTRUCTORID || enrollState) &&
                 <div className={styles.opI}>
                     <Link to={`/discussions/${ID}`} className='btnE' >chat room</Link>
                 </div>

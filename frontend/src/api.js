@@ -51,6 +51,7 @@ const api = {
     deleteLesson: (l_id) => `http://localhost:4000/lessons/deletelessonbyid/${l_id}`,
     getCourseLessons: (c_id) => `http://localhost:4000/lessons/getlessonsbycourse/${c_id}`,
     getLesson: (l_id) => `http://localhost:4000/lessons/getlessonbyid/${l_id}`,
+    getDiscussion: (c_id) => `http://localhost:4000/discussions/getcoursediscussion/${c_id}`,
 
 
     addQuestion: `http://localhost:4000/questions/create`,

@@ -1,7 +1,11 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 export default function Quiz() {
     return (
-        <div>Quiz</div>
+        <section>
+            <h2>Quzzies</h2>
+            <Link to='add'><button className='btnS' >Add Quiz</button></Link>
+
+        </section>
     )
 }

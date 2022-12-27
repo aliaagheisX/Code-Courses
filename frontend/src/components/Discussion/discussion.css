@@ -1,69 +1,12 @@
-.App {
-    width: 100vw;
-    height: 100vh;
-    background: #fff;
-    color: #212121;
-    font-family: "Open Sans", sans-serif;
-    display: grid;
-    place-items: center;
-  }
-  body {
-    margin: 0%;
-    padding: 0%;
-  }
-  @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
-  
-  .joinChatContainer {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .joinChatContainer h3 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-  .joinChatContainer input {
-    width: 210px;
-    height: 40px;
-    margin: 7px;
-    border: 2px solid #43a047;
-    border-radius: 5px;
-    padding: 5px;
-    font-size: 16px;
-  }
-  
-  .joinChatContainer button {
-    width: 225px;
-    height: 50px;
-    margin: 7px;
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
-    font-size: 16px;
-    background: #43a047;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  .joinChatContainer button:hover {
-    background: #2e7d32;
-  }
-  
-  .chat-window {
-    width: 300px;
-    height: 420px;
-  }
-  
+
   .chat-window p {
     margin: 0;
   }
   .chat-window .chat-header {
-    height: 45px;
-    border-radius: 6px;
+    padding: 0;
+    border-radius: 6px 6px 0 0;
     background: #263238;
     position: relative;
-    cursor: pointer;
   }
   .chat-window .chat-header p {
     display: block;
@@ -74,9 +17,8 @@
   }
   
   .chat-window .chat-body {
-    height: calc(450px - (45px + 70px));
+    height: calc(600px - (45px + 70px));
     border: 1px solid #263238;
-    background: #fff;
   
     position: relative;
   }
@@ -99,10 +41,9 @@
   .chat-window .chat-body .message .message-content {
     width: auto;
     height: auto;
-    min-height: 40px;
-    max-width: 120px;
-    background-color: #43a047;
-    border-radius: 5px;
+    max-width: 519px;
+    background-color: #317234;
+    border-radius: 15px;
     color: white;
     display: flex;
     align-items: center;
@@ -112,6 +53,7 @@
     padding-left: 5px;
     overflow-wrap: break-word;
     word-break: break-word;
+    padding: 10px 11px;
   }
   
   #you {
@@ -120,11 +62,14 @@
   
   #you .message-content {
     justify-content: flex-start;
+    background-color: #568aaa;
+
   }
   
   #you .message-meta {
-    justify-content: flex-start;
-    margin-left: 5px;
+    align-items: flex-start;
+    margin-left:9px ;
+
   }
   
   #other {
@@ -132,23 +77,25 @@
   }
   
   #other .message-content {
-    justify-content: flex-end;
-    background-color: cornflowerblue;
+    align-items: flex-end;
+
   }
   
   #other .message-meta {
-    justify-content: flex-end;
-    margin-right: 5px;
+    align-items: flex-end;
+    margin-right:9px ;
   }
   
   .message-meta #author {
-    margin-left: 10px;
     font-weight: bold;
+    color: #777;
   }
   
   .chat-window .chat-body .message .message-meta {
     display: flex;
-    font-size: 12px;
+    font-size: 10px;
+    flex-direction: column;
+    padding-top: 5px;
   }
   
   .chat-window .chat-footer {
@@ -156,6 +103,9 @@
     border: 1px solid #263238;
     border-top: none;
     display: flex;
+  }
+  .message-meta #time {
+    color: #777;
   }
   
   .chat-window .chat-footer input {
@@ -189,3 +139,13 @@
   .hide {
     opacity: 0 !important;
   }
+
+.react-scroll-to-bottom--css-aqiui-1n7m0yu::-webkit-scrollbar {
+    width: 8px;
+}
+   
+.react-scroll-to-bottom--css-aqiui-1n7m0yu::-webkit-scrollbar-thumb {
+    border-radius: 50px;
+    background-color: rgb(199, 216, 255);
+    outline: 1px solid slategrey;
+}

@@ -56,6 +56,14 @@ export const addCourseInitialValues = (id) => ({
   'instructor_id': id
 });
 
+export const addQuizInitialValues = (id) => ({
+  image: '',
+  title: '',
+  description: '',
+  topics: [],
+  questions: [],
+});
+
 export const changePasswordInitialValues = {
   password: '',
   confirmPassword: '',
@@ -219,6 +227,21 @@ export const AddCourseSchema = Yup.object().shape({
     .max(256, "at most 256 characters"),
 
   topics: Yup.array().min(1, "at least 1").required("required")
+});
+
+export const AddQuizSchema = Yup.object().shape({
+  image: Yup.mixed(),
+  title: Yup.string().required('must enter')
+    .min(2, "at least 2 characters")
+    .max(25, "at most 25 characters"),
+
+  description: Yup.string().required('must enter')
+    .min(20, "at least 20 characters")
+    .max(150, "at most 150 characters"),
+
+
+  topics: Yup.array().min(1, "at least 1").required("required"),
+  questions: Yup.array().of(Yup.number()).min(1, "at least 1").required("required")
 });
 
 export const EditCourseSchema = Yup.object().shape({

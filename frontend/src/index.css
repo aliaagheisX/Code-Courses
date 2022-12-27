@@ -82,6 +82,7 @@ a:hover {
 .customSelect div {
     border-color: #86A8E7;
     border-radius: 8px;
+    font-size: 12px;
 }
 .form label {
     margin-bottom: 2px;
