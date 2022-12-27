@@ -42,7 +42,7 @@ module.exports = {
   },
   getQuestionsByQuiz: (Q_ID) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM Question WHERE ID = ${Q_ID}`;
+      let queryString = `SELECT N_ID FROM QUIZ_QUESTION_TOPIC WHERE Q_ID = ${Q_ID}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);

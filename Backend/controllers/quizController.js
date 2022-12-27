@@ -1,6 +1,6 @@
 const quizRepo = require("../repositories/quizRepository");
 const elementRepo = require("../repositories/elementRepository");
-
+CONT 
 const Joi = require("joi");
 
 function quizValidate(columns) {
@@ -123,6 +123,29 @@ module.exports = {
       return res
         .status(500)
         .send({ message: "Internal server error getting all lessons " + err });
+    }
+  },
+  takeQuiz: async (req, res) => {
+    try {
+      const quiz = req.q_id;
+      const student_id = req.body.s_id;
+      const { error } = quizValidate(quiz);
+      if (error) {
+        return res.status(403).send({ message: "Validation Error:  " + error });
+      }
+      createQ = await quizRepo.createQuiz(quiz, instructor_id);
+      quiz_id = createQ["@quiz_id"];
+      addTopic = await quizRepo.addTopicsToQuiz(
+        quiz_id,
+        quiz.topics,
+        quiz.questions
+      );
+      return res.status(201).send({
+        message: "quiz Created",
+        createdQuiz: createQ,
+      });
+    } catch (err) {
+      return res.status(500).send({ message: "Internal server error " + err });
     }
   },
 };

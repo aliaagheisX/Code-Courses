@@ -58,11 +58,11 @@ module.exports = {
   },
   getQuestionsByInstructor: async (req, res) => {
     try {
-      let I_ID = req.body.I_ID;
+      let I_ID = req.params.I_ID;
       if (!I_ID) {
         return res
           .status(403)
-          .send({ message: "Pleases Insert the Instructor ID as I_ID  " });
+          .send({ message: "Pleases Insert the Instructor ID in the url  " });
       }
       let questions = await questionRepo.getQuestionsByInstructor(I_ID);
       return res.status(201).send({
