@@ -10,6 +10,47 @@ function quizValidate(columns) {
 }
 
 module.exports = {
+  getAllQuizzes: async (req, res) => {
+    try {
+      let quizzes = await quizRepo.getAllQuizzes();
+      if (!quizzes.length) {
+        return res
+          .status(404)
+          .send({ message: "No quizzes found "});
+      }
+      return res
+        .status(200)
+        .send({ quizzes: quizzes });
+    } catch (err) {
+      return res
+        .status(500)
+        .send({ message: "Internal server error getting all quizzes " + err });
+    }
+  },
+  getQuizById: async (req, res) => {
+    try {
+      let q_id = parseInt(req.params.q_id);
+      let Quiz = await quizRepo.getQuizById(q_id);
+      if (!Quiz) {
+        return res
+          .status(404)
+          .send({ message: "Quiz not found" });
+      }
+      const { quiz, questions, choices, students } = Quiz;
+      return res
+        .status(200)
+        .send({ 
+          quiz: quiz,
+          questions: questions,
+          choices: choices,
+          students: students,
+        });
+    } catch (err) {
+      return res
+        .status(500)
+        .send({ message: "Internal server error getting quiz by id " + err });
+    }
+  },
   postQuiz: async (req, res) => {
     try {
       let quiz = req.body;
