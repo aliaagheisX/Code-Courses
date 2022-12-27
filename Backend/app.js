@@ -84,7 +84,11 @@ io.on("connection", (socket) => {
     console.log(`User with ID: ${socket.id} joined room: ${data}`);
   });
 
-  socket.on("send_message", (data) => {   //data = message object
+  socket.on("send_message", async (data) => {   //data = message object
+    await db.DBconnection.query(`INSERT INTO messages (TXT, SENDER, CID) VALUES ('${data.message}', '${data.author}', ${data.room})`, (err, rows) => {
+      if (err) return console.log(err);
+      return rows;
+    })
     socket.to(data.room).emit("receive_message", data);
   });
 
