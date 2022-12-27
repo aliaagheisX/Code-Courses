@@ -12,7 +12,7 @@ export default function Options({ id, instructor_id, score }) {
         <div className={styles.Buttons}>
 
             {
-                token && userdata.ID !== instructor_id && (
+                (token && userdata.ID !== instructor_id) && (
                     <Link to='take' className='btnG'>{score ? 'Retake quiz' : 'Take quiz'}</Link>
                 )
             }

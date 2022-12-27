@@ -27,9 +27,9 @@ export default function Quiz({ quiz: { quiz, questions, choices, topics, score }
             <h3>{TITLE}</h3>
             <p className={styles.desc}>{DESCRIPTION}</p>
             {
-                score && <div className='tag-list'>
+                score && (<div className='tag-list'>
                     <div className='tag error'>{score.SCORE} / {MAXSCORE}</div>
-                </div>
+                </div>)
             }
             <div className='tag-list'>
                 {topics.map(({ NAME, TID }) => <div key={TID} className='tag active'>{NAME}</div>)}

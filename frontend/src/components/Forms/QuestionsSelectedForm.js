@@ -8,19 +8,10 @@ import { Link } from 'react-router-dom';
 
 export default function QuestionsSelectedForm({ questions, handelChange }) {
     const formikProps = useFormikContext();
-    /* const options = questions.map((item) => ({
+    const options = questions.map((item) => ({
         label: `${item.ID} - ${item.BODY}`,
         value: item.ID
-    })) */
-    const options = [
-        { label: '1 - how  to select from two peices to go', value: 1 },
-        { label: '2 - helohelohelohelohelo', value: 2 },
-        { label: '3 - `console.log(`Heeeelo world`)` will give what?? ', value: 3 },
-        { label: '4 - - kill me please', value: 4 },
-        { label: '50 - is it a cool  topic?', value: 50 },
-        { label: '51 - is it a cool  topic?', value: 51 },
-        { label: '55 - is it a cool  topic?', value: 55 },
-    ]
+    }))
 
     return (
         <div>

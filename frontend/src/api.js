@@ -54,6 +54,9 @@ const api = {
     getDiscussion: (c_id) => `http://localhost:4000/discussions/getcoursediscussion/${c_id}`,
 
     addQuestion: `http://localhost:4000/questions/create`,
+    addQuiz: `http://localhost:4000/quizzes/create`,
+    getInstructorQuestions: (i_id) => `http://localhost:4000/questions/getByInstructor/${i_id}`,
+
     getQuizById: (q_id) => `http://localhost:4000/quizzes/getquizbyid/${q_id}`,
     getAllQuizzes: `http://localhost:4000/quizzes/`,
 }

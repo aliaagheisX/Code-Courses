@@ -22,13 +22,14 @@ export default function AddQuizForm({ questions_data }) {
     const { token, userdata: { ID: id } } = useToken()
     const navigate = useNavigate()
 
-    const onSubmit = async (values) => {
+    const handelSubmit = async (values) => {
+        console.log(values)
         try {
 
             const formData = new FormData();
 
             Object.keys(values).forEach((key) => {
-                if (key === 'topics') {
+                if (key === 'topics' || key === 'questions') {
 
                     formData.append(key, JSON.stringify(values[key]))
                 }
@@ -37,7 +38,7 @@ export default function AddQuizForm({ questions_data }) {
                 }
             });
 
-            const res1 = await fetch(api.addCourse, {
+            const res1 = await fetch(api.addQuiz, {
                 method: 'POST',
                 headers: { "token": token },
                 body: formData
@@ -50,7 +51,7 @@ export default function AddQuizForm({ questions_data }) {
 
             console.log('added quiz', data)
 
-            navigate(`/quizzes/${data.course_id}`)
+            //navigate(`/quizzes/${data.}`)
 
         }
         catch (err) {
@@ -63,38 +64,37 @@ export default function AddQuizForm({ questions_data }) {
         <Formik
             initialValues={addQuizInitialValues}
             validationSchema={AddQuizSchema}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={handelSubmit}
         >
 
-            {({ values, isSubmitting }) => (
-                <Form encType='multipart/form-data' className='form smallTxtBox'>
+            <Form encType='multipart/form-data' className='form smallTxtBox'>
 
-                    <div style={{ margin: '19px 0' }}>
-                        <ImgField mode='thumb' defaultImg='/4.jpg' ChooseFileBtn={ChooseFileBtn} Avatar={Thumb} name='image' />
+                <div style={{ margin: '19px 0' }}>
+                    <ImgField mode='thumb' defaultImg='/4.jpg' ChooseFileBtn={ChooseFileBtn} Avatar={Thumb} name='image' />
+                </div>
+                <div className='form-vert'>
+                    <div className='group' style={{ flexDirection: 'column' }}>
+                        <TextField name="title" label="Title" placeholder='title of course' />
+                        <TextField name="description" label="description" placeholder='small summary on what course do' />
                     </div>
-                    <div className='form-vert'>
-                        <div className='group' style={{ flexDirection: 'column' }}>
-                            <TextField name="title" label="Title" placeholder='title of course' />
-                            <TextField name="description" label="description" placeholder='small summary on what course do' />
-                        </div>
-                        <TopicListSelection />
-                    </div>
+                    <TopicListSelection />
+                </div>
 
-                    <QuestionsSelectedForm />
+                <QuestionsSelectedForm questions={questions_data} />
 
 
-                    {/* backend error */}
-                    {backendError &&
-                        <span className='errorForm'>
-                            {backendError}
-                        </span>
-                    }
+                {/* backend error */}
+                {backendError &&
+                    <span className='errorForm'>
+                        {backendError}
+                    </span>
+                }
 
-                    <SubmitButton text='Add' isSubmitting={isSubmitting} />
+                <SubmitButton text='Add' isSubmitting={false} />
 
 
-                </Form>
-            )}
+            </Form>
+
         </Formik>
 
     )
