@@ -2,6 +2,7 @@ const instructorRepo = require("../repositories/instructorRepo");
 const Joi = require("joi");
 const articleRepo = require("../repositories/articleRepository");
 const courseRepo = require("../repositories/courseRepository");
+const quizRepo = require("../repositories/quizRepository");
 
 function ratingValidate(columns) {
   const schema = Joi.object({
@@ -37,12 +38,19 @@ module.exports = {
       const writtenArticles = await articleRepo.getArticlesOfInstructor(id);
       const courses = await courseRepo.getCoursesOfInstructor(id);
       const coursesCount = courses.length
+
+      const quizzes = await quizRepo.getQuizzesByInstructor(id)
+      const quizzesCount = quizzes.length
+
       return res.status(200).send({
         instructor: instructor,
         writtenCount: writtenCount,
         writtenArticles: writtenArticles,
         courses: courses,
-        coursesCount: coursesCount
+        coursesCount: coursesCount,
+        quizzes: quizzes,
+        quizzesCount: quizzesCount
+
       });
     } catch (err) {
       return res.status(500).send({

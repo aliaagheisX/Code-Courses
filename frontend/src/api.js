@@ -53,7 +53,8 @@ const api = {
     getLesson: (l_id) => `http://localhost:4000/lessons/getlessonbyid/${l_id}`,
     getDiscussion: (c_id) => `http://localhost:4000/discussions/getcoursediscussion/${c_id}`,
 
-    getQuizById: (q_id) => `http://localhost:4000/quizzes/getquizbyid/${q_id}`,
     addQuestion: `http://localhost:4000/questions/create`,
+    getQuizById: (q_id) => `http://localhost:4000/quizzes/getquizbyid/${q_id}`,
+    getAllQuizzes: `http://localhost:4000/quizzes/`,
 }
 export default api

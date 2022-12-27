@@ -97,4 +97,5 @@ module.exports = {
         .send({ message: "Internal server error getting all lessons " + err });
     }
   },
+
 };

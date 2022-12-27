@@ -14,6 +14,7 @@ import ArticleComponent from '../../components/ArticleComponent'
 import Options from './Options'
 import CustomCarsoul from '../../components/CustomCarsoul'
 import CourseComponent from '../../components/CourseComponent'
+import QuizComponent from '../../components/QuizComponent'
 export default function InstructorProfile() {
 
     let { id } = useParams();
@@ -28,7 +29,9 @@ export default function InstructorProfile() {
                     writtenCount,
                     writtenArticles: articles,
                     courses,
-                    coursesCount
+                    coursesCount,
+                    quizzesCount,
+                    quizzes
                 } = items
                 console.log(items)
                 return (
@@ -41,7 +44,7 @@ export default function InstructorProfile() {
                                 <ProfileCharts
                                     nCourses={coursesCount}
                                     nArticles={writtenCount}
-                                    nQuizzes={3}
+                                    nQuizzes={quizzesCount}
                                 />
 
                             </div>
@@ -61,6 +64,15 @@ export default function InstructorProfile() {
                             <CustomCarsoul
                                 items={
                                     courses.map((course) => <CourseComponent course={course} key={course.ID} />)
+
+                                } />
+                        </section>
+
+                        <section>
+                            <h3>Quizzes</h3>
+                            <CustomCarsoul
+                                items={
+                                    quizzes.map((quiz) => <QuizComponent quiz={quiz} key={quiz.ID} />)
 
                                 } />
                         </section>
