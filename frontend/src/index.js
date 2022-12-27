@@ -25,6 +25,8 @@ import Home from './Layouts/Homepage/Home';
 import AddLesson from './Layouts/Lessons/AddLesson';
 import EditLesson from './Layouts/Lessons/EditLesson';
 import Discussion from './components/Discussion';
+import AddQuestion from './Layouts/Questions/AddQuestion';
+import Questions from './Layouts/Questions';
 
 const ProtectedRoute = ({ children }) => {
   const { token } = useToken();
@@ -59,8 +61,11 @@ root.render(
           <Route path='instructors' element={<Instructors />} />
           <Route path='admins' element={<Admins />} />
         </Route>
-
-        <Route path="/" element={<Home />}></Route>
+        <Route path='edit/me' element={
+          <ProtectedRoute>
+            <EditProfile />
+          </ProtectedRoute>
+        } />
 
         <Route path='/Topics' element={
           <AdminRoute >
@@ -68,7 +73,6 @@ root.render(
           </AdminRoute>} />
 
 
-        <Route path='/articles/:id' element={<ShowArticle />} />
         <Route path='/articles/add' element={
           <InstructorRoute>
             <AddArticle />
@@ -79,17 +83,11 @@ root.render(
             <EditeArticle />
           </InstructorRoute>
         } />
+        <Route path='/articles/:id' element={<ShowArticle />} />
         <Route path='/articles' element={<Articles />} />
 
 
 
-
-
-        <Route path='edit/me' element={
-          <ProtectedRoute>
-            <EditProfile />
-          </ProtectedRoute>
-        } />
 
 
         <Route path='/courses' element={<Courses />} />
@@ -107,13 +105,36 @@ root.render(
           </InstructorRoute>
         } />
 
+        <Route path='/lessons/add/:id' element={
+          <InstructorRoute>
+            <AddLesson />
+          </InstructorRoute>
+        } />
         <Route path='/lessons/edit/:id' element={
           <InstructorRoute>
             <EditLesson />
           </InstructorRoute>
         } />
 
-        <Route path='/discussions' element={<Discussion />} />
+
+        <Route path='/discussions' element={
+          <ProtectedRoute>
+            <Discussion />
+          </ProtectedRoute>
+        } />
+
+        <Route path='/questions' element={
+          <InstructorRoute>
+            <Questions />
+          </InstructorRoute>
+        } />
+
+        <Route path='/questions/add' element={
+          <InstructorRoute>
+            <AddQuestion />
+          </InstructorRoute>
+        } />
+
       </Route>
     </Routes>
   </BrowserRouter>

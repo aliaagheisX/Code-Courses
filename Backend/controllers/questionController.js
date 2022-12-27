@@ -1,11 +1,12 @@
 const questionRepo = require("../repositories/questionRepository");
+const choiceRepo = require("../repositories/choiceRepository");
 const Joi = require("joi");
 
 function questionValidate(columns) {
   const schema = Joi.object({
-    body: Joi.string().required().min(2),
-    I_ID: Joi.number().required().min(0),
+    body: Joi.string().required().min(10).max(500000),
     score: Joi.number().required().min(0),
+    choices: Joi.array().required().min(1)
   });
   return schema.validate(columns);
 }
@@ -14,14 +15,18 @@ module.exports = {
   postQuestion: async (req, res) => {
     try {
       let question = req.body;
+      const i_id = req.user.ID;
       const { error } = questionValidate(question);
       if (error) {
         return res.status(403).send({ message: "Validation Error:  " + error });
       }
-      createQ = await questionRepo.createQuestion(question);
+      const createQ = await questionRepo.createQuestion(question, i_id);
+      const question_id = createQ.insertId;
+      const choices = await choiceRepo.addChoicesToQuiz(question_id, question.choices);
+
       return res.status(201).send({
         message: "Question Created",
-        createdQuestion: createQ,
+        question_id: question_id,
       });
     } catch (err) {
       return res

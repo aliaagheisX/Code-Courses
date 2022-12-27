@@ -78,7 +78,11 @@ export const addLessonInitialValues = (cid) => {
   }
 }
 
-
+export const addQuestionInitialValues = {
+  body: '',
+  score: '',
+  choices: [],
+};
 
 
 
@@ -264,4 +268,16 @@ export const EditLessonSchema = Yup.object().shape({
   cid: Yup.number(),
   qid: Yup.number().min(1),
   aid: Yup.number().min(1),
+});
+
+
+export const AddQuestionSchema = Yup.object().shape({
+  body: Yup.string().required().min(10).max(500000),
+  score: Yup.number().required().min(0),
+  choices: Yup.array().of(
+    Yup.object().shape({
+      body: Yup.string().required().min(2).max(255),
+      is_correct: Yup.number().min(0).max(1).required()
+    })
+  ).required().min(1)
 });

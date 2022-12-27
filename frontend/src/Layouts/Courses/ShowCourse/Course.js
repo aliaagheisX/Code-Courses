@@ -11,8 +11,10 @@ import Reviews from './Reviews'
 import Resource from '../../../Resource'
 import api from '../../../api'
 import CourseContent from '../../../components/CourseContent'
+import { Link } from 'react-router-dom'
 
 export default function Course({ course }) {
+    const { userdata } = useToken()
     const [enrollState, setEnrollState] = useState(course.is_enrolled)
     const [courseRating, setCourseRating] = useState(course.rating)
     console.log(course)
@@ -43,6 +45,13 @@ export default function Course({ course }) {
             </div>
 
             <Thumb avatar={IMAGE} />
+            {
+                userdata.ID === INSTRUCTORID &&
+                <div className={styles.opI}>
+                    <Link to={`/discussions/${ID}`} className='btnE' >chat room</Link>
+                </div>
+
+            }
             <div className={styles.markW}>
                 <h2>Prerequisite</h2>
 
@@ -50,7 +59,7 @@ export default function Course({ course }) {
 
                 <Resource
                     path={api.getCourseLessons(ID)}
-                    render={({ items: { lessons } }) => <CourseContent lessons={lessons} />}
+                    render={({ items: { lessons } }) => <CourseContent instructor_id={INSTRUCTORID} lessons={lessons} />}
                     ErrorComp={<></>}
                 />
                 <div className={styles.footer}>
