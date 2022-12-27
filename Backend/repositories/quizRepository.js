@@ -75,13 +75,15 @@ module.exports = {
       });
     });
   },
-  addTopicsToQuiz: (q_id, topics) => {
+  addTopicsToQuiz: (quiz_id, topics, questions) => {
     return new Promise((resolve, reject) => {
-      let queryString = `INSERT INTO quiz_topic(QID, TID) VALUES `;
+      let queryString = `INSERT INTO QUIZ_QUESTION_TOPIC(QID, TID,NID) VALUES `;
       topics.forEach((t_id, ind) => {
-        queryString += `(${q_id}, ${t_id})`;
-        if (ind < topics.length - 1) queryString += ", ";
+        questions.forEach((q_id, idx) => {
+          queryString += `(${quiz_id}, ${t_id}, ${q_id}),`;
+        });
       });
+      queryString = queryString.slice(0, -1);
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
