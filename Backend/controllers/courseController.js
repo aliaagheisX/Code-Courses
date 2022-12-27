@@ -103,7 +103,7 @@ module.exports = {
 	},
 	getCoursesOfStudent: async (req, res) => {
 		try {
-			let id = parseInt(req.params.id);
+			let id = parseInt(req.params.s_id);
 			let courses = await courseRepo.getCoursesOfStudent(id);
 			if (!courses.length) {
 				return res

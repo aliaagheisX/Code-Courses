@@ -11,6 +11,7 @@ const { canCreateCourse, canControllCourse, canEnroll, canDisenroll, canEditRevi
 
 
 router.get('/', courseController.getAllCourses);
+router.get('/getcoursesofstudent/:s_id', courseController.getCoursesOfStudent);
 router.get('/instructors/:i_id', courseController.getCoursesOfInstructor);
 
 router.get('/:id', courseController.getCourseById);

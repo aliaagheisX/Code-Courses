@@ -35,6 +35,7 @@ const api = {
     deleteComment: (id) => `http://localhost:4000/comments/${id}`,//comment_id
     getCourse: (id) => `http://localhost:4000/courses/${id}`,
     getAllCourses: `http://localhost:4000/courses/`,
+    getCoursesOfStudent: (s_id) => `http://localhost:4000/courses/getcoursesofstudent/${s_id}`,
     addCourse: `http://localhost:4000/courses/create`,
     deleteCourse: (id) => `http://localhost:4000/courses/${id}`,
     editCourse: (id) => `http://localhost:4000/courses/${id}`,
@@ -50,5 +51,8 @@ const api = {
     deleteLesson: (l_id) => `http://localhost:4000/lessons/deletelessonbyid/${l_id}`,
     getCourseLessons: (c_id) => `http://localhost:4000/lessons/getlessonsbycourse/${c_id}`,
     getLesson: (l_id) => `http://localhost:4000/lessons/getlessonbyid/${l_id}`,
+
+
+    addQuestion: `http://localhost:4000/questions/create`,
 }
 export default api

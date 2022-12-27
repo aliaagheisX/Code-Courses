@@ -1,4 +1,5 @@
 const { DBconnection } = require("../config/database");
+const ch = (str) => str.replace(/'/g, "`");
 
 module.exports = {
   getQuestionById: () => {
@@ -10,12 +11,12 @@ module.exports = {
       });
     });
   },
-  createQuestion: (question) => {
+  createQuestion: (question, i_id) => {
     return new Promise((resolve, reject) => {
-      let queryString = `INSERT INTO QUESTION (SCORE,BODY,INSTRUCTORID) VALUES(${question.score},'${question.body}',${question.I_ID})`;
+      let queryString = `INSERT INTO QUESTION (SCORE,BODY,INSTRUCTORID) VALUES(${question.score},'${ch(question.body)}',${i_id})`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
-        return resolve(rows[0]);
+        return resolve(rows);
       });
     });
   },
