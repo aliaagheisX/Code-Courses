@@ -106,7 +106,7 @@ module.exports = {
                     id: id,
                     lesson: newLesson,
                 });
-        } catch (error) {
+        } catch (err) {
             return res
                 .status(500)
                 .send({ message: "Internal server error creating new lesson " + err });
