@@ -39,7 +39,6 @@ module.exports = {
       if (quiz === undefined) {
         return res.status(404).send({ message: "Quiz not found" });
       }
-<<<<<<< HEAD
       const score = await getUserQuizScore(req, q_id);
       return res
         .status(200)
@@ -51,15 +50,7 @@ module.exports = {
           topics: topics,
           score: score
         });
-=======
-      return res.status(200).send({
-        quiz: quiz,
-        questions: questions,
-        choices: choices,
-        students: students,
-        topics: topics,
-      });
->>>>>>> bd695d6999d67088f7b41adca36f492d75043000
+
     } catch (err) {
       return res
         .status(500)
@@ -116,9 +107,4 @@ module.exports = {
         .send({ message: "Internal server error getting all lessons " + err });
     }
   },
-<<<<<<< HEAD
-
-
-=======
->>>>>>> bd695d6999d67088f7b41adca36f492d75043000
 };
