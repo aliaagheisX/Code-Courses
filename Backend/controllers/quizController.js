@@ -16,7 +16,7 @@ module.exports = {
       if (!quizzes.length) {
         return res
           .status(404)
-          .send({ message: "No quizzes found "});
+          .send({ message: "No quizzes found " });
       }
       return res
         .status(200)
@@ -39,7 +39,7 @@ module.exports = {
       const { quiz, questions, choices, students } = Quiz;
       return res
         .status(200)
-        .send({ 
+        .send({
           quiz: quiz,
           questions: questions,
           choices: choices,
