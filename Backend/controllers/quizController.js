@@ -54,9 +54,10 @@ module.exports = {
   postQuiz: async (req, res) => {
     try {
       let quiz = req.body;
-      // quiz.topics = JSON.parse(quiz.topics);
-      // const instructor_id = req.user.ID;
-      const instructor_id = quiz.I_ID;
+      quiz.topics = JSON.parse(quiz.topics);
+      quiz.question = JSON.parse(quiz.questions);
+      const instructor_id = req.user.ID;
+      // const instructor_id = quiz.I_ID;
       const { error } = quizValidate(quiz);
       if (error) {
         return res.status(403).send({ message: "Validation Error:  " + error });
