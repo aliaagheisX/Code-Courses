@@ -1,9 +1,9 @@
-
-h2{
-    padding: 10px;
-    margin-bottom: 10px;
+.space {
+    display: flex;
+    flex-direction: column;
+    gap: 70px;
 }
-section
-{
-    margin-bottom: 10px;
+
+.space h2 {
+    margin-bottom: 20px;
 }

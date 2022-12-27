@@ -65,9 +65,10 @@ module.exports = {
   getQuizzesByInstructor: (I_ID) => {
     return new Promise((resolve, reject) => {
       let queryString = `
-      SELECT E.*, Q.* 
-      FROM quiz Q, element E 
-      WHERE Q.INSTRUCTORID = ${I_ID} AND E.ID = Q.ID`;
+      SELECT E.CREATIONDATE, E.TITLE, E.IMAGE, E.DESCRIPTION,
+        Q.*, (SELECT COUNT(QQT.NID) FROM quiz_question_topic QQT WHERE QQT.QID=Q.ID) as numOfQuestions,
+        (SELECT COUNT(STQ.SID) FROM studenttakesquiz STQ WHERE STQ.QID=Q.ID) as numOfStudents FROM quiz Q, element E
+        WHERE Q.INSTRUCTORID = ${I_ID} AND Q.ID=E.ID`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
