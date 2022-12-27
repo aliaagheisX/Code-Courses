@@ -117,7 +117,7 @@ root.render(
         } />
 
 
-        <Route path='/discussions' element={
+        <Route path='/discussions/:id' element={
           <ProtectedRoute>
             <Discussion />
           </ProtectedRoute>

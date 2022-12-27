@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
+import getDate from "../../getDate";
 
 function Chat({ socket, username, room, messagesInitial }) {
     const [currentMessage, setCurrentMessage] = useState("");
@@ -7,25 +8,27 @@ function Chat({ socket, username, room, messagesInitial }) {
 
     const sendMessage = async () => {
         if (currentMessage !== "") {
+            const timeElapsed = Date.now();
+            const today = new Date(timeElapsed).toISOString();
+
             const messageData = {
                 room: room,
                 author: username,
                 message: currentMessage,
-                time:
-                    new Date(Date.now()).getHours() +
-                    ":" +
-                    new Date(Date.now()).getMinutes(),
+                time: today,
             };
 
             await socket.emit("send_message", messageData);
             setMessageList((list) => [...list, messageData]);
             setCurrentMessage("");
+            console.log("sent message")
         }
     };
 
     useEffect(() => {
         socket.on("receive_message", (data) => {
             setMessageList((list) => [...list, data]);
+            console.log("receved message")
         });
     }, [socket]);
 
@@ -36,9 +39,9 @@ function Chat({ socket, username, room, messagesInitial }) {
             </div>
             <div className="chat-body">
                 <ScrollToBottom className="message-container">
-                    {messageList.map((messageContent) => {
+                    {messageList.map((messageContent, ind) => {
                         return (
-                            <div
+                            <div key={ind}
                                 className="message"
                                 id={username === messageContent.author ? "you" : "other"}
                             >
@@ -47,7 +50,7 @@ function Chat({ socket, username, room, messagesInitial }) {
                                         <p>{messageContent.message}</p>
                                     </div>
                                     <div className="message-meta">
-                                        <p id="time">{messageContent.time}</p>
+                                        <p id="time">{getDate(messageContent.time)} ago</p>
                                         <p id="author">{messageContent.author}</p>
                                     </div>
                                 </div>

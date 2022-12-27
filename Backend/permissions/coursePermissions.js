@@ -78,7 +78,23 @@ module.exports = {
 	canEnroll: async (req, res, next) => {
 		let u_id = req.user.ID;
 		let c_id = parseInt(req.params.c_id);
+		let course = null;
 		let is_enrolled = null;
+
+		try {
+			course = await courseRepo.getCourseById(c_id);
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting course " + err });
+		}
+
+		if (course.INSTRUCTORID === u_id) {
+			return res
+				.status(401)
+				.send({ message: "Unauthorized. You are already instructor in this course" });
+		}
+
 		try {
 			is_enrolled = await courseRepo.getUserEnrolled(u_id, c_id);
 		} catch (err) {
