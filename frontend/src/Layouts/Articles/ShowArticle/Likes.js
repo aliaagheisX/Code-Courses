@@ -25,8 +25,7 @@ export default function Likes({ likes, views, a_id }) {
         }
     }
     return (
-        <div
-            className={styles.stLike}>
+        <div className={styles.stLike}>
             <span className={`${styles.lkCont} ${active ? styles.liActive : ''}`}
 
                 onClick={handelLike}>

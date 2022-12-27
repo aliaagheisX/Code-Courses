@@ -1,0 +1,129 @@
+.sec {
+    text-align: center;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+}
+.sec > * {
+    margin: auto;
+    text-align: center;
+}
+.opt {
+    display: flex;
+    margin: 0;
+    justify-content: flex-end;
+    gap: 3rem;
+}
+
+.stLike {
+    position: fixed;
+    margin: 0;
+    top:300px;
+    right: 8%;
+    display: flex;
+    justify-content: flex-end;
+    border-left: 1px solid #bebebe;
+    padding-left: 24px;
+    flex-direction: column;
+    gap: 50px;
+    align-items: flex-end;
+    
+}
+.vsCont span{
+    font-variation-settings: 'FILL' 1 !important;
+    color: #424261;
+
+}
+.lkCont, .vsCont {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0 7px;
+    cursor: pointer;
+}
+.lkCont:hover span, .liActive .lkCont span, .liActive span{
+    font-variation-settings: 'FILL' 1 !important;
+    color: rgb(162, 45, 45) !important;
+}
+.stLike  .stl {
+    color: #5e5e86;
+    margin: 3px 0;
+    font-size: 13px;
+}
+.stLike span {
+    font-size: 25px;
+    font-variation-settings: 'FILL' 0;
+    cursor: pointer;
+}
+
+.sec h3 {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 31px;
+    line-height: 37px;
+    text-transform: capitalize;
+    color: #424261;
+
+}
+
+.sec .desc {
+    font-family: 'lato';
+    font-size: 15px;   
+    letter-spacing: 0.3px;
+
+    color: #818182;
+}
+
+.markW {
+    max-width: 75%;
+    padding-top: 25px;
+    text-align: left;
+    color: #818182;
+    font-size: 14px;
+    min-width: 62%;
+}
+.markW h1, .markW h2,.markW h3,.markW h4 {
+    margin: 50px 0 10px 0;
+    color: #424261;
+}
+
+.markW  pre {
+    background-color: #1a1a26;
+    color: #fff;
+    padding: 12px;
+    border-radius: 5px;
+}
+
+.markW img {
+    max-width: 250px;
+}
+
+.markW p code {
+    background-color: rgb(235, 233, 233);
+    padding: 3px 10px;
+    border-radius: 6px;
+}
+
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding-top: 50px;
+    margin-top: 100px;
+    border-top: 1px solid #ddd;
+}
+.footer h4{
+    font-family: 'Montserrat';
+    font-weight: 900;
+    font-size: 15px;
+    line-height: 13px;
+    margin: 0;
+
+    color: #0F0F10;
+
+
+}

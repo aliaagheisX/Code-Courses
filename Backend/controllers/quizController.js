@@ -34,10 +34,10 @@ module.exports = {
     try {
       let q_id = parseInt(req.params.q_id);
       let Quiz = await quizRepo.getQuizById(q_id);
-      if (!Quiz) {
+      const { quiz, questions, choices, students, topics } = Quiz;
+      if (quiz === undefined) {
         return res.status(404).send({ message: "Quiz not found" });
       }
-      const { quiz, questions, choices, students } = Quiz;
       return res
         .status(200)
         .send({
@@ -45,6 +45,7 @@ module.exports = {
           questions: questions,
           choices: choices,
           students: students,
+          topics: topics
         });
     } catch (err) {
       return res
