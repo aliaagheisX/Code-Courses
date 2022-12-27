@@ -101,4 +101,28 @@ module.exports = {
         .send({ message: "Internal server error getting all lessons " + err });
     }
   },
+  getQuizzesByStudent: async (req, res) => {
+    try {
+      let S_ID = req.params.s_id;
+      if (!S_ID) {
+        return res.status(403).send({
+          message: "Pleases Insert the student id in the url ",
+        });
+      }
+      let quizzes = await quizRepo.getQuizzesByStudent(S_ID);
+      if (!quizzes.length) {
+        return res
+          .status(404)
+          .send({ message: "Looks like you have no quizzes" });
+      }
+      return res.status(201).send({
+        message: "quizzes retrieved",
+        Quizzes: quizzes,
+      });
+    } catch (err) {
+      return res
+        .status(500)
+        .send({ message: "Internal server error getting all lessons " + err });
+    }
+  },
 };
