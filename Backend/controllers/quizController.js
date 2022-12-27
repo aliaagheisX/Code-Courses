@@ -10,6 +10,8 @@ function quizValidate(columns) {
     image: Joi.string().required(),
     max_score: Joi.number().required().min(0),
     topics: Joi.array().items(Joi.number()).min(1).required(),
+    questions: Joi.array().items(Joi.number()).min(1).required(),
+    I_ID: Joi.number(),
   });
   return schema.validate(columns);
 }
@@ -19,9 +21,7 @@ module.exports = {
     try {
       let quizzes = await quizRepo.getAllQuizzes();
       if (!quizzes.length) {
-        return res
-          .status(404)
-          .send({ message: "No quizzes found " });
+        return res.status(404).send({ message: "No quizzes found " });
       }
       return res.status(200).send({ quizzes: quizzes });
     } catch (err) {
@@ -38,15 +38,13 @@ module.exports = {
       if (quiz === undefined) {
         return res.status(404).send({ message: "Quiz not found" });
       }
-      return res
-        .status(200)
-        .send({
-          quiz: quiz,
-          questions: questions,
-          choices: choices,
-          students: students,
-          topics: topics
-        });
+      return res.status(200).send({
+        quiz: quiz,
+        questions: questions,
+        choices: choices,
+        students: students,
+        topics: topics,
+      });
     } catch (err) {
       return res
         .status(500)
@@ -56,15 +54,20 @@ module.exports = {
   postQuiz: async (req, res) => {
     try {
       let quiz = req.body;
-      quiz.topics = JSON.parse(quiz.topics);
-      const instructor_id = req.user.ID;
+      // quiz.topics = JSON.parse(quiz.topics);
+      // const instructor_id = req.user.ID;
+      const instructor_id = quiz.I_ID;
       const { error } = quizValidate(quiz);
       if (error) {
         return res.status(403).send({ message: "Validation Error:  " + error });
       }
       createQ = await quizRepo.createQuiz(quiz, instructor_id);
       quiz_id = createQ["@quiz_id"];
-      addTopic = await quizRepo.addTopicsToQuiz(quiz_id, quiz.topics);
+      addTopic = await quizRepo.addTopicsToQuiz(
+        quiz_id,
+        quiz.topics,
+        quiz.questions
+      );
       return res.status(201).send({
         message: "quiz Created",
         createdQuiz: createQ,
@@ -97,5 +100,4 @@ module.exports = {
         .send({ message: "Internal server error getting all lessons " + err });
     }
   },
-
 };

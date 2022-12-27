@@ -58,4 +58,13 @@ module.exports = {
       });
     });
   },
+  getQuestionsByStudent: (I_ID) => {
+    return new Promise((resolve, reject) => {
+      let queryString = `SELECT * FROM Question WHERE INSTRUCTORID = ${I_ID}`;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows);
+      });
+    });
+  },
 };
