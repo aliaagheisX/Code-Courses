@@ -1,6 +1,41 @@
 const { DBconnection } = require("../config/database");
 
 module.exports = {
+  getAllQuizzes: () => {
+    return new Promise((resolve, reject) => {
+      let queryString = `SELECT E.CREATIONDATE, E.TITLE, E.IMAGE, E.DESCRIPTION,
+        Q.*, (SELECT COUNT(QQT.NID) FROM quiz_question_topic QQT WHERE QQT.QID=Q.ID) as numOfQuestions,
+        (SELECT COUNT(STQ.SID) FROM studenttakesquiz STQ WHERE STQ.QID=Q.ID) as numOfStudents FROM quiz Q, element E
+        WHERE Q.ID=E.ID`;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows);
+      })
+    })
+  },
+  getQuizById: (q_id) => {
+    return new Promise((resolve, reject) => {
+      let queryString = `SELECT E.TITLE, E.IMAGE, E.CREATIONDATE, E.DESCRIPTION,
+        Q.*, (SELECT COUNT(QQT.NID) FROM quiz_question_topic QQT WHERE QQT.QID=Q.ID) as numOfQuestions,
+        (SELECT COUNT(STQ.SID) FROM studenttakesquiz STQ WHERE STQ.QID=Q.ID) as numOfStudents
+        FROM quiz Q, element E WHERE Q.ID=E.ID AND Q.ID=${q_id};
+        
+        SELECT QU.* FROM question QU, quiz_question_topic QQT WHERE QQT.NID=QU.ID AND QQT.QID=${q_id};
+        
+        SELECT CH.* FROM choices CH WHERE CH.ID IN (SELECT QU.ID FROM question QU, quiz_question_topic QQT WHERE QQT.NID=QU.ID AND QQT.QID=${q_id});
+        
+        SELECT U.* FROM _user U, studenttakesquiz STQ WHERE STQ.SID=U.ID AND STQ.QID=${q_id}`;
+        DBconnection.query(queryString, (err, rows) => {
+          if (err) return reject(err);
+          return resolve({
+            quiz: rows[0][0],
+            questions: rows[1],
+            choices: rows[2],
+            students: rows[3],
+          });
+        })
+    })
+  },
   createQuiz: (quiz) => {
     return new Promise((resolve, reject) => {
       let queryString = `INSERT INTO QUiz (MAXSCORE,INSTRUCTORID) VALUES(${quiz.max_score},${quiz.I_ID})`;
@@ -14,7 +49,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       let queryString = `
       SELECT E.*, Q.* 
-      FROM QUiz Q, element E 
+      FROM quiz Q, element E 
       WHERE Q.INSTRUCTORID = ${I_ID} AND E.ID = Q.ID`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
