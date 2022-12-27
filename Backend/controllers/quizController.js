@@ -8,7 +8,6 @@ function quizValidate(columns) {
     title: Joi.string().min(4).required(),
     description: Joi.string().required(),
     image: Joi.string().required(),
-    I_ID: Joi.number().required().min(0),
     max_score: Joi.number().required().min(0),
     topics: Joi.array().items(Joi.number()).min(1).required(),
   });
@@ -56,12 +55,13 @@ module.exports = {
   postQuiz: async (req, res) => {
     try {
       let quiz = req.body;
-      // quiz.topics = JSON.parse(quiz.topics);
+      quiz.topics = JSON.parse(quiz.topics);
+      const instructor_id = req.user.ID;
       const { error } = quizValidate(quiz);
       if (error) {
         return res.status(403).send({ message: "Validation Error:  " + error });
       }
-      createQ = await quizRepo.createQuiz(quiz);
+      createQ = await quizRepo.createQuiz(quiz, instructor_id);
       quiz_id = createQ["@quiz_id"];
       addTopic = await quizRepo.addTopicsToQuiz(quiz_id, quiz.topics);
       return res.status(201).send({

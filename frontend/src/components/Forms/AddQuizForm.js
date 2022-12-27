@@ -14,6 +14,7 @@ import useToken from '../../useToken';
 import SubmitButton from '../Fields/SubmitButton'
 import { Formik, Form, FieldArray } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import QuestionsSelectedForm from './QuestionsSelectedForm';
 
 
 export default function AddQuizForm({ questions_data }) {
@@ -62,7 +63,7 @@ export default function AddQuizForm({ questions_data }) {
         <Formik
             initialValues={addQuizInitialValues}
             validationSchema={AddQuizSchema}
-            onSubmit={onSubmit}
+            onSubmit={(values) => console.log(values)}
         >
 
             {({ values, isSubmitting }) => (
@@ -78,34 +79,8 @@ export default function AddQuizForm({ questions_data }) {
                         </div>
                         <TopicListSelection />
                     </div>
-                    <TextAreaField mode='textarea' name="pre" label="prerequisites" placeholder='[ ] react' />
 
-                    <FieldArray
-                        name='questions'
-                        render={arrayHelpers => (
-                            <div>
-                                {values.questions && values.questions.length > 0 ? (
-
-                                    values.questions.map((question, ind) => (
-                                        <div className='form-group' key={ind} style={{ paddingTop: '20px' }}>
-
-                                            <TextField
-                                                name={`questions.${ind}`}
-                                                label={`question ${ind + 1}`}
-                                                placeholder={`enter question ${ind + 1} body here..`}
-                                            />
-
-                                        </div>
-                                    ))
-
-
-                                ) : <></>}
-                                <div className='btnG' onClick={() => arrayHelpers.push(0)}>+ add question</div>
-
-                            </div>
-                        )
-                        }
-                    />
+                    <QuestionsSelectedForm />
 
 
                     {/* backend error */}

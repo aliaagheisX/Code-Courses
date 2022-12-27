@@ -51,7 +51,7 @@ export default function Options({ id, instructor_id, is_enrolled, setEnrollState
         <div className={styles.Buttons}>
             {
                 token && userdata.ID === instructor_id &&
-                <button className='btnG' >+ add lesson</button>
+                <Link to='/lessons/add' className='btnG' >+ add lesson</Link>
             }
             {
                 token && userdata.ID !== instructor_id && (
