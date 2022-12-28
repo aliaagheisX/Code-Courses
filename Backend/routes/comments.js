@@ -32,6 +32,8 @@ router.delete(
 
 router.post("/create/:a_id", [authToken], commentsController.addCommentToArticle);
 
+router.post("/likecomment/:c_id", [authToken], commentsController.likeComment);
+
 router.put("/edit/:c_id", [authToken, canDeleteUserComment], commentsController.editComment);
 
 module.exports = router;
