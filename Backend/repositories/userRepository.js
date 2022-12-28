@@ -186,16 +186,18 @@ module.exports = {
       CALL TopEnrolledCourses();
       CALL TopRatedCourses();
       CALL TopTakenQuizzes();
+      CALL activitesReport();
       `;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve({
           TopicsReport: rows[0],
-          UsersReport: rows[1],
-          TopLikedArticles: rows[2],
-          TopEnrolledCourses: rows[3],
-          TopRatedCourses: rows[4],
-          TopTakenQuizzes: rows[5],
+          UsersReport: rows[2][0],
+          TopLikedArticles: rows[4],
+          TopEnrolledCourses: rows[6],
+          TopRatedCourses: rows[8],
+          TopTakenQuizzes: rows[10],
+          ActivitesReport: rows[12][0],
         });
       });
     });

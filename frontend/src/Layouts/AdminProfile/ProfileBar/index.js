@@ -5,9 +5,9 @@ import useToken from '../../../useToken'
 import Avatar from '../../../components/Avatar'
 import RankDetails
     from '../../../RankDetails'
-export default function ProfileBar({ userdata }) {
+export default function ProfileBar() {
 
-
+    const { userdata } = useToken()
 
     const {
         FNAME: first_name,

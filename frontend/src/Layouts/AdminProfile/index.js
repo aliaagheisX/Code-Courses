@@ -1,5 +1,5 @@
 import React from 'react'
-import ProfileCharts from './ProfileCharts'
+import AdminPieCharts from './AdminPieCharts'
 import ProfileBar from './ProfileBar'
 
 import styles from './index.module.css'
@@ -7,56 +7,73 @@ import styles from './index.module.css'
 import Resource from '../../Resource'
 
 import api from '../../api'
-import RankBar from './RankBar'
 
-import { useParams } from 'react-router-dom'
-import Articles from './Articles'
 import Options from './Options'
-import Courses from './Courses'
 import CustomCarsoul from '../../components/CustomCarsoul'
 import QuizComponent from '../../components/QuizComponent'
+import ArticleComponent from '../../components/ArticleComponent'
 
+import CourseComponent from '../../components/CourseComponent'
+import TopicsChart from './TopicsChart'
 export default function AdminProfile() {
 
-    let { id } = useParams();
 
 
 
     return (
 
-        < Resource
-            path={api.student(id)}
-            render={({ items }) => {
-                const { student } = items
-
+        <Resource
+            path={api.getAdminReport}
+            render={({ items: { report } }) => {
+                const { TopEnrolledCourses, TopLikedArticles, TopRatedCourses, TopTakenQuizzes, TopicsReport, UsersReport, ActivitesReport } = report;
                 return (
                     <section className={styles.body} >
-                        <Options id={student.ID} />
+                        <Options />
                         <main>
-                            <ProfileBar userdata={student} />
+                            <ProfileBar />
                             <div className={styles.stats}>
-
-                                <RankBar score={student.SCORE} />
-                                <ProfileCharts
-                                    nCourses={items.coursesCount}
-                                    nArticles={items.readCount}
-                                    nQuizzes={items.quizzesCount}
-                                />
+                                <AdminPieCharts UsersReport={UsersReport} ActivitesReport={ActivitesReport} />
+                                <TopicsChart TopicsReport={TopicsReport} />
 
                             </div>
                         </main>
 
-
-                        <Articles articlesRead={items.articlesRead} articlesLiked={items.articlesLiked} />
-                        <Courses coursesEnrolled={items.coursesEnrolled} />
                         <section>
-                            <h3>Quizzes</h3>
+                            <h3>Top {TopLikedArticles.length} Liked Articles</h3>
                             <CustomCarsoul
                                 items={
-                                    items.quizzesTaken.map((quiz) => <QuizComponent quiz={quiz} key={quiz.ID} />)
+                                    TopLikedArticles.map((article) => <ArticleComponent article={article} key={article.ID} />)
 
                                 } />
                         </section>
+
+                        <section>
+                            <h3>Top {TopRatedCourses.length} Rated Courses</h3>
+                            <CustomCarsoul
+                                items={
+                                    TopRatedCourses.map((course) => <CourseComponent course={course} key={course.ID} />)
+
+                                } />
+                        </section>
+
+                        <section>
+                            <h3>Top {TopEnrolledCourses.length} Enrolled Courses</h3>
+                            <CustomCarsoul
+                                items={
+                                    TopEnrolledCourses.map((course) => <CourseComponent course={course} key={course.ID} />)
+
+                                } />
+                        </section>
+
+                        <section>
+                            <h3>Top {TopTakenQuizzes.length} Taken Quizzes</h3>
+                            <CustomCarsoul
+                                items={
+                                    TopTakenQuizzes.map((quiz) => <QuizComponent quiz={quiz} key={quiz.ID} />)
+
+                                } />
+                        </section>
+
                     </section>
                 )
             }} />

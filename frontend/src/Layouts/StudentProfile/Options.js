@@ -7,7 +7,7 @@ import useToken from '../../useToken'
 import api from '../../api'
 
 export default function Options({ id }) {
-    const { isInstructor, isAdmin, token, setInstructor, userdata } = useToken()
+    const { isInstructor, isAdmin, token, setInstructor, userdata: { ID } } = useToken()
     const handelAddInstructor = async () => {
         try {
             const res = await fetch(api.addInstructor, {
@@ -31,16 +31,16 @@ export default function Options({ id }) {
             <div>
                 {isInstructor ?
                     <Link to={`/instructors/${id}`} className='btnG'>as Insrtuctor</Link> :
-                    userdata.ID === id &&
+                    ID === id &&
                     <button className='btnG' onClick={handelAddInstructor}>Be Insrtuctor</button>
                 }
-                {isAdmin ?
+                {isAdmin && (ID === id) ?
                     <Link to={`/admin`} className='btnG'>as admin</Link> : <></>
                 }
             </div>
 
             <div>
-                {token && (isAdmin || userdata.ID === id) ?
+                {token && (isAdmin || ID === id) ?
                     <>
                         <Link to='/edit/me' className='btnE'>Edit</Link>
 
