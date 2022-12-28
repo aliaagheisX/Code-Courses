@@ -57,6 +57,10 @@ root.render(
 
         <Route path='/students/:id' element={<StudentProfile />} />
         <Route path='/instructors/:id' element={<InstructorProfile />} />
+        <Route path='/admin' element={
+          <AdminRoute />}
+
+        />
 
         <Route path='/users' element={<Users />} >
           <Route path='' element={<Students />} />

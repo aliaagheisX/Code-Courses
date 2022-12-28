@@ -91,7 +91,7 @@ export default function CourseContent({ lessons: lessonsInit, instructor_id }) {
                                         <div className={styles.cont}>
                                             <span className={`material-symbols-outlined ${styles.icon}`}>contact_support</span>
 
-                                            <Link className={styles.title} to={`/articles/${QID}`}>{quiz_title}</Link>
+                                            <Link className={styles.title} to={`/quizzes/${QID}`}>{quiz_title}</Link>
 
                                         </div>
                                     </div>

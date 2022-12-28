@@ -1,0 +1,56 @@
+.body {
+    width: 95%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 4rem 0;
+    gap: 5rem;
+}
+.body aside {
+    flex-grow: 0.1;
+}
+.body main {
+    flex-grow: 1;
+    margin: 0 20px;
+}
+
+.stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+
+}
+
+
+.optsCont {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0px 27px;
+    margin-bottom: -25px;
+    align-items: flex-start;
+}
+
+.optsCont div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 3rem;
+    align-items:flex-start;
+}
+
+.danger form {
+    padding: 0;
+}
+.danger button{
+    background-color: #CC2936;
+}
+
+.danger button:hover {
+    background-color: #a0212c;
+
+}

@@ -28,17 +28,11 @@ export default function Options({ id }) {
     }
     return (
         <div className={styles.optsCont}>
-            <div>
-                {isInstructor ?
-                    <Link to={`/instructors/${id}`} className='btnG'>as Insrtuctor</Link> :
-                    userdata.ID === id &&
-                    <button className='btnG' onClick={handelAddInstructor}>Be Insrtuctor</button>
-                }
-                {isAdmin ?
-                    <Link to={`/admin`} className='btnG'>as admin</Link> : <></>
-                }
-            </div>
-
+            {isInstructor ?
+                <Link to={`/instructors/${id}`} className='btnG'>as Insrtuctor</Link> :
+                userdata.ID === id &&
+                <button className='btnG' onClick={handelAddInstructor}>Be Insrtuctor</button>
+            }
             <div>
                 {token && (isAdmin || userdata.ID === id) ?
                     <>
