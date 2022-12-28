@@ -17,7 +17,7 @@ function quizValidate(columns) {
 function answerValidate(columns) {
   const schema = Joi.object({
     answers: Joi.array()
-      .items(Joi.object().items(Joi.number().required, Joi.string().required))
+      .items(Joi.number().required, Joi.string().required)
       .min(1)
       .required(),
   });
@@ -143,21 +143,43 @@ module.exports = {
   takeQuiz: async (req, res) => {
     try {
       const quiz_id = req.params.q_id;
-      const student_id = req.body.s_id;
+      const student_id = req.user.ID;
       const answers = req.body.answers;
-      const { error } = answerValidate(req.body);
-      if (error)
-        return res.status(403).send({ message: "Validation Error " + err });
-        let score = 0;  
-       answers.forEach((ans, ind) => {
-            
-       });
-      
+      // const { error } = answerValidate(req.body);
+      // if (error)
+      //   return res.status(403).send({ message: "Validation Error " + error });
+      let score = 0;
+      let scores = [];
 
-      return res.status(201).send({
-        message: "quiz Solved! ",
-        QuizScore: score,
-        student_id: student_id 
+      answers.forEach(async (ans, ind) => {
+        let check = await quizRepo
+          .DidHeAnswerCorrect(ans.q_id, ans.body)
+          .then((choiceRet) => {
+            console.log(choiceRet);
+            if (choiceRet) {
+              let q_score = quizRepo
+                .gwtQuestionScore(ans.q_id)
+                .then((questionScore) => {
+                  console.log(questionScore);
+                  score += questionScore;
+                  console.log(score);
+                })
+                .then(() => {
+                  if (ind == answers.length - 1) {
+                    let addRecord = quizRepo.addNewScore(
+                      quiz_id,
+                      student_id,
+                      score
+                    );
+                    return res.status(201).send({
+                      message: "quiz Solved! ",
+                      QuizScore: score,
+                      student_id: student_id,
+                    });
+                  }
+                });
+            }
+          });
       });
     } catch (err) {
       return res.status(500).send({ message: "Internal server error " + err });

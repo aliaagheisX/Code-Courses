@@ -122,10 +122,19 @@ module.exports = {
   },
   DidHeAnswerCorrect: (q_id, body) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT ISCORRECT FROM CHOICES WHERE QID=${q_id} AND BODY= '${body}'`;
+      let queryString = `SELECT ISCORRECT FROM CHOICES WHERE ID=${q_id} AND BODY= '${body}'`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
-        return resolve(rows[0]);
+        return resolve(rows[0]["ISCORRECT"]);
+      });
+    });
+  },
+  gwtQuestionScore: (q_id) => {
+    return new Promise((resolve, reject) => {
+      let queryString = `SELECT SCORE FROM QUESTION WHERE ID = ${q_id} `;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows[0]["SCORE"]);
       });
     });
   },
