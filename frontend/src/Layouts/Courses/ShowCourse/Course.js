@@ -3,7 +3,7 @@ import styles from './index.module.css'
 import Thumb from '../../../components/Thumb'
 
 import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'https://esm.sh/remark-gfm@3'
+import remarkGfm from 'remark-gfm'
 import useToken from '../../../useToken'
 import Options from './Options';
 import StudentFeedBack from './StudentFeedBack'

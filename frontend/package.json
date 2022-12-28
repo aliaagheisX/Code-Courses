@@ -30,9 +30,9 @@
     },
     "scripts": {
         "start": "react-scripts start",
-        "predeploy" : "npm run build",
-        "deploy" : "gh-pages -d build",
-        "build": "react-scripts build",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
+        "build": "webpack --mode production",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
@@ -57,6 +57,8 @@
     "devDependencies": {
         "gh-pages": "^4.0.0",
         "json-server": "^0.17.1",
-        "json-server-auth": "^2.1.0"
+        "json-server-auth": "^2.1.0",
+        "webpack": "^5.75.0",
+        "webpack-cli": "^5.0.1"
     }
 }

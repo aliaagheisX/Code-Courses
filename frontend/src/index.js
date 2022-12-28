@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, HashRouter } from "react-router-dom";
 import './index.css';
 import App from './App';
 import StudentProfile from './Layouts/StudentProfile'
@@ -51,106 +51,106 @@ const InstructorRoute = ({ children }) => {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />}>
-        <Route path='/' element={<Home />} />
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route path='/' element={<Home />} />
 
-        <Route path='/students/:id' element={<StudentProfile />} />
-        <Route path='/instructors/:id' element={<InstructorProfile />} />
+          <Route path='/students/:id' element={<StudentProfile />} />
+          <Route path='/instructors/:id' element={<InstructorProfile />} />
 
-        <Route path='/users' element={<Users />} >
-          <Route path='' element={<Students />} />
-          <Route path='students' element={<Students />} />
-          <Route path='instructors' element={<Instructors />} />
-          <Route path='admins' element={<Admins />} />
+          <Route path='/users' element={<Users />} >
+            <Route path='' element={<Students />} />
+            <Route path='students' element={<Students />} />
+            <Route path='instructors' element={<Instructors />} />
+            <Route path='admins' element={<Admins />} />
+          </Route>
+          <Route path='edit/me' element={
+            <ProtectedRoute>
+              <EditProfile />
+            </ProtectedRoute>
+          } />
+
+          <Route path='/Topics' element={
+            <AdminRoute >
+              <Topics />
+            </AdminRoute>} />
+
+
+          <Route path='/articles/add' element={
+            <InstructorRoute>
+              <AddArticle />
+            </InstructorRoute>
+          } />
+          <Route path='/articles/edite/:id' element={
+            <InstructorRoute>
+              <EditeArticle />
+            </InstructorRoute>
+          } />
+          <Route path='/articles/:id' element={<ShowArticle />} />
+          <Route path='/articles' element={<Articles />} />
+
+
+
+
+
+          <Route path='/courses' element={<Courses />} />
+          <Route path='/courses/:id' element={<ShowCourse />} />
+          <Route path='/courses/edit/:id' element={<EditCourse />} />
+          <Route path='/courses/add' element={
+            <InstructorRoute>
+              <AddCourse />
+            </InstructorRoute>
+          } />
+
+          <Route path='/lessons/add' element={
+            <InstructorRoute>
+              <AddLesson />
+            </InstructorRoute>
+          } />
+
+          <Route path='/lessons/add/:id' element={
+            <InstructorRoute>
+              <AddLesson />
+            </InstructorRoute>
+          } />
+          <Route path='/lessons/edit/:id' element={
+            <InstructorRoute>
+              <EditLesson />
+            </InstructorRoute>
+          } />
+
+
+          <Route path='/discussions/:id' element={
+            <ProtectedRoute>
+              <Discussion />
+            </ProtectedRoute>
+          } />
+
+          <Route path='/questions' element={
+            <InstructorRoute>
+              <Questions />
+            </InstructorRoute>
+          } />
+
+          <Route path='/questions/add' element={
+            <InstructorRoute>
+              <AddQuestion />
+            </InstructorRoute>
+          } />
+
+          <Route path='/quizzes' element={
+            <Quiz />
+          } />
+
+          <Route path='/quizzes/add' element={
+            <InstructorRoute>
+              <AddQuiz />
+            </InstructorRoute>
+          } />
+
+          <Route path='/quizzes/:id' element={<ViewQuiz />} />
+
         </Route>
-        <Route path='edit/me' element={
-          <ProtectedRoute>
-            <EditProfile />
-          </ProtectedRoute>
-        } />
-
-        <Route path='/Topics' element={
-          <AdminRoute >
-            <Topics />
-          </AdminRoute>} />
-
-
-        <Route path='/articles/add' element={
-          <InstructorRoute>
-            <AddArticle />
-          </InstructorRoute>
-        } />
-        <Route path='/articles/edite/:id' element={
-          <InstructorRoute>
-            <EditeArticle />
-          </InstructorRoute>
-        } />
-        <Route path='/articles/:id' element={<ShowArticle />} />
-        <Route path='/articles' element={<Articles />} />
-
-
-
-
-
-        <Route path='/courses' element={<Courses />} />
-        <Route path='/courses/:id' element={<ShowCourse />} />
-        <Route path='/courses/edit/:id' element={<EditCourse />} />
-        <Route path='/courses/add' element={
-          <InstructorRoute>
-            <AddCourse />
-          </InstructorRoute>
-        } />
-
-        <Route path='/lessons/add' element={
-          <InstructorRoute>
-            <AddLesson />
-          </InstructorRoute>
-        } />
-
-        <Route path='/lessons/add/:id' element={
-          <InstructorRoute>
-            <AddLesson />
-          </InstructorRoute>
-        } />
-        <Route path='/lessons/edit/:id' element={
-          <InstructorRoute>
-            <EditLesson />
-          </InstructorRoute>
-        } />
-
-
-        <Route path='/discussions/:id' element={
-          <ProtectedRoute>
-            <Discussion />
-          </ProtectedRoute>
-        } />
-
-        <Route path='/questions' element={
-          <InstructorRoute>
-            <Questions />
-          </InstructorRoute>
-        } />
-
-        <Route path='/questions/add' element={
-          <InstructorRoute>
-            <AddQuestion />
-          </InstructorRoute>
-        } />
-
-        <Route path='/quizzes' element={
-          <Quiz />
-        } />
-
-        <Route path='/quizzes/add' element={
-          <InstructorRoute>
-            <AddQuiz />
-          </InstructorRoute>
-        } />
-
-        <Route path='/quizzes/:id' element={<ViewQuiz />} />
-
-      </Route>
-    </Routes>
+      </Routes>
   </BrowserRouter>
 ); 
