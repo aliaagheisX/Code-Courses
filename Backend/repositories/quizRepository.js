@@ -5,7 +5,7 @@ module.exports = {
   getAllQuizzes: () => {
     return new Promise((resolve, reject) => {
       let queryString = `SELECT E.CREATIONDATE, E.TITLE, E.IMAGE, E.DESCRIPTION,
-        Q.*, (SELECT COUNT(QQT.NID) FROM quiz_question_topic QQT WHERE QQT.QID=Q.ID) as numOfQuestions,
+        Q.*, (SELECT COUNT(DISTINCT  QQT.NID) FROM quiz_question_topic QQT WHERE QQT.QID=Q.ID) as numOfQuestions,
         (SELECT COUNT(STQ.SID) FROM studenttakesquiz STQ WHERE STQ.QID=Q.ID) as numOfStudents FROM quiz Q, element E
         WHERE Q.ID=E.ID`;
       DBconnection.query(queryString, (err, rows) => {
@@ -17,17 +17,16 @@ module.exports = {
   getQuizById: (q_id) => {
     return new Promise((resolve, reject) => {
       let queryString = `
-      SELECT E.TITLE, E.IMAGE, E.CREATIONDATE, E.DESCRIPTION,
-        Q.*, (SELECT COUNT(QQT.NID) FROM quiz_question_topic QQT WHERE QQT.QID=Q.ID) as numOfQuestions,
+      SELECT E.TITLE, E.IMAGE, E.CREATIONDATE, E.DESCRIPTION, Q.*,
         (SELECT COUNT(STQ.SID) FROM studenttakesquiz STQ WHERE STQ.QID=Q.ID) as numOfStudents
         FROM quiz Q, element E WHERE Q.ID=E.ID AND Q.ID=${q_id};
         
-        SELECT QU.* FROM question QU, quiz_question_topic QQT WHERE QQT.NID=QU.ID AND QQT.QID=${q_id};
+        SELECT DISTINCT QU.BODY, QU.ID, QU.SCORE FROM question QU, quiz_question_topic QQT WHERE QQT.NID=QU.ID AND QQT.QID=${q_id};
 
         
-        SELECT CH.* FROM choices CH WHERE CH.ID IN (SELECT QU.ID FROM question QU, quiz_question_topic QQT WHERE QQT.NID=QU.ID AND QQT.QID=${q_id});
+        SELECT CH.BODY, CH.ID FROM choices CH WHERE CH.ID IN (SELECT QU.ID FROM question QU, quiz_question_topic QQT WHERE QQT.NID=QU.ID AND QQT.QID=${q_id});
         SELECT U.* FROM _user U, studenttakesquiz STQ WHERE STQ.SID=U.ID AND STQ.QID=${q_id};
-        SELECT T.* FROM topic T, quiz_question_topic QQT WHERE T.ID=QQT.TID AND QQT.QID=${q_id};
+        SELECT DISTINCT T.* FROM topic T, quiz_question_topic QQT WHERE T.ID=QQT.TID AND QQT.QID=${q_id};
         `;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
@@ -65,7 +64,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       let queryString = `
       SELECT E.CREATIONDATE, E.TITLE, E.IMAGE, E.DESCRIPTION,
-        Q.*, (SELECT COUNT(QQT.NID) FROM quiz_question_topic QQT WHERE QQT.QID=Q.ID) as numOfQuestions,
+        Q.*, (SELECT COUNT(DISTINCT QQT.NID) FROM quiz_question_topic QQT WHERE QQT.QID=Q.ID) as numOfQuestions,
         (SELECT COUNT(STQ.SID) FROM studenttakesquiz STQ WHERE STQ.QID=Q.ID) as numOfStudents FROM quiz Q, element E
         WHERE Q.INSTRUCTORID = ${I_ID} AND Q.ID=E.ID`;
       DBconnection.query(queryString, (err, rows) => {
@@ -77,7 +76,11 @@ module.exports = {
   getQuizzesByStudent: (S_ID) => {
     return new Promise((resolve, reject) => {
       let queryString = `
-     SELECT * FROM STUDENTTAKESQUIZ WHERE SID = ${S_ID}`;
+      SELECT E.CREATIONDATE, E.TITLE, E.IMAGE, E.DESCRIPTION, Q.*, 
+      (SELECT COUNT(DISTINCT QQT.NID) FROM quiz_question_topic QQT WHERE QQT.QID=Q.ID) as numOfQuestions,
+      (SELECT COUNT(STQ.SID) FROM studenttakesquiz STQ WHERE STQ.QID=Q.ID) as numOfStudents 
+      FROM studenttakesquiz STQ, quiz Q, element E
+      WHERE STQ.SID =${S_ID} AND STQ.QID = Q.ID AND  Q.ID=E.ID`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);

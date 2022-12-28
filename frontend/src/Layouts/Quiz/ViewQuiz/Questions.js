@@ -1,31 +1,41 @@
-export default function Questions({ Ques, Name, Topics }) {
-    console.log(Topics)
-    const handleClick = () => {
-        return (
-            <div>
+import Question from "./Question";
+import { Form, Formik } from "formik";
+import { TakeQuizSchema } from "../../../formsConfig";
+import Spinner from 'react-bootstrap/Spinner';
 
-            </div>
-        );
+export default function Questions({ questions, choices }) {
+
+    const handelSubmit = async (values) => {
+        console.log(JSON.stringify(values, null, 2))
     }
     return (
+        <Formik
+            initialValues={{ answers: [] }}
+            validationSchema={TakeQuizSchema}
+            onSubmit={handelSubmit}
 
-        <div className='quiz'> <div className="viewquestions">
-            {Ques.map((i, ind) => (
-                <div key={ind} className="outlay">
-                    <div className="question" key={i.id}>
-                        <div className="qu">{i.body}
-                            {i.choices.map((k) => (<div className="choices" key={k.name}>
-                                <input type="checkbox" name={k.body} id={k.id} /> {k.body}
-                            </div>))}
-                            <p className='grade'>points: {i.grade}</p>
-                        </div>
+        >
+            {({ isSubmitting }) => (
+                <Form className='form smallTxtBox'>
+                    <div className='quiz'>
+                        {questions.map((q, ind) => (
+                            <div className="question" key={q.ID}>
+                                <Question question={q} choices={choices[q.ID]} />
+                            </div>
+                        ))}
+
+
                     </div>
-                </div>
-            ))}
-        </div>
-            <div className='Submitbutton'>
-                <button onClick={handleClick}>Submit</button>
-            </div>
-        </div>
+
+                    <button type="submit" className="submitBtnQuiz" >
+                        {isSubmitting ?
+                            <Spinner animation="border" variant="light" size="sm" /> :
+                            <span>submit</span>
+                        }
+                    </button>
+
+                </Form>
+            )}
+        </Formik>
     );
 }

@@ -139,9 +139,7 @@ root.render(
         } />
 
         <Route path='/quizzes' element={
-          <InstructorRoute>
-            <Quiz />
-          </InstructorRoute>
+          <Quiz />
         } />
 
         <Route path='/quizzes/add' element={
@@ -150,10 +148,7 @@ root.render(
           </InstructorRoute>
         } />
 
-        <Route path='/quizzes/:id' element={
-          <ProtectedRoute>
-            <ViewQuiz />
-          </ProtectedRoute>} />
+        <Route path='/quizzes/:id' element={<ViewQuiz />} />
 
       </Route>
     </Routes>

@@ -33,7 +33,6 @@ export default function InstructorProfile() {
                     quizzesCount,
                     quizzes
                 } = items
-                console.log(items)
                 return (
                     <section className={styles.body} >
                         <Options id={instructor.ID} />

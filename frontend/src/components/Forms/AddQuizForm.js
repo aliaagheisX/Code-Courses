@@ -23,7 +23,6 @@ export default function AddQuizForm({ questions_data }) {
     const navigate = useNavigate()
 
     const handelSubmit = async (values) => {
-        console.log(values)
         try {
 
             const formData = new FormData();

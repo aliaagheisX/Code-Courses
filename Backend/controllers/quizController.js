@@ -137,7 +137,7 @@ module.exports = {
   },
   takeQuiz: async (req, res) => {
     try {
-      const quiz = req.q_id;
+      const quiz = req.params.q_id;
       const student_id = req.body.s_id;
       const { error } = quizValidate(quiz);
       if (error) {

@@ -17,7 +17,6 @@ export default function Course({ course }) {
     const { userdata } = useToken()
     const [enrollState, setEnrollState] = useState(course.is_enrolled)
     const [courseRating, setCourseRating] = useState(course.rating)
-    console.log(course)
     const {
         ID, TITLE, INSTRUCTORFNAME, INSTRUCTORSNAME,
         PREREQUISITES, CREATIONDATE, DESCRIPTION, IMAGE, INSTRUCTORID, enrolls_count

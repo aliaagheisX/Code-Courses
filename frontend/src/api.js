@@ -46,6 +46,7 @@ const api = {
     deleteAllReviews: (c_id) => `http://localhost:4000/courses/deletecoursereviews/${c_id}`, //admin
     getInstructorCourses: (i_id) => `http://localhost:4000/courses/instructors/${i_id}`,
     getInstructorQuizzes: (i_id) => `http://localhost:4000/quizzes/getByInstructor/${i_id}`,
+    getInstructorQuestions: (i_id) => `http://localhost:4000/questions/getByInstructor/${i_id}`,
     addLesson: `http://localhost:4000/lessons/newlesson`,
     editLesson: (l_id) => `http://localhost:4000/lessons/editlesson/${l_id}`,
     deleteLesson: (l_id) => `http://localhost:4000/lessons/deletelessonbyid/${l_id}`,
@@ -55,8 +56,8 @@ const api = {
 
     addQuestion: `http://localhost:4000/questions/create`,
     addQuiz: `http://localhost:4000/quizzes/create`,
-    getInstructorQuestions: (i_id) => `http://localhost:4000/questions/getByInstructor/${i_id}`,
-
+    getStudentQuizzes: (s_id) => `http://localhost:4000/quizzes/getByStudent/${s_id}`,
+    takeQuiz: (q_id) => `http://localhost:4000/quizzes/take/${q_id}`,
     getQuizById: (q_id) => `http://localhost:4000/quizzes/getquizbyid/${q_id}`,
     getAllQuizzes: `http://localhost:4000/quizzes/`,
 }
