@@ -11,7 +11,7 @@ export default function App() {
                 <div style={{ margin: "0 auto", width: "85%", minWidth: "250px", padding: "4rem 0" }}>
                     <Outlet />
                 </div>
-            
+
 
             </div>
         </>

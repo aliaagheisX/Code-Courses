@@ -11,6 +11,6 @@ router.post(
 );
 router.get("/getByQuiz", questionController.getQuestionsByQuiz);
 
-router.get("/getByInstructor/:id", questionController.getQuestionsByInstructor);
+router.get("/getByInstructor", [authToken, canCreateCourse], questionController.getQuestionsByInstructor);
 
 module.exports = router;

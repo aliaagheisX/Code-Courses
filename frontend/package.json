@@ -2,7 +2,7 @@
     "name": "frontend",
     "version": "0.1.0",
     "private": true,
-    "proxy": "https://thumbsnap.com",
+    "homepage": "https://aliaagheisx.github.io/Code-Courses/",
     "dependencies": {
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",
@@ -29,10 +29,10 @@
         "yup-password": "^0.2.2"
     },
     "scripts": {
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
         "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "build": "react-scripts build"
     },
     "eslintConfig": {
         "extends": [
@@ -53,7 +53,10 @@
         ]
     },
     "devDependencies": {
+        "gh-pages": "^4.0.0",
         "json-server": "^0.17.1",
-        "json-server-auth": "^2.1.0"
+        "json-server-auth": "^2.1.0",
+        "webpack": "^5.75.0",
+        "webpack-cli": "^5.0.1"
     }
 }

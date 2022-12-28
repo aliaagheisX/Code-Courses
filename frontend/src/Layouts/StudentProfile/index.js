@@ -13,40 +13,14 @@ import { useParams } from 'react-router-dom'
 import Articles from './Articles'
 import Options from './Options'
 import Courses from './Courses'
-
-
-export const ranks = ['Newbie', 'Pupil', 'Specialist', 'Expert', 'CM', 'IM', 'GM', 'IGM', 'LGM'];
-export const min_scores_per_rank = [0, 1200, 1400, 1600, 1900, 2100, 2300, 2400, 2600, 3000]
+import RankDetails from '../../RankDetails'
+import CustomCarsoul from '../../components/CustomCarsoul'
+import QuizComponent from '../../components/QuizComponent'
 
 export default function StudentProfile() {
 
     let { id } = useParams();
-    const getRatingByScore = (score) => {
-        for (let i = 0; i < min_scores_per_rank.length; i++) {
-            if (min_scores_per_rank[i] > score) {
-                return i - 1;
-            }
-        }
-        return 8;//max rating
-    }
-    const getPercentileOfNxtRating = (score) => {
 
-        const currRank = getRatingByScore(score);
-        let nxtRankScore = 0;
-        let befRankScore = 0;
-        if (score >= 3000) {
-            nxtRankScore = (Math.floor(score / 1000) + 1) * 1000;
-            befRankScore = nxtRankScore - 1000;
-        }
-        else {
-            nxtRankScore = min_scores_per_rank[currRank + 1];
-            befRankScore = min_scores_per_rank[currRank];
-        }
-
-        return [(nxtRankScore - score), ((score - befRankScore) / (nxtRankScore - befRankScore) * 100)];
-
-
-    }
 
 
     return (
@@ -55,23 +29,19 @@ export default function StudentProfile() {
             path={api.student(id)}
             render={({ items }) => {
                 const { student } = items
-                const rank_ind = getRatingByScore(student.SCORE)
-                const rank = ranks[rank_ind]
-                const [rem, percent] = getPercentileOfNxtRating(student.SCORE)
-                const nxtRank = rank_ind === 8 ? 'Thousands' : ranks[rank_ind + 1];
 
                 return (
                     <section className={styles.body} >
                         <Options id={student.ID} />
                         <main>
-                            <ProfileBar userdata={student} rank_ind={rank_ind} rank={rank} />
+                            <ProfileBar userdata={student} />
                             <div className={styles.stats}>
 
-                                <RankBar percent={percent} nxtRank={nxtRank} remenderPts={rem} />
+                                <RankBar score={student.SCORE} />
                                 <ProfileCharts
                                     nCourses={items.coursesCount}
                                     nArticles={items.readCount}
-                                    nQuizzes={3}
+                                    nQuizzes={items.quizzesCount}
                                 />
 
                             </div>
@@ -80,6 +50,14 @@ export default function StudentProfile() {
 
                         <Articles articlesRead={items.articlesRead} articlesLiked={items.articlesLiked} />
                         <Courses coursesEnrolled={items.coursesEnrolled} />
+                        <section>
+                            <h3>Quizzes</h3>
+                            <CustomCarsoul
+                                items={
+                                    items.quizzesTaken.map((quiz) => <QuizComponent quiz={quiz} key={quiz.ID} />)
+
+                                } />
+                        </section>
                     </section>
                 )
             }} />

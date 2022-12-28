@@ -5,7 +5,7 @@ import Resource from '../../../Resource'
 import api from '../../../api';
 
 import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'https://esm.sh/remark-gfm@3'
+import remarkGfm from 'remark-gfm'
 import Likes from './Likes';
 import useToken from '../../../useToken'
 import Options from './Options';

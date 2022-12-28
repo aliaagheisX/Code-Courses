@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, HashRouter } from "react-router-dom";
 import './index.css';
 import App from './App';
 import StudentProfile from './Layouts/StudentProfile'
@@ -50,7 +50,7 @@ const InstructorRoute = ({ children }) => {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
+  <HashRouter>
     <Routes>
       <Route path="/" element={<App />}>
         <Route path='/' element={<Home />} />
@@ -139,9 +139,7 @@ root.render(
         } />
 
         <Route path='/quizzes' element={
-          <InstructorRoute>
-            <Quiz />
-          </InstructorRoute>
+          <Quiz />
         } />
 
         <Route path='/quizzes/add' element={
@@ -150,12 +148,9 @@ root.render(
           </InstructorRoute>
         } />
 
-        <Route path='/quizzes/:id' element={
-          <ProtectedRoute>
-            <ViewQuiz />
-          </ProtectedRoute>} />
+        <Route path='/quizzes/:id' element={<ViewQuiz />} />
 
       </Route>
     </Routes>
-  </BrowserRouter>
+  </HashRouter>
 ); 

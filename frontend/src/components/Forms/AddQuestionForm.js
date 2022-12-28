@@ -17,7 +17,6 @@ export default function AddQuestionForm() {
     const { token } = useToken();
 
     const handelSubmit = async (values) => {
-        console.log(values)
         try {
             const res = await fetch(api.addQuestion, {
                 method: 'POST',
@@ -42,9 +41,9 @@ export default function AddQuestionForm() {
         <Formik
             initialValues={addQuestionInitialValues}
             validationSchema={AddQuestionSchema}
-            onSubmit={values => console.log(JSON.stringify(values, null, 2))}
+            onSubmit={handelSubmit}
         >
-            {({ values, handleChange }) => (
+            {({ values }) => (
                 <Form className='form smallTxtBox'>
                     <NumberField name='score' label='score' />
                     <TextAreaField name='body' label='body' placeholder='enter description of question here...' />

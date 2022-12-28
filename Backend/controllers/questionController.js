@@ -58,7 +58,7 @@ module.exports = {
   },
   getQuestionsByInstructor: async (req, res) => {
     try {
-      let I_ID = req.params.id;
+      let I_ID = req.user.ID;
       if (!I_ID) {
         return res
           .status(403)

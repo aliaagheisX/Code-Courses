@@ -3,6 +3,7 @@ import styles from './index.module.css'
 
 import useToken from '../../../useToken'
 import Avatar from '../../../components/Avatar'
+import RankDetails from '../../../RankDetails'
 
 export default function ProfileBar({ userdata }) {
 
@@ -28,9 +29,10 @@ export default function ProfileBar({ userdata }) {
         _IMAGE: img
     } = userdata
 
+    const { background } = RankDetails(RATING)
 
     return (
-        <div className={styles.wrapper} style={{ background: bg_styles[RATING] }}>
+        <div className={styles.wrapper} style={{ background: background }}>
             <div className={styles.user}>
                 <Avatar avatar={img} />
                 <div className={styles.userDetails}>
@@ -38,7 +40,7 @@ export default function ProfileBar({ userdata }) {
                     <div className={styles.bio}>{bio}</div>
                 </div>
             </div>
-            <div className={styles.rank}>{RATING}/10</div>
+            <div className={styles.rank}>{RATING}</div>
 
         </div>
     )

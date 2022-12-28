@@ -7,7 +7,7 @@ import { Navigate, useParams } from "react-router-dom";
 import api from "../../api";
 import Resource from "../../Resource";
 
-const socket = io.connect("http://localhost:4000");
+const socket = io.connect(api.server);
 
 function Discussion() {
     const { id } = useParams()

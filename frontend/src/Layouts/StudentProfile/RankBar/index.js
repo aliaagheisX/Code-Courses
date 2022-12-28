@@ -1,7 +1,10 @@
 import React from 'react'
 import styles from './rankbar.module.css'
-export default function RankBar({ percent, nxtRank, remenderPts }) {
-
+import RankDetails from '../../../RankDetails';
+export default function RankBar({ score }) {
+    const {
+        rem, percent, nxtRank
+    } = RankDetails(score);
     return (
         <div className={styles.cont}>
             <img src='/run.png' alt='runner' style={{ marginLeft: `calc(${percent}% - 90px)` }} />
@@ -9,7 +12,7 @@ export default function RankBar({ percent, nxtRank, remenderPts }) {
                 <div className={styles.partP} style={{ width: `calc(${percent}%)` }}></div>
             </div>
             <div className={styles.txt}>
-                {remenderPts} points to <span> {nxtRank} </span>
+                {rem} points to <span> {nxtRank} </span>
             </div>
 
         </div>

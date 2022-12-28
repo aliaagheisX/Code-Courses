@@ -71,7 +71,7 @@ const server = app.listen(PORT, (err) => {
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });

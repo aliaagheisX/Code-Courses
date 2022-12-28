@@ -6,7 +6,6 @@ export default function Summary({ comment }) {
     const {
         FNAME, SNAME, _IMAGE, CREATIONDATENTIME, UID
     } = comment
-    console.log(comment)
 
     return (
         <div className={styles.summary}>

@@ -92,6 +92,10 @@ export const addQuestionInitialValues = {
   choices: [],
 };
 
+export const takeQuizInitialValues = {
+  answers: [],
+};
+
 
 
 /* validation schemas */
@@ -301,6 +305,16 @@ export const AddQuestionSchema = Yup.object().shape({
     Yup.object().shape({
       body: Yup.string().required().min(2).max(255),
       is_correct: Yup.number().min(0).max(1).required()
+    })
+  ).required().min(1)
+});
+
+
+export const TakeQuizSchema = Yup.object().shape({
+  answers: Yup.array().of(
+    Yup.object().shape({
+      q_id: Yup.number().required().min(1),
+      body: Yup.string().required().min(2).max(255)
     })
   ).required().min(1)
 });
