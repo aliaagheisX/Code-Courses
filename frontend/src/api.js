@@ -1,4 +1,4 @@
-const server = `http://localhost:4000`
+const server = `https://codecoursesbackend.onrender.com`
 const api = {
     server: server,
     login: `${server}/auth/login`,
@@ -63,5 +63,7 @@ const api = {
     getQuizById: (q_id) => `${server}/quizzes/getquizbyid/${q_id}`,
     getAllQuizzes: `${server}/quizzes/`,
     getAdminReport: `${server}/users/admin`,
+    likeComment: (c_id) => `${server}/likecomment/${c_id}`,
+
 }
 export default api

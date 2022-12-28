@@ -73,8 +73,10 @@ module.exports = {
         return res.status(403).send({ message: "Validation Error:  " + error });
       }
       //
-      let imagePath = req.file?.path || "images/4.jpg";
-      imagePath = "http://localhost:4000/" + imagePath.replace("\\", "/");
+      let imagePath = "./4.jpg";
+      if (req.file?.path)
+        imagePath = "https://codecoursesbackend.onrender.com/" + imagePath.replace('\\', '/');
+
 
       createQ = await quizRepo.createQuiz(quiz, instructor_id, imagePath);
 
