@@ -41,7 +41,7 @@ export default function Quiz({ quiz: { quiz, questions, choices, topics, score }
 
             <div className={styles.markW}>
                 {showQuiz ?
-                    <Questions questions={questions} choices={mappedChoices} /> :
+                    <Questions QuizID={ID} questions={questions} choices={mappedChoices} /> :
                     <></>
                 }
                 <div className={styles.footer}>
