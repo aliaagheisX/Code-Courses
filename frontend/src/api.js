@@ -1,4 +1,4 @@
-const server = `https://codecoursesbackend.onrender.com`
+const server = `http://localhost:4000`
 const api = {
     server: server,
     login: `${server}/auth/login`,
