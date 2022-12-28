@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Code-Courses/static/css/main.4b66983c.css",
-    "main.js": "/Code-Courses/static/js/main.85de5800.js",
+    "main.css": "/Code-Courses/static/css/main.8e80f9bd.css",
+    "main.js": "/Code-Courses/static/js/main.30377389.js",
     "index.html": "/Code-Courses/index.html",
-    "main.4b66983c.css.map": "/Code-Courses/static/css/main.4b66983c.css.map",
-    "main.85de5800.js.map": "/Code-Courses/static/js/main.85de5800.js.map"
+    "main.8e80f9bd.css.map": "/Code-Courses/static/css/main.8e80f9bd.css.map",
+    "main.30377389.js.map": "/Code-Courses/static/js/main.30377389.js.map"
   },
   "entrypoints": [
-    "static/css/main.4b66983c.css",
-    "static/js/main.85de5800.js"
+    "static/css/main.8e80f9bd.css",
+    "static/js/main.30377389.js"
   ]
 }
