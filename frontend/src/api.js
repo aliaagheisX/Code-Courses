@@ -62,5 +62,6 @@ const api = {
     takeQuiz: (q_id) => `${server}/quizzes/take/${q_id}`,
     getQuizById: (q_id) => `${server}/quizzes/getquizbyid/${q_id}`,
     getAllQuizzes: `${server}/quizzes/`,
+    getAdminReport: `${server}/users/admin`,
 }
 export default api

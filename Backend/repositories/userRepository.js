@@ -62,7 +62,7 @@ module.exports = {
       ;`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
-        return resolve({ 
+        return resolve({
           message: "User created successfully",
           rows: rows,
         });
@@ -176,5 +176,28 @@ module.exports = {
         return resolve(rows);
       })
     })
-  }
+  },
+  getAdminReport: () => {
+    return new Promise((resolve, reject) => {
+      let queryString = `
+      CALL getTopicsReport();
+      CALL getUsersReport();
+      CALL TopLikedArticles();
+      CALL TopEnrolledCourses();
+      CALL TopRatedCourses();
+      CALL TopTakenQuizzes();
+      `;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve({
+          TopicsReport: rows[0],
+          UsersReport: rows[1],
+          TopLikedArticles: rows[2],
+          TopEnrolledCourses: rows[3],
+          TopRatedCourses: rows[4],
+          TopTakenQuizzes: rows[5],
+        });
+      });
+    });
+  },
 };
