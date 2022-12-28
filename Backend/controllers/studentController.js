@@ -1,5 +1,6 @@
 const articleRepo = require('../repositories/articleRepository');
 const courseRepo = require('../repositories/courseRepository');
+const quizRepo = require('../repositories/quizRepository');
 const studentRepo = require('../repositories/studentRepository');
 
 module.exports = {
@@ -32,14 +33,18 @@ module.exports = {
       let articlesLiked = await articleRepo.getArticlesLikedByUser(id);
       let coursesEnrolled = await courseRepo.getCoursesOfStudent(id);
       let coursesCount = coursesEnrolled.length
-
+      let quizzesTaken = await quizRepo.getQuizzesByStudent(id);
+      let quizzesCount = quizzesTaken.length
       return res.status(200).send({
         student: student,
         readCount: readCount,
         articlesRead: articlesRead,
         articlesLiked: articlesLiked,
         coursesEnrolled: coursesEnrolled,
-        coursesCount: coursesCount
+        coursesCount: coursesCount,
+        quizzesTaken: quizzesTaken,
+        quizzesCount: quizzesCount
+
       });
     } catch (err) {
       return res

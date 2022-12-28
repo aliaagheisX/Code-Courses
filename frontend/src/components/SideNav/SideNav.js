@@ -3,8 +3,9 @@ import styles from './index.module.css'
 import useToken from '../../useToken'
 import { NavLink } from 'react-router-dom'
 import AdminProtectedComponent from '../AdminProtectedComponent'
+import InstructorProtectedComponent from '../InstructorProtectedComponent'
 export default function SideNav() {
-    const { userdata: { ID } } = useToken()
+    const { token } = useToken()
     return (
         <aside className={styles.wrapper}>
             <ul>
@@ -50,21 +51,26 @@ export default function SideNav() {
                     <span className={styles.overlay}>Quizzes</span>
                 </NavLink></li>
 
-                <li><NavLink to="/questions">
-                    <span className="material-symbols-outlined">
-                        contact_support
-                    </span>
-                    <span className={styles.overlay}>Questions</span>
-                </NavLink></li>
+                <InstructorProtectedComponent
+                    render={
+                        <li><NavLink to="/questions">
+                            <span className="material-symbols-outlined">
+                                contact_support
+                            </span>
+                            <span className={styles.overlay}>Questions</span>
+                        </NavLink></li>
+                    }
+                    replace={<></>} />
 
 
 
-
-
-                <li><NavLink to="/edit/me">
-                    <span className="material-symbols-outlined">settings</span>
-                    <span className={styles.overlay}>Edit profile</span>
-                </NavLink></li>
+                {token ?
+                    <li><NavLink to="/edit/me">
+                        <span className="material-symbols-outlined">settings</span>
+                        <span className={styles.overlay}>Edit profile</span>
+                    </NavLink></li> :
+                    <></>
+                }
             </ul>
         </aside>
     )

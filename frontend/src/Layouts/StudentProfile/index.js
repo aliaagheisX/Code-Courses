@@ -14,6 +14,8 @@ import Articles from './Articles'
 import Options from './Options'
 import Courses from './Courses'
 import RankDetails from '../../RankDetails'
+import CustomCarsoul from '../../components/CustomCarsoul'
+import QuizComponent from '../../components/QuizComponent'
 
 export default function StudentProfile() {
 
@@ -39,7 +41,7 @@ export default function StudentProfile() {
                                 <ProfileCharts
                                     nCourses={items.coursesCount}
                                     nArticles={items.readCount}
-                                    nQuizzes={3}
+                                    nQuizzes={items.quizzesCount}
                                 />
 
                             </div>
@@ -48,6 +50,14 @@ export default function StudentProfile() {
 
                         <Articles articlesRead={items.articlesRead} articlesLiked={items.articlesLiked} />
                         <Courses coursesEnrolled={items.coursesEnrolled} />
+                        <section>
+                            <h3>Quizzes</h3>
+                            <CustomCarsoul
+                                items={
+                                    items.quizzesTaken.map((quiz) => <QuizComponent quiz={quiz} key={quiz.ID} />)
+
+                                } />
+                        </section>
                     </section>
                 )
             }} />

@@ -12,7 +12,7 @@ export default function AddQuiz() {
             <div style={{ maxWidth: '80%' }}>
                 <h2>Add Quiz</h2>
                 <Resource
-                    path={api.getInstructorQuestions(userdata.ID)}
+                    path={api.getInstructorQuestions}
                     render={({ items: { Questions } }) => {
                         if (Questions.length === 0) return <Navigate to={'/questions/add'} replace={true} />;
                         return <AddQuizForm questions_data={Questions} />

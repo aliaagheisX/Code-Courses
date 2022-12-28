@@ -46,7 +46,7 @@ const api = {
     deleteAllReviews: (c_id) => `http://localhost:4000/courses/deletecoursereviews/${c_id}`, //admin
     getInstructorCourses: (i_id) => `http://localhost:4000/courses/instructors/${i_id}`,
     getInstructorQuizzes: (i_id) => `http://localhost:4000/quizzes/getByInstructor/${i_id}`,
-    getInstructorQuestions: (i_id) => `http://localhost:4000/questions/getByInstructor/${i_id}`,
+    getInstructorQuestions: `http://localhost:4000/questions/getByInstructor/`,
     addLesson: `http://localhost:4000/lessons/newlesson`,
     editLesson: (l_id) => `http://localhost:4000/lessons/editlesson/${l_id}`,
     deleteLesson: (l_id) => `http://localhost:4000/lessons/deletelessonbyid/${l_id}`,

@@ -630,3 +630,21 @@ button
     border-radius: 10px;
     border-color:blueviolet ;
 }
+
+.questionComponent h4 {
+    overflow-y:hidden;
+    text-overflow:ellipsis;
+    max-height:50px; 
+}
+.questionComponent h4 a {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 33px;
+    color: #ffffffc2 !important;
+    font-size: 25px;
+    padding-top: 18px;
+    letter-spacing: 0.5px;
+    
+}
