@@ -11,6 +11,7 @@ router.get("/", userController.getAllUsers);
 router.get("/me", [authToken], userController.getUserLoggedIn);
 router.get("/getbyusername/:username", userController.getUserByUsername);
 router.get("/admins/getadmins", userController.getAdmins);
+router.get("/admin", [authToken, admin], userController.getAdminReport);
 router.get("/:id", userController.getUserById);
 
 router.delete("/delete/me", [authToken], userController.deleteSignedInUser);

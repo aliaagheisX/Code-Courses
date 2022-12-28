@@ -1,8 +1,7 @@
 const quizRepo = require("../repositories/quizRepository");
 const elementRepo = require("../repositories/elementRepository");
-const { getUserQuizScore } = require("../helpers/userHelper")
+const { getUserQuizScore } = require("../helpers/userHelper");
 const Joi = require("joi");
-
 
 function quizValidate(columns) {
   const schema = Joi.object({
@@ -12,6 +11,15 @@ function quizValidate(columns) {
     topics: Joi.array().items(Joi.number()).min(1).required(),
     questions: Joi.array().items(Joi.number()).min(1).required(),
     I_ID: Joi.number(),
+  });
+  return schema.validate(columns);
+}
+function answerValidate(columns) {
+  const schema = Joi.object({
+    answers: Joi.array()
+      .items(Joi.number().required, Joi.string().required)
+      .min(1)
+      .required(),
   });
   return schema.validate(columns);
 }
@@ -39,17 +47,14 @@ module.exports = {
         return res.status(404).send({ message: "Quiz not found" });
       }
       const score = await getUserQuizScore(req, q_id);
-      return res
-        .status(200)
-        .send({
-          quiz: quiz,
-          questions: questions,
-          choices: choices,
-          students: students,
-          topics: topics,
-          score: score
-        });
-
+      return res.status(200).send({
+        quiz: quiz,
+        questions: questions,
+        choices: choices,
+        students: students,
+        topics: topics,
+        score: score,
+      });
     } catch (err) {
       return res
         .status(500)
@@ -68,8 +73,8 @@ module.exports = {
         return res.status(403).send({ message: "Validation Error:  " + error });
       }
       //
-      let imagePath = req.file?.path || "images/4.jpg"
-      imagePath = "http://localhost:4000/" + imagePath.replace('\\', '/')
+      let imagePath = req.file?.path || "images/4.jpg";
+      imagePath = "http://localhost:4000/" + imagePath.replace("\\", "/");
 
       createQ = await quizRepo.createQuiz(quiz, instructor_id, imagePath);
 
@@ -137,22 +142,44 @@ module.exports = {
   },
   takeQuiz: async (req, res) => {
     try {
-      const quiz = req.params.q_id;
-      const student_id = req.body.s_id;
-      const { error } = quizValidate(quiz);
-      if (error) {
-        return res.status(403).send({ message: "Validation Error:  " + error });
-      }
-      createQ = await quizRepo.createQuiz(quiz, instructor_id);
-      quiz_id = createQ["@quiz_id"];
-      addTopic = await quizRepo.addTopicsToQuiz(
-        quiz_id,
-        quiz.topics,
-        quiz.questions
-      );
-      return res.status(201).send({
-        message: "quiz Created",
-        createdQuiz: createQ,
+      const quiz_id = req.params.q_id;
+      const student_id = req.user.ID;
+      const answers = req.body.answers;
+      // const { error } = answerValidate(req.body);
+      // if (error)
+      //   return res.status(403).send({ message: "Validation Error " + error });
+      let score = 0;
+      let scores = [];
+
+      answers.forEach(async (ans, ind) => {
+        let check = await quizRepo
+          .DidHeAnswerCorrect(ans.q_id, ans.body)
+          .then((choiceRet) => {
+            console.log(choiceRet);
+            if (choiceRet) {
+              let q_score = quizRepo
+                .gwtQuestionScore(ans.q_id)
+                .then((questionScore) => {
+                  console.log(questionScore);
+                  score += questionScore;
+                  console.log(score);
+                })
+                .then(() => {
+                  if (ind == answers.length - 1) {
+                    let addRecord = quizRepo.addNewScore(
+                      quiz_id,
+                      student_id,
+                      score
+                    );
+                    return res.status(201).send({
+                      message: "quiz Solved! ",
+                      QuizScore: score,
+                      student_id: student_id,
+                    });
+                  }
+                });
+            }
+          });
       });
     } catch (err) {
       return res.status(500).send({ message: "Internal server error " + err });

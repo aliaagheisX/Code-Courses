@@ -102,15 +102,40 @@ module.exports = {
       });
     });
   },
-
   getScoreStudent: (q_id, s_id) => {
     return new Promise((resolve, reject) => {
       let queryString = `SELECT * FROM studenttakesquiz WHERE QID=${q_id} AND SID=${s_id}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows[0]);
-      })
-    })
-  }
+      });
+    });
+  },
+  addNewScore: (q_id, s_id, score) => {
+    return new Promise((resolve, reject) => {
+      let queryString = `INSERT INTO STUDENTTAKESQUIZ (QID , SID , SCORE) VALUES(${q_id}  ,${s_id} ,  ${score} )`;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows[0]);
+      });
+    });
+  },
+  DidHeAnswerCorrect: (q_id, body) => {
+    return new Promise((resolve, reject) => {
+      let queryString = `SELECT ISCORRECT FROM CHOICES WHERE ID=${q_id} AND BODY= '${body}'`;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows[0]["ISCORRECT"]);
+      });
+    });
+  },
+  gwtQuestionScore: (q_id) => {
+    return new Promise((resolve, reject) => {
+      let queryString = `SELECT SCORE FROM QUESTION WHERE ID = ${q_id} `;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows[0]["SCORE"]);
+      });
+    });
+  },
 };
-

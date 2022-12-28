@@ -15,8 +15,6 @@ export default function EditeArticle() {
         <Resource
             path={api.getArticle(article_id)}
             render={({ items: { article } }) => {
-                if (!isAdmin && article.ID !== article_id)
-                    return <Navigate to='/' />
                 return (
                     <section>
                         <div style={{ maxWidth: '80%' }}>
