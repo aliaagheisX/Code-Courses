@@ -38,7 +38,7 @@ module.exports = {
         .send({ message: "Internal server error getting all quizzes " + err });
     }
   },
-  getQuizById: async (req, res) => {
+    getQuizById: async (req, res) => {
     try {
       let q_id = parseInt(req.params.q_id);
       let Quiz = await quizRepo.getQuizById(q_id);
@@ -75,8 +75,9 @@ module.exports = {
       //
       let imagePath = "./4.jpg";
       if (req.file?.path)
-        imagePath = "https://codecoursesbackend.onrender.com/" + imagePath.replace('\\', '/');
-
+        imagePath =
+          "https://codecoursesbackend.onrender.com/" +
+          imagePath.replace("\\", "/");
 
       createQ = await quizRepo.createQuiz(quiz, instructor_id, imagePath);
 

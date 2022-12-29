@@ -1,11 +1,11 @@
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
-    host: "db4free.net",
-    user: "codecourses",
-    password: "codecourses",
-    database: "codecourses",
-    multipleStatements: true,
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "codecourses",
+  port: 3306,
 });
 
 module.exports = {

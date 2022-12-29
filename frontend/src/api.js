@@ -1,4 +1,4 @@
-const server = `https://localhost:4000`;
+const server = `http://localhost:4000`;
 const api = {
   server: server,
   login: `${server}/auth/login`,

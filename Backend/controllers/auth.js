@@ -132,7 +132,7 @@ module.exports = {
       let payload = { email: user.EMAIL };
       const token = jwt.sign({ payload }, process.env.PRIMARY_KEY);
       return res.status(200).send({
-        token: token,
+        token: token, 
         user: user,
       });
     } catch (err) {
