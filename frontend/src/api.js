@@ -66,6 +66,6 @@ const api = {
   getQuizById: (q_id) => `${server}/quizzes/getquizbyid/${q_id}`,
   getAllQuizzes: `${server}/quizzes/`,
   getAdminReport: `${server}/users/admin`,
-  likeComment: (c_id) => `${server}/likecomment/${c_id}`,
+  likeComment: (c_id) => `${server}/comments/likecomment/${c_id}`,
 };
 export default api;
