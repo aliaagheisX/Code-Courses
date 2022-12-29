@@ -46,7 +46,7 @@ export default function Comment({ comments, id, addComment, removeComment }) {
                         <EditeComment id={id} body={body} handelEditingBody={handelEditingBody} /> :
                         <div className={styles.body}>{body}</div>
                 }
-                <Likes toggleReply={toggleReply} likes={comments[id].likes} />
+                <Likes id={id} toggleReply={toggleReply} likes={comments[id].likes} />
             </div>
             {!reply ? <></> : <AddComment addComment={addReply} reply_id={id} />}
 

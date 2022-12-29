@@ -26,11 +26,13 @@ router.delete(
 );
 router.delete(
   "/articles/commentsbyarticle/:a_id",
-  [authToken , canDeleteArticleComments],
+  [authToken, canDeleteArticleComments],
   commentsController.deleteCommentsByArticle
 );
 
 router.post("/create/:a_id", [authToken], commentsController.addCommentToArticle);
+
+router.post("/likecomment/:c_id", [authToken], commentsController.likeComment);
 
 router.put("/edit/:c_id", [authToken, canDeleteUserComment], commentsController.editComment);
 

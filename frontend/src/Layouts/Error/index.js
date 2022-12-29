@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export default function Error() {
     return (
         <section className={styles.cont}>
-            <img src='/404.png' alt='404' />
+            <img src='./404.png' alt='404' />
             <Link to='/'>
                 <button>return to Home</button>
             </Link>

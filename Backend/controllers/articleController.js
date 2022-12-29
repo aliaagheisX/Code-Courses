@@ -142,8 +142,10 @@ module.exports = {
 		try {
 			let article = req.body;
 			///// image /////
-			let imagePath = req.file?.path || "images/4.jpg";
-			imagePath = "http://localhost:4000/" + imagePath.replace('\\', '/');			
+
+			let imagePath = "./4.jpg";
+			if (req.file?.path)
+				imagePath = "https://codecoursesbackend.onrender.com/" + imagePath.replace('\\', '/');
 
 			let response = await articleRepo.createArticle(article, imagePath);
 			return res
@@ -189,8 +191,8 @@ module.exports = {
 			}
 		}
 		if (req.file?.path != null) {
-			let imagePath = req.file.path
-			imagePath = "http://localhost:4000/" + imagePath.replace('\\', '/')
+			imagePath = "https://codecoursesbackend.onrender.com/" + imagePath.replace('\\', '/');
+
 			try {
 				await elementRepo.editImage(id, imagePath);
 			} catch (err) {

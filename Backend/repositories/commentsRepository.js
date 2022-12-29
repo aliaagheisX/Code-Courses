@@ -99,4 +99,50 @@ module.exports = {
       });
     });
   },
+  getLikeOnComment: (c_id, u_id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `SELECT * FROM LIKEONCOMMENT WHERE CID=${c_id} AND UID=${u_id}`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows[0]);
+			})
+		})
+	},
+  dislikeComment: (c_id, u_id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `DELETE FROM LIKEONCOMMENT WHERE CID=${c_id} AND UID=${u_id}`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows);
+			})
+		})
+	},
+  likeCountComment: (c_id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `SELECT COUNT(*) AS count FROM LIKEONCOMMENT WHERE CID=${c_id}`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows[0].count);
+			})
+		})
+	},
+  likeComment: (c_id, u_id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `INSERT INTO LIKEONCOMMENT (UID, CID) VALUES (${u_id}, ${c_id})`;
+
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows);
+			})
+		})
+	},
+  likeCountComment: (c_id) => {
+		return new Promise((resolve, reject) => {
+			let queryString = `SELECT COUNT(*) AS count FROM LIKEONCOMMENT WHERE CID=${c_id}`;
+			DBconnection.query(queryString, (err, rows) => {
+				if (err) return reject(err);
+				return resolve(rows[0].count);
+			})
+		})
+	},
 };

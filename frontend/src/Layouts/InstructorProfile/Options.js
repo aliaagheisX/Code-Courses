@@ -6,7 +6,7 @@ import useToken from '../../useToken'
 import api from '../../api'
 
 export default function Options({ id }) {
-    const { userdata, token, setInstructor, isAdmin } = useToken()
+    const { userdata, token, setInstructor, isAdmin, userdata: { ID } } = useToken()
     const navigate = useNavigate();
 
     const handelDeleteIns = async () => {
@@ -27,7 +27,12 @@ export default function Options({ id }) {
     }
     return (
         <div className={styles.optsCont}>
-            <Link to={`/students/${id}`} className='btnG'>as Student</Link>
+            <div>
+                <Link to={`/students/${id}`} className='btnG'>as Student</Link>
+                {isAdmin && ID === id ?
+                    <Link to={`/admin`} className='btnG'>as admin</Link> : <></>
+                }
+            </div>
 
             <div>
                 {token && (isAdmin || userdata.ID === id) ?

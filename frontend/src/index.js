@@ -30,6 +30,7 @@ import Questions from './Layouts/Questions';
 import Quiz from './Layouts/Quiz';
 import AddQuiz from './Layouts/Quiz/AddQuiz';
 import ViewQuiz from './Layouts/Quiz/ViewQuiz';
+import AdminProfile from './Layouts/AdminProfile';
 
 const ProtectedRoute = ({ children }) => {
   const { token } = useToken();
@@ -57,6 +58,12 @@ root.render(
 
         <Route path='/students/:id' element={<StudentProfile />} />
         <Route path='/instructors/:id' element={<InstructorProfile />} />
+        <Route path='/admin' element={
+          <AdminRoute >
+            <AdminProfile />
+          </AdminRoute>}
+
+        />
 
         <Route path='/users' element={<Users />} >
           <Route path='' element={<Students />} />

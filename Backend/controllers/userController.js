@@ -47,7 +47,7 @@ module.exports = {
           .status(404)
           .send({ message: "No admins found" });
       }
-      return res  
+      return res
         .status(200)
         .send({ admins: admins });
     } catch (err) {
@@ -119,7 +119,7 @@ module.exports = {
       }
       if (req.file?.path != null && req.file?.path != "") {
         let imagePath = req.file.path
-        imagePath = "http://localhost:4000/" + imagePath.replace('\\', '/')
+        imagePath = "https://codecoursesbackend.onrender.com/" + imagePath.replace('\\', '/')
         await userRepo.editImage(username, imagePath);
 
       }
@@ -227,6 +227,24 @@ module.exports = {
       return res
         .status(500)
         .send({ message: "Internal server error deleting user\n" + err });
+    }
+  },
+
+  getAdminReport: async (req, res) => {
+    try {
+      let report = await userRepo.getAdminReport();
+      if (!report) {
+        return res
+          .status(404)
+          .send({ message: "No report found" });
+      }
+      return res
+        .status(200)
+        .send({ report: report });
+    } catch (err) {
+      return res
+        .status(500)
+        .send({ message: "Internal server error getting admins " + err });
     }
   },
 };
