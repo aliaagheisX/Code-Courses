@@ -1,0 +1,6 @@
+     Name            Section    BN      EMAIL
+
+Ahmed Osama Helmy	1	5      ahmed.osama1982002@gmail.com
+Aliaa Gheis      	1       28     aliaagheis@gmail.com
+Ahmed Abdelatty 	1	10     ahmed.allah01@eng-st.cu.edu.eg
+Mennatallah Ahmed 	2	26     mennaahmed0701@gmail.com
