@@ -138,4 +138,13 @@ module.exports = {
       });
     });
   },
+  getQuizScore: (q_id) => {
+    return new Promise((resolve, reject) => {
+      let queryString = `SELECT SUM(SCORE) AS SCORE FROM QUIZ_QUESTION_TOPIC,QUESTION WHERE QID = ${q_id} AND QUESTION.ID =  QUIZ_QUESTION_TOPIC.NID `;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows[0]["SCORE"]);
+      });
+    });
+  },
 };

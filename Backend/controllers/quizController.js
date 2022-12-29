@@ -38,7 +38,7 @@ module.exports = {
         .send({ message: "Internal server error getting all quizzes " + err });
     }
   },
-    getQuizById: async (req, res) => {
+  getQuizById: async (req, res) => {
     try {
       let q_id = parseInt(req.params.q_id);
       let Quiz = await quizRepo.getQuizById(q_id);
@@ -47,6 +47,7 @@ module.exports = {
         return res.status(404).send({ message: "Quiz not found" });
       }
       const score = await getUserQuizScore(req, q_id);
+      const max_score = await quizRepo.getQuizScore(q_id);
       return res.status(200).send({
         quiz: quiz,
         questions: questions,
@@ -54,6 +55,7 @@ module.exports = {
         students: students,
         topics: topics,
         score: score,
+        max_score: max_score,
       });
     } catch (err) {
       return res
@@ -152,36 +154,36 @@ module.exports = {
       // if (error)
       //   return res.status(403).send({ message: "Validation Error " + error });
       let score = 0;
-      let scores = [];
+      let total = 0;
 
       answers.forEach(async (ans, ind) => {
         let check = await quizRepo
           .DidHeAnswerCorrect(ans.q_id, ans.body)
           .then((choiceRet) => {
-            console.log(choiceRet);
-            if (choiceRet) {
-              let q_score = quizRepo
-                .gwtQuestionScore(ans.q_id)
-                .then((questionScore) => {
-                  console.log(questionScore);
-                  score += questionScore;
-                  console.log(score);
-                })
-                .then(() => {
-                  if (ind == answers.length - 1) {
-                    let addRecord = quizRepo.addNewScore(
-                      quiz_id,
-                      student_id,
-                      score
-                    );
-                    return res.status(201).send({
-                      message: "quiz Solved! ",
-                      QuizScore: score,
-                      student_id: student_id,
-                    });
-                  }
-                });
-            }
+            let q_score = quizRepo
+              .gwtQuestionScore(ans.q_id)
+              .then((questionScore) => {
+                console.log(questionScore);
+
+                if (choiceRet) score += questionScore;
+                total += questionScore;
+                console.log(score);
+              })
+              .then(() => {
+                if (ind == answers.length - 1) {
+                  let addRecord = quizRepo.addNewScore(
+                    quiz_id,
+                    student_id,
+                    score
+                  );
+                  return res.status(201).send({
+                    message: "quiz Solved! ",
+                    QuizScore: score,
+                    student_id: student_id,
+                    total: total,
+                  });
+                }
+              });
           });
       });
     } catch (err) {
