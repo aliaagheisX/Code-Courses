@@ -14,6 +14,7 @@ export default function Questions({ questions, choices, QuizID }) {
 
   const handelSubmit = async (values) => {
     try {
+      debugger;
       const res = await fetch(api.takeQuiz(QuizID), {
         method: "POST",
         headers: { "Content-Type": "application/json", token: token },
@@ -48,11 +49,8 @@ export default function Questions({ questions, choices, QuizID }) {
           {/* backend error */}
           {backendError && <span className="errorForm">{backendError}</span>}
           <button type="submit" className="submitBtnQuiz">
-            {isSubmitting ? (
-              <Spinner animation="border" variant="light" size="sm" />
-            ) : (
+             
               <span>submit</span>
-            )}
           </button>
         </Form>
       )}

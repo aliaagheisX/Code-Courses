@@ -9,30 +9,25 @@ export default function Likes({ toggleReply, likes, id }) {
     const handelClick = async () => {
         try {
 
-            const res = await fetch(api.userLikeArticle(id), {
+            const res = await fetch(api.likeComment(id), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'token': token },
             })
             const data = await res.json()
 
             if (!res.ok) throw Error(data.message)
-            console.log(data);
-
+            const newCount = data.likeCount;
+            if (newCount < count) {
+                setIsActive(0)
+            }
+            else {
+                setIsActive(1)
+            }
+            setCount(newCount)
 
         } catch (err) {
             console.log("err", err)
-        }
-        /* if (isActive) {
-            setIsActive(0)
-            setCount(count - 1)
-        }
-        else {
-            setIsActive(1)
-            setCount(count + 1)
-
-        } */
-    }
-
+        }}
     return (
         <div className={styles.options}>
             <div className={`${styles.likes} ${isActive ? styles.active : ''}`}
