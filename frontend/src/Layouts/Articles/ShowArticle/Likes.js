@@ -3,7 +3,7 @@ import api from '../../../api'
 import useToken from '../../../useToken'
 import styles from './index.module.css'
 
-export default function Likes({ likes, views, a_id }) {
+export default function Likes({ likes, views, c_id }) {
     const { token } = useToken()
     const [active, setActive] = useState(0)
     const [count, setCount] = useState(likes)
@@ -11,14 +11,14 @@ export default function Likes({ likes, views, a_id }) {
     const handelLike = async () => {
         if (!token) return;
         try {
-            const res = await fetch(api.userLikeArticle(a_id), {
+            const res = await fetch(api.likeComment(c_id), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'token': token },
             })
             const data = await res.json()
             if (!res.ok) throw data.message
 
-            setActive((data.message === 'Student liked article'));
+            setActive((data.message === 'Student liked comment'));
             setCount(data.likeCount)
         } catch (err) {
             console.log("err", err)
