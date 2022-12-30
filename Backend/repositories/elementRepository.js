@@ -29,7 +29,7 @@ module.exports = {
   editElementDescription: (article, id) => {
     const description = article.description;
     return new Promise((resolve, reject) => {
-      let queryString = `UPDATE ELEMENT SET description = '${description}' WHERE ID = ${id} `;
+      let queryString = `UPDATE ELEMENT SET DESCRIPTION = '${description}' WHERE ID = ${id} `;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);

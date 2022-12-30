@@ -148,9 +148,10 @@ module.exports = {
 					.send({ message: "Validation error " + error.details[0].message });
 			}
 			///// image /////
-			let imagePath = "./4.jpg";
-			if (req.file?.path)
-				imagePath = "https://codecoursesbackend.onrender.com/" + imagePath.replace('\\', '/');
+			let imagePath = req.file?.path || "./images/4.jpg"
+
+			imagePath = "https://codecources.azurewebsites.net/" + imagePath.replace('\\', '/')
+
 
 			let response = await courseRepo.createCourse(course, imagePath);
 			const c_id = response['@course_id']
@@ -208,7 +209,7 @@ module.exports = {
 			}
 			if (req.file?.path != null) {
 				let imagePath = req.file.path
-				imagePath = "https://codecoursesbackend.onrender.com/" + imagePath.replace('\\', '/')
+				imagePath = "https://codecources.azurewebsites.net/" + imagePath.replace('\\', '/')
 				try {
 					await elementRepo.editImage(id, imagePath);
 				} catch (err) {

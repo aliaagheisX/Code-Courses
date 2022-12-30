@@ -4,7 +4,7 @@ const ch = (str) => str.replace(/'/g, "`");
 module.exports = {
   getQuestionById: () => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM Question WHERE `;
+      let queryString = `SELECT * FROM QUESTION WHERE `;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows[0]);
@@ -51,7 +51,7 @@ module.exports = {
   },
   getQuestionsByInstructor: (I_ID) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM Question WHERE INSTRUCTORID = ${I_ID}`;
+      let queryString = `SELECT * FROM QUESTION WHERE INSTRUCTORID = ${I_ID}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -60,7 +60,7 @@ module.exports = {
   },
   getQuestionsByStudent: (I_ID) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM Question WHERE INSTRUCTORID = ${I_ID}`;
+      let queryString = `SELECT * FROM QUESTION WHERE INSTRUCTORID = ${I_ID}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);

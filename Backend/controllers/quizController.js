@@ -171,11 +171,23 @@ module.exports = {
               })
               .then(() => {
                 if (ind == answers.length - 1) {
-                  let addRecord = quizRepo.addNewScore(
-                    quiz_id,
-                    student_id,
-                    score
-                  );
+                  let getStudentRecord = quizRepo
+                    .getScoreStudent(quiz_id, student_id)
+                    .then((record) => {
+                      if (!record) {
+                        let addRecord = quizRepo.addNewScore(
+                          quiz_id,
+                          student_id,
+                          score
+                        );
+                      } else {
+                        let addRecord = quizRepo.editScore(
+                          quiz_id,
+                          student_id,
+                          score
+                        );
+                      }
+                    });
                   return res.status(201).send({
                     message: "quiz Solved! ",
                     QuizScore: score,

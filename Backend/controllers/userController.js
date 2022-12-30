@@ -119,7 +119,7 @@ module.exports = {
       }
       if (req.file?.path != null && req.file?.path != "") {
         let imagePath = req.file.path
-        imagePath = "https://codecoursesbackend.onrender.com/" + imagePath.replace('\\', '/')
+        imagePath = "https://codecources.azurewebsites.net/" + imagePath.replace('\\', '/')
         await userRepo.editImage(username, imagePath);
 
       }
@@ -217,7 +217,7 @@ module.exports = {
   },
   deleteSignedInUser: async (req, res) => {
     try {
-      let id = req.body.user.ID;
+      let id = req.user.ID;
       let rows = await userRepo.deleteUserbyID(id);
       if (!rows.affectedRows) {
         return res.status(404).send({ message: "User not found" });
@@ -229,7 +229,6 @@ module.exports = {
         .send({ message: "Internal server error deleting user\n" + err });
     }
   },
-
   getAdminReport: async (req, res) => {
     try {
       let report = await userRepo.getAdminReport();

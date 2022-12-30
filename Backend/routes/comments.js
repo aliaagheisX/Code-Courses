@@ -26,7 +26,7 @@ router.delete(
 );
 router.delete(
   "/articles/commentsbyarticle/:a_id",
-  [authToken, canDeleteArticleComments],
+  [authToken , canDeleteArticleComments],
   commentsController.deleteCommentsByArticle
 );
 

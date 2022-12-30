@@ -155,32 +155,32 @@ module.exports = {
     }
   },
   likeComment: async (req, res) => {
-		try {
-			let c_id = parseInt(req.params.c_id);
-			let u_id = req.user.ID;
-			let row = await commentsRepo.getLikeOnComment(c_id, u_id);
-			if (row) {
-				await commentsRepo.dislikeComment(c_id, u_id);
-				let likeCount = await commentsRepo.likeCountComment(c_id);
-				return res
-					.status(200)
-					.send({
-						message: "Student disliked comment",
-						likeCount: likeCount,
-					});
-			}
-			let response = await commentsRepo.likeComment(c_id, u_id);
-			let likeCount = await commentsRepo.likeCountComment(c_id);
-			return res
-				.status(200)
-				.send({
-					message: "Student liked comment",
-					likeCount: likeCount,
-				});
-		} catch (err) {
-			return res
-				.status(500)
-				.send({ message: "Internal server error liking comment " + err });
-		}
-	},
+    try {
+      let c_id = parseInt(req.params.c_id);
+      let u_id = req.user.ID;
+      let row = await commentsRepo.getLikeOnComment(c_id, u_id);
+      if (row) {
+        await commentsRepo.dislikeComment(c_id, u_id);
+        let likeCount = await commentsRepo.likeCountComment(c_id);
+        return res
+          .status(200)
+          .send({
+            message: "Student disliked comment",
+            likeCount: likeCount,
+          });
+      }
+      let response = await commentsRepo.likeComment(c_id, u_id);
+      let likeCount = await commentsRepo.likeCountComment(c_id);
+      return res
+        .status(200)
+        .send({
+          message: "Student liked comment",
+          likeCount: likeCount,
+        });
+    } catch (err) {
+      return res
+        .status(500)
+        .send({ message: "Internal server error liking comment " + err });
+    }
+  },
 };

@@ -3,7 +3,7 @@ const { DBconnection } = require("../config/database");
 module.exports = {
   getRepliesToComment: (id) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM _comment WHERE RID=${id}`;
+      let queryString = `SELECT * FROM _COMMENT WHERE RID=${id}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -18,8 +18,8 @@ module.exports = {
       u.USERNAME, 
       u.FNAME, 
       u.SNAME, 
-      (SELECT COUNT(*) FROM likeoncomment L WHERE c.ID = L.CID) as likes 
-      FROM _comment c, _user u
+      (SELECT COUNT(*) FROM LIKEONCOMMENT L WHERE c.ID = L.CID) as likes 
+      FROM _COMMENT c, _USER u
       WHERE c.AID=${article_id} AND c.UID = u.ID;`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
@@ -34,8 +34,8 @@ module.exports = {
       u.USERNAME, 
       u.FNAME, 
       u.SNAME, 
-      (SELECT COUNT(*) FROM likeoncomment L WHERE c.ID = L.CID) as likes 
-      FROM _comment c, _user u
+      (SELECT COUNT(*) FROM LIKEONCOMMENT L WHERE c.ID = L.CID) as likes 
+      FROM _COMMENT c, _USER u
       WHERE c.ID=${id} AND c.UID = u.ID;`;
       DBconnection.query(query, (error, rows) => {
         if (error) return reject(error);
@@ -65,7 +65,7 @@ module.exports = {
   },
   deleteAllComments: () => {
     return new Promise((resolve, reject) => {
-      let queryString = `DELETE FROM _comment`;
+      let queryString = `DELETE FROM _COMMENT`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -74,7 +74,7 @@ module.exports = {
   },
   deleteCommentById: (id) => {
     return new Promise((resolve, reject) => {
-      let queryString = `DELETE FROM _comment WHERE ID=${id}`;
+      let queryString = `DELETE FROM _COMMENT WHERE ID=${id}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -83,7 +83,7 @@ module.exports = {
   },
   deleteCommentsByUser: (id) => {
     return new Promise((resolve, reject) => {
-      let queryString = `DELETE FROM _comment WHERE UID=${id}`;
+      let queryString = `DELETE FROM _COMMENT WHERE UID=${id}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -92,7 +92,7 @@ module.exports = {
   },
   deleteCommentsByArticle: (id) => {
     return new Promise((resolve, reject) => {
-      let queryString = `DELETE FROM _comment WHERE AID=${id}`;
+      let queryString = `DELETE FROM _COMMENT WHERE AID=${id}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);

@@ -6,8 +6,8 @@ module.exports = {
             let queryString = `
             SELECT 
                 C.INSTRUCTORFNAME, C.INSTRUCTORSNAME, E.*, 
-                (SELECT COUNT(L.SID) FROM enroll L WHERE L.CID = C.ID ) as enrolls_count 
-            FROM course C, element E WHERE E.ID = C.ID;`;
+                (SELECT COUNT(L.SID) FROM ENROLL L WHERE L.CID = C.ID ) as enrolls_count 
+            FROM COURSE C, ELEMENT E WHERE E.ID = C.ID;`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -20,8 +20,8 @@ module.exports = {
             let queryString = `
             SELECT 
                     C.INSTRUCTORFNAME, C.INSTRUCTORSNAME, E.*, 
-                    (SELECT COUNT(L.SID) FROM enroll L WHERE L.CID = C.ID ) as enrolls_count 
-            FROM    course C, element E 
+                    (SELECT COUNT(L.SID) FROM ENROLL L WHERE L.CID = C.ID ) as enrolls_count 
+            FROM    COURSE C, ELEMENT E 
             WHERE   C.INSTRUCTORID=${id}  AND E.ID = C.ID;`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
@@ -35,8 +35,8 @@ module.exports = {
             let queryString = `
             SELECT 
                     C.INSTRUCTORFNAME, C.INSTRUCTORSNAME, E.*, 
-                    (SELECT COUNT(L.SID) FROM enroll L WHERE L.CID = C.ID ) as enrolls_count 
-            FROM    course C, enroll L, element E 
+                    (SELECT COUNT(L.SID) FROM ENROLL L WHERE L.CID = C.ID ) as enrolls_count 
+            FROM    COURSE C, ENROLL L, ELEMENT E 
             WHERE   L.CID=C.ID AND L.SID = ${id} AND   E.ID = C.ID;`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
@@ -47,9 +47,10 @@ module.exports = {
     getCourseById: (id) => {
         return new Promise((resolve, reject) => {
             let queryString = `
-            SELECT C.*, E.*, COUNT(S.SID) AS enrolls_count
-            FROM course C, element E, enroll S
-            WHERE C.ID=${id} AND E.ID = C.ID AND S.CID = C.ID`;
+            SELECT C.*, E.*,
+            (SELECT COUNT(L.SID) FROM ENROLL L WHERE L.CID = C.ID ) as enrolls_count 
+            FROM COURSE C, ELEMENT E
+            WHERE C.ID=${id} AND E.ID = C.ID;`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows[0]);
@@ -59,7 +60,7 @@ module.exports = {
 
     getUserEnrolled: (u_id, c_id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `SELECT * FROM enroll  WHERE SID=${u_id} AND CID=${c_id} ;`;
+            let queryString = `SELECT * FROM ENROLL  WHERE SID=${u_id} AND CID=${c_id} ;`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows[0]);
@@ -70,7 +71,7 @@ module.exports = {
     getCourseRating: (c_id) => {
         return new Promise((resolve, reject) => {
             let queryString = `SELECT REVIEWRATING AS rate, COUNT(*) as count 
-            FROM enroll 
+            FROM ENROLL 
             WHERE CID = ${c_id} AND REVIEWRATING IS NOT NULL
             GROUP BY REVIEWRATING;`;
             DBconnection.query(queryString, (err, rows) => {
@@ -82,7 +83,7 @@ module.exports = {
 
     getCourseReviews: (c_id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `SELECT E.*, U.USERNAME, U.FNAME, U.SNAME,U._IMAGE, U.EMAIL FROM enroll E, _user U  WHERE E.CID=${c_id} AND REVIEWRATING IS NOT NULL AND U.ID=E.SID;`;
+            let queryString = `SELECT E.*, U.USERNAME, U.FNAME, U.SNAME,U._IMAGE, U.EMAIL FROM ENROLL E, _USER U  WHERE E.CID=${c_id} AND REVIEWRATING IS NOT NULL AND U.ID=E.SID;`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -92,7 +93,7 @@ module.exports = {
 
     getCourseUserReview: (c_id, u_id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `SELECT E.*, U.USERNAME, U.FNAME, U.SNAME,U._IMAGE, U.EMAIL FROM enroll E, _user U  WHERE E.CID=${c_id} AND E.SID = ${u_id} AND REVIEWRATING IS NOT NULL AND U.ID=E.SID;`;
+            let queryString = `SELECT E.*, U.USERNAME, U.FNAME, U.SNAME,U._IMAGE, U.EMAIL FROM ENROLL E, _USER U  WHERE E.CID=${c_id} AND E.SID = ${u_id} AND REVIEWRATING IS NOT NULL AND U.ID=E.SID;`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows[0]);
@@ -102,7 +103,7 @@ module.exports = {
 
     getReview: (c_id, u_id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `SELECT E.*, U.USERNAME, U.FNAME, U.SNAME, U._IMAGE, U.EMAIL FROM enroll E, _user U 
+            let queryString = `SELECT E.*, U.USERNAME, U.FNAME, U.SNAME, U._IMAGE, U.EMAIL FROM ENROLL E, _USER U 
                 WHERE E.CID=${c_id} AND E.SID=${u_id} AND REVIEWRATING IS NOT NULL AND U.ID=E.SID`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
@@ -115,7 +116,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             let queryString = `
             SELECT NAME, TID 
-            FROM course_topic, topic 
+            FROM COURSE_TOPIC, TOPIC 
             WHERE CID=${c_id} AND TID=ID`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
@@ -161,7 +162,7 @@ module.exports = {
 
     enrollCourse: (u_id, c_id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `INSERT INTO enroll (SID, CID) VALUES (${u_id}, ${c_id})`;
+            let queryString = `INSERT INTO ENROLL (SID, CID) VALUES (${u_id}, ${c_id})`;
 
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
@@ -172,7 +173,7 @@ module.exports = {
 
     disenrollCourse: (u_id, c_id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `DELETE FROM enroll WHERE CID=${c_id} AND SID=${u_id}`;
+            let queryString = `DELETE FROM ENROLL WHERE CID=${c_id} AND SID=${u_id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -182,7 +183,7 @@ module.exports = {
 
     removeTopicsFromCourse: (c_id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `DELETE FROM course_topic WHERE CID=${c_id}`;
+            let queryString = `DELETE FROM COURSE_TOPIC WHERE CID=${c_id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -193,7 +194,7 @@ module.exports = {
 
     deleteCourseTopics: (id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `DELETE FROM course_topic WHERE CID=${id}`;
+            let queryString = `DELETE FROM COURSE_TOPIC WHERE CID=${id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -202,7 +203,7 @@ module.exports = {
     },
     addTopicsToCourse: (c_id, topics) => {
         return new Promise((resolve, reject) => {
-            let queryString = `INSERT INTO course_topic(CID, TID) VALUES `;
+            let queryString = `INSERT INTO COURSE_TOPIC(CID, TID) VALUES `;
             topics.forEach((t_id, ind) => {
                 queryString += `(${c_id}, ${t_id})`
                 if (ind < topics.length - 1) queryString += ', '
@@ -215,7 +216,7 @@ module.exports = {
     },
     deleteCourseById: (id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `DELETE FROM course WHERE ID=${id}`;
+            let queryString = `DELETE FROM COURSE WHERE ID=${id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -225,7 +226,7 @@ module.exports = {
     createReview: (c_id, u_id, body, rating) => {
         body = ch(body);
         return new Promise((resolve, reject) => {
-            let queryString = `UPDATE enroll SET REVIEWBODY='${body}', REVIEWRATING=${rating}
+            let queryString = `UPDATE ENROLL SET REVIEWBODY='${body}', REVIEWRATING=${rating}
                 WHERE CID=${c_id} AND SID=${u_id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
@@ -236,7 +237,7 @@ module.exports = {
     editReviewBody: (body, c_id, u_id) => {
         body = ch(body);
         return new Promise((resolve, reject) => {
-            let queryString = `UPDATE enroll SET REVIEWBODY='${body}' WHERE CID=${c_id} AND SID=${u_id}`;
+            let queryString = `UPDATE ENROLL SET REVIEWBODY='${body}' WHERE CID=${c_id} AND SID=${u_id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -245,7 +246,7 @@ module.exports = {
     },
     editReviewRating: (rating, c_id, u_id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `UPDATE enroll SET REVIEWRATING=${rating} WHERE CID=${c_id} AND SID=${u_id}`;
+            let queryString = `UPDATE ENROLL SET REVIEWRATING=${rating} WHERE CID=${c_id} AND SID=${u_id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -254,7 +255,7 @@ module.exports = {
     },
     deleteOneReview: (c_id, u_id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `UPDATE enroll SET REVIEWBODY=NULL, REVIEWRATING=NULL
+            let queryString = `UPDATE ENROLL SET REVIEWBODY=NULL, REVIEWRATING=NULL
                 WHERE CID=${c_id} AND SID=${u_id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
@@ -264,7 +265,7 @@ module.exports = {
     },
     deleteCourseReviews: (c_id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `UPDATE enroll SET REVIEWRATING=NULL, REVIEWBODY=NULL
+            let queryString = `UPDATE ENROLL SET REVIEWRATING=NULL, REVIEWBODY=NULL
                 WHERE CID=${c_id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);

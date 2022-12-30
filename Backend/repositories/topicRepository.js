@@ -3,7 +3,7 @@ const { DBconnection } = require("../config/database");
 module.exports = {
   getAllTopics: () => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM topic`;
+      let queryString = `SELECT * FROM TOPIC`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -12,7 +12,7 @@ module.exports = {
   },
   getTopicByName: (name) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM topic WHERE name='${name}'`;
+      let queryString = `SELECT * FROM TOPIC WHERE name='${name}'`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows[0]);
@@ -21,7 +21,7 @@ module.exports = {
   },
   getTopicById: (id) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM topic WHERE ID=${id}`;
+      let queryString = `SELECT * FROM TOPIC WHERE ID=${id}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows[0]);
@@ -30,7 +30,7 @@ module.exports = {
   },
   createTopic: (name) => {
     return new Promise((resolve, reject) => {
-      let queryString = `INSERT INTO topic (NAME) VALUES ('${name}')`;
+      let queryString = `INSERT INTO TOPIC (NAME) VALUES ('${name}')`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -39,7 +39,7 @@ module.exports = {
   },
   editTopic: (id, name) => {
     return new Promise((resolve, reject) => {
-      let queryString = `UPDATE topic SET NAME='${name}' WHERE ID=${id}`;
+      let queryString = `UPDATE TOPIC SET NAME='${name}' WHERE ID=${id}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);

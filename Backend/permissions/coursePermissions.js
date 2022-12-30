@@ -127,4 +127,24 @@ module.exports = {
 		}
 		next();
 	},
+	canEnterDiscussion: async (req, res, next) => {
+		let u_id = req.user.ID;
+		let c_id = parseInt(req.params.c_id);
+		let is_enrolled = null;
+		let instructor = null;
+		try {
+			is_enrolled = await courseRepo.getUserEnrolled(u_id, c_id);
+			instructor = await courseRepo.getCourseById(c_id);
+		} catch (err) {
+			return res
+				.status(500)
+				.send({ message: "Internal server error getting user enrolled " + err });
+		}
+		if (!is_enrolled && instructor.INSTRUCTORID !== u_id) {
+			return res
+				.status(401)
+				.send({ message: "Unauthorized. You are not enrolled in this course and aren't its instructor" });
+		}
+		next();
+	}
 }

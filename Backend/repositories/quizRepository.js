@@ -112,8 +112,18 @@ module.exports = {
     });
   },
   addNewScore: (q_id, s_id, score) => {
+    console.log(score, q_id, s_id);
     return new Promise((resolve, reject) => {
       let queryString = `INSERT INTO STUDENTTAKESQUIZ (QID , SID , SCORE) VALUES(${q_id}  ,${s_id} ,  ${score} )`;
+      DBconnection.query(queryString, (err, rows) => {
+        if (err) return reject(err);
+        return resolve(rows[0]);
+      });
+    });
+  },
+  editScore: (q_id, s_id, new_score) => {
+    return new Promise((resolve, reject) => {
+      let queryString = `UPDATE STUDENTTAKESQUIZ SET SCORE = ${new_score}   WHERE QID = ${q_id} AND SID = ${s_id}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows[0]);
@@ -140,7 +150,7 @@ module.exports = {
   },
   getQuizScore: (q_id) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT SUM(SCORE) AS SCORE FROM QUIZ_QUESTION_TOPIC,QUESTION WHERE QID = ${q_id} AND QUESTION.ID =  QUIZ_QUESTION_TOPIC.NID `;
+      let queryString = `SELECT SUM( DISTINCT (SCORE)) AS SCORE FROM QUIZ_QUESTION_TOPIC,QUESTION WHERE QID = ${q_id} AND QUESTION.ID =  QUIZ_QUESTION_TOPIC.NID `;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows[0]["SCORE"]);

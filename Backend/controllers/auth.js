@@ -42,9 +42,20 @@ function validateUserRegister(user) {
       symbol: 1,
       requirementCount: 4,
     }).required(),
-    firstName: Joi.string().pattern(/^[a-zA-Z]+$/).message("fname can only contain letters from the alphabet").min(2).max(32),
-    lastName: Joi.string().pattern(/^[a-zA-Z]+$/).message("sname can only contain letters from the alphabet").max(32),
-    username: Joi.string().alphanum().message("username can only contain alphanumeric characters").max(32).min(2),
+    firstName: Joi.string()
+      .pattern(/^[a-zA-Z]+$/)
+      .message("fname can only contain letters from the alphabet")
+      .min(2)
+      .max(32),
+    lastName: Joi.string()
+      .pattern(/^[a-zA-Z]+$/)
+      .message("sname can only contain letters from the alphabet")
+      .max(32),
+    username: Joi.string()
+      .alphanum()
+      .message("username can only contain alphanumeric characters")
+      .max(32)
+      .min(2),
   });
   return schema.validate(user);
 }
@@ -112,6 +123,7 @@ module.exports = {
 
     try {
       let userPassword = await userRepo.getUserPassword(req.body.email);
+      // userPassword._password = userPassword._password.slice(0, userPassword._password.length - 1);
       if (userPassword) {
         //console.log(req.body.password);
         const validPassword = await bcrypt.compare(
@@ -132,7 +144,7 @@ module.exports = {
       let payload = { email: user.EMAIL };
       const token = jwt.sign({ payload }, process.env.PRIMARY_KEY);
       return res.status(200).send({
-        token: token, 
+        token: token,
         user: user,
       });
     } catch (err) {
@@ -146,12 +158,10 @@ module.exports = {
       let id = parseInt(req.params.u_id);
       let response = await userRepo.addAdmin(id);
       let user = await userRepo.getUserById(id);
-      return res
-        .status(200)
-        .send({
-          message: "Admin added successfully",
-          user: user,
-        });
+      return res.status(200).send({
+        message: "Admin added successfully",
+        user: user,
+      });
     } catch (err) {
       return res
         .status(500)

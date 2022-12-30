@@ -3,7 +3,7 @@ const { DBconnection } = require("../config/database");
 module.exports = {
   getAdmins: () => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM _user WHERE ISADMIN=(1)`;
+      let queryString = `SELECT * FROM _USER WHERE ISADMIN=(1)`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -12,7 +12,7 @@ module.exports = {
   },
   checkEmailQuery: (email) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT email FROM _user WHERE email='${email}'`;
+      let queryString = `SELECT email FROM _USER WHERE email='${email}'`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) reject(err);
         return resolve(rows[0]);
@@ -21,7 +21,7 @@ module.exports = {
   },
   getUser: (email) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM _user WHERE EMAIL='${email}'`;
+      let queryString = `SELECT * FROM _USER WHERE EMAIL='${email}'`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows[0]);
@@ -30,7 +30,7 @@ module.exports = {
   },
   getUserPassword: (email) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT _password FROM _user WHERE email='${email}'`;
+      let queryString = `SELECT _password FROM _USER WHERE email='${email}'`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows[0]);
@@ -39,7 +39,7 @@ module.exports = {
   },
   getUserById: (id) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM _user WHERE ID=${id}`;
+      let queryString = `SELECT * FROM _USER WHERE ID=${id}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows[0]);
@@ -48,7 +48,7 @@ module.exports = {
   },
   getUserByName: (username) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM _user WHERE USERNAME='${username}'`;
+      let queryString = `SELECT * FROM _USER WHERE USERNAME='${username}'`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows[0]);
@@ -57,12 +57,12 @@ module.exports = {
   },
   createUser: (user_data) => {
     return new Promise((resolve, reject) => {
-      let queryString = `INSERT INTO _user (username, fname, sname, email, _password,_image)
+      let queryString = `INSERT INTO _USER (username, fname, sname, email, _password,_image)
       VALUES ('${user_data.username}','${user_data.firstName}','${user_data.lastName}','${user_data.email}','${user_data.password}}','${user_data.image}}')
       ;`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
-        return resolve({
+        return resolve({ 
           message: "User created successfully",
           rows: rows,
         });
@@ -71,7 +71,7 @@ module.exports = {
   },
   getAllUsers: () => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM _user`;
+      let queryString = `SELECT * FROM _USER`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -80,7 +80,7 @@ module.exports = {
   },
   deleteUserbyID: (id) => {
     return new Promise((resolve, reject) => {
-      let queryString = `DELETE  FROM _user WHERE id = ${id}`;
+      let queryString = `DELETE  FROM _USER WHERE id = ${id}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -89,7 +89,7 @@ module.exports = {
   },
   deleteUserbyusername: (username) => {
     return new Promise((resolve, reject) => {
-      let queryString = `DELETE  FROM _user WHERE USERNAME = '${username}'`;
+      let queryString = `DELETE  FROM _USER WHERE USERNAME = '${username}'`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -98,7 +98,7 @@ module.exports = {
   },
   editUsername: (username, newUsername) => {
     return new Promise((resolve, reject) => {
-      let queryString = `UPDATE _user SET USERNAME = '${newUsername}' WHERE USERNAME = '${username}'`;
+      let queryString = `UPDATE _USER SET USERNAME = '${newUsername}' WHERE USERNAME = '${username}'`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -107,7 +107,7 @@ module.exports = {
   },
   editfname: (username, fname) => {
     return new Promise((resolve, reject) => {
-      let queryString = `UPDATE _user SET FNAME = '${fname}' WHERE USERNAME = '${username}'`;
+      let queryString = `UPDATE _USER SET FNAME = '${fname}' WHERE USERNAME = '${username}'`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -116,7 +116,7 @@ module.exports = {
   },
   editsname: (username, sname) => {
     return new Promise((resolve, reject) => {
-      let queryString = `UPDATE _user SET SNAME = '${sname}' WHERE USERNAME = '${username}'`;
+      let queryString = `UPDATE _USER SET SNAME = '${sname}' WHERE USERNAME = '${username}'`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -125,7 +125,7 @@ module.exports = {
   },
   editAbout: (username, about) => {
     return new Promise((resolve, reject) => {
-      let queryString = `UPDATE _user SET ABOUT = '${about}' WHERE USERNAME = '${username}'`;
+      let queryString = `UPDATE _USER SET ABOUT = '${about}' WHERE USERNAME = '${username}'`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -134,7 +134,7 @@ module.exports = {
   },
   editEmail: (username, email) => {
     return new Promise((resolve, reject) => {
-      let queryString = `UPDATE _user SET EMAIL = '${email}' WHERE USERNAME = '${username}'`;
+      let queryString = `UPDATE _USER SET EMAIL = '${email}' WHERE USERNAME = '${username}'`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -143,7 +143,7 @@ module.exports = {
   },
   editPassword: (username, password) => {
     return new Promise((resolve, reject) => {
-      let queryString = `UPDATE _user SET _PASSWORD = '${password}' WHERE USERNAME = '${username}'`;
+      let queryString = `UPDATE _USER SET _PASSWORD = '${password}' WHERE USERNAME = '${username}'`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -152,7 +152,7 @@ module.exports = {
   },
   editImage: (username, image) => {
     return new Promise((resolve, reject) => {
-      let queryString = `UPDATE _user SET _IMAGE='${image}' WHERE USERNAME = '${username}'`
+      let queryString = `UPDATE _USER SET _IMAGE='${image}' WHERE USERNAME = '${username}'`
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -161,7 +161,7 @@ module.exports = {
   },
   deleteAllUsers: () => {
     return new Promise((resolve, reject) => {
-      let queryString = `DELETE FROM _user`;
+      let queryString = `DELETE FROM _USER`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -170,7 +170,7 @@ module.exports = {
   },
   addAdmin: (id) => {
     return new Promise((resolve, reject) => {
-      let queryString = `UPDATE _user SET ISADMIN=1 WHERE ID=${id}`;
+      let queryString = `UPDATE _USER SET ISADMIN=1 WHERE ID=${id}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);

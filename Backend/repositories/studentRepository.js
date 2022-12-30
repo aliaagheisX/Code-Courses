@@ -3,7 +3,7 @@ const { DBconnection } = require('../config/database');
 module.exports = {
     getAllStudents: () => {
         return new Promise((resolve, reject) => {
-            let queryString = `SELECT * FROM student, _user WHERE _user.ID = student.ID `;
+            let queryString = `SELECT * FROM STUDENT, _USER WHERE _USER.ID = STUDENT.ID `;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -12,7 +12,7 @@ module.exports = {
     },
     getStudentById: (id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `SELECT * FROM student, _user WHERE _user.ID = student.ID AND _user.ID=${id}`;
+            let queryString = `SELECT * FROM STUDENT, _USER WHERE _USER.ID = STUDENT.ID AND _USER.ID=${id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows[0]);
@@ -21,7 +21,7 @@ module.exports = {
     },
     createStudent: (id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `INSERT INTO student (ID) VALUES (${id})`;
+            let queryString = `INSERT INTO STUDENT (ID) VALUES (${id})`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -30,7 +30,7 @@ module.exports = {
     },
     deleteAllStudents: () => {
         return new Promise((resolve, reject) => {
-            let queryString = `DELETE FROM student`;
+            let queryString = `DELETE FROM STUDENT`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -39,7 +39,7 @@ module.exports = {
     },
     deleteStudentById: (id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `DELETE FROM student WHERE ID=${id}`;
+            let queryString = `DELETE FROM STUDENT WHERE ID=${id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);

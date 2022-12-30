@@ -5,7 +5,7 @@ const ch = str => str.replace(/'/g, "`");
 module.exports = {
     getAllLessons: () => {
         return new Promise((resolve, reject) => {
-            let queryString = `SELECT * FROM lesson`;
+            let queryString = `SELECT * FROM LESSON`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -14,7 +14,7 @@ module.exports = {
     },
     getLessonById: (l_id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `SELECT * FROM lesson WHERE LID=${l_id}`;
+            let queryString = `SELECT * FROM LESSON WHERE LID=${l_id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows[0]);
@@ -25,7 +25,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             let queryString = `SELECT 
             L.*, A.TITLE AS article_title, Q.TITLE AS quiz_title
-            FROM lesson L, element A, element Q 
+            FROM LESSON L, ELEMENT A, ELEMENT Q 
             WHERE CID=${c_id}  AND Q.ID = L.QID AND A.ID = L.AID `;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
@@ -35,7 +35,7 @@ module.exports = {
     },
     deleteAllLessons: () => {
         return new Promise((resolve, reject) => {
-            let queryString = `DELETE FROM lesson`;
+            let queryString = `DELETE FROM LESSON`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -44,7 +44,7 @@ module.exports = {
     },
     deleteLessonById: (l_id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `DELETE FROM lesson WHERE LID = ${l_id}`;
+            let queryString = `DELETE FROM LESSON WHERE LID = ${l_id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -64,7 +64,7 @@ module.exports = {
                 @lesson_id
             );
             SELECT @lesson_id;
-            SELECT * FROM lesson WHERE LID=@lesson_id;`;
+            SELECT * FROM LESSON WHERE LID=@lesson_id;`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve({
@@ -77,7 +77,7 @@ module.exports = {
     editLessonName: (name, id) => {
         name = ch(name);
         return new Promise((resolve, reject) => {
-            let queryString = `UPDATE lesson SET NAME='${name}' WHERE LID=${id}`;
+            let queryString = `UPDATE LESSON SET NAME='${name}' WHERE LID=${id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -87,7 +87,7 @@ module.exports = {
     editLessonDescription: (description, id) => {
         description = ch(description);
         return new Promise((resolve, reject) => {
-            let queryString = `UPDATE lesson SET DESCRIPTION='${description}' WHERE LID=${id}`;
+            let queryString = `UPDATE LESSON SET DESCRIPTION='${description}' WHERE LID=${id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -96,7 +96,7 @@ module.exports = {
     },
     editLessonQuestion: (q_id, id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `UPDATE lesson SET QID=${q_id} WHERE LID=${id}`;
+            let queryString = `UPDATE LESSON SET QID=${q_id} WHERE LID=${id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -105,7 +105,7 @@ module.exports = {
     },
     editLessonArticle: (a_id, id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `UPDATE lesson SET AID=${a_id} WHERE LID=${id}`;
+            let queryString = `UPDATE LESSON SET AID=${a_id} WHERE LID=${id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);
@@ -114,7 +114,7 @@ module.exports = {
     },
     editLessonCourseId: (cid, id) => {
         return new Promise((resolve, reject) => {
-            let queryString = `UPDATE lesson SET CID=${cid} WHERE LID=${id}`;
+            let queryString = `UPDATE LESSON SET CID=${cid} WHERE LID=${id}`;
             DBconnection.query(queryString, (err, rows) => {
                 if (err) return reject(err);
                 return resolve(rows);

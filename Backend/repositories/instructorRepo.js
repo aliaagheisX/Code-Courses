@@ -3,7 +3,7 @@ const { DBConnection, DBconnection } = require("../config/database");
 module.exports = {
   getAllInstructors: () => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM instructor, _user WHERE instructor.ID=_user.ID`;
+      let queryString = `SELECT * FROM INSTRUCTOR, _USER WHERE INSTRUCTOR.ID=_USER.ID`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -12,7 +12,7 @@ module.exports = {
   },
   getInstructorById: (id) => {
     return new Promise((resolve, reject) => {
-      let queryString = `SELECT * FROM instructor I, _user U WHERE I.ID=U.ID AND I.ID=${id}`;
+      let queryString = `SELECT * FROM INSTRUCTOR I, _USER U WHERE I.ID=U.ID AND I.ID=${id}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows[0]);
@@ -21,7 +21,7 @@ module.exports = {
   },
   createInstructor: (id) => {
     return new Promise((resolve, reject) => {
-      let queryString = `INSERT INTO instructor(ID, RATING) VALUES (${id}, 0)`;
+      let queryString = `INSERT INTO INSTRUCTOR(ID, RATING) VALUES (${id}, 0)`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);
@@ -30,7 +30,7 @@ module.exports = {
   },
   editInstructor: (id, rating) => {
     return new Promise((resolve, reject) => {
-      let queryString = `UPDATE instructor SET RATING=${rating} WHERE ID=${id}`;
+      let queryString = `UPDATE INSTRUCTOR SET RATING=${rating} WHERE ID=${id}`;
       DBconnection.query(queryString, (err, rows) => {
         if (err) return reject(err);
         return resolve(rows);

@@ -3,7 +3,7 @@ const { DBconnection } = require('../config/database');
 module.exports = {
 	getAllArticles: () => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT A.AUTHORFNAME, A.AUTHORSNAME, A.INSTRUCTORID, E.*, (SELECT COUNT(L.UID) FROM likeonarticle L WHERE L.AID = A.ID ) as likes FROM article A, element E WHERE E.ID = A.ID;`;
+			let queryString = `SELECT A.AUTHORFNAME, A.AUTHORSNAME, A.INSTRUCTORID, E.*, (SELECT COUNT(L.UID) FROM LIKEONARTICLE L WHERE L.AID = A.ID ) as likes FROM ARTICLE A, ELEMENT E WHERE E.ID = A.ID;`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
@@ -12,7 +12,7 @@ module.exports = {
 	},
 	getArticlesOfInstructor: (instructor_id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT A.AUTHORFNAME, A.AUTHORSNAME, A.INSTRUCTORID, E.*, (SELECT COUNT(L.UID) FROM likeonarticle L WHERE L.AID = A.ID ) as likes FROM article A, element E, instructor I WHERE E.ID = A.ID AND A.INSTRUCTORID = I.ID AND I.ID = ${instructor_id};`;
+			let queryString = `SELECT A.AUTHORFNAME, A.AUTHORSNAME, A.INSTRUCTORID, E.*, (SELECT COUNT(L.UID) FROM LIKEONARTICLE L WHERE L.AID = A.ID ) as likes FROM ARTICLE A, ELEMENT E, INSTRUCTOR I WHERE E.ID = A.ID AND A.INSTRUCTORID = I.ID AND I.ID = ${instructor_id};`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
@@ -21,7 +21,10 @@ module.exports = {
 	},
 	getArticleById: (id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT A.*, E.*, COUNT(L.UID) as likes FROM article A, element E, likeonarticle L WHERE A.ID=${id} AND   E.ID = A.ID AND   L.AID =A.ID;`;
+			let queryString = `SELECT 
+			A.*, E.*, 
+			(SELECT COUNT(L.UID) FROM LIKEONARTICLE L WHERE L.AID = A.ID ) as likes 
+			FROM ARTICLE A, ELEMENT E WHERE A.ID=${id} AND   E.ID = A.ID;`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows[0]);
@@ -30,7 +33,7 @@ module.exports = {
 	},
 	getNumberOfArticlesByAuthor: (id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT COUNT(*) AS count FROM article WHERE INSTRUCTORID=${id}`;
+			let queryString = `SELECT COUNT(*) AS count FROM ARTICLE WHERE INSTRUCTORID=${id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows[0].count);
@@ -49,8 +52,8 @@ module.exports = {
 	getArticlesByTopicId: (id) => {
 		return new Promise((resolve, reject) => {
 			let queryString = `SELECT A.AUTHORFNAME, A.AUTHORSNAME, A.INSTRUCTORID, E.*, 
-				(SELECT COUNT(L.UID) FROM likeonarticle L WHERE L.AID = A.ID ) as likes 
-				FROM article A, article_topic t, element E 
+				(SELECT COUNT(L.UID) FROM LIKEONARTICLE L WHERE L.AID = A.ID ) as likes 
+				FROM ARTICLE A, ARTICLE_TOPIC t, ELEMENT E 
 				WHERE A.ID=t.AID AND E.ID = A.ID AND t.TID=${id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
@@ -60,7 +63,7 @@ module.exports = {
 	},
 	getArticlesByAuthorName: (fname, sname) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT * FROM article, element WHERE element.ID=article.ID AND article.AUTHORFNAME='${fname}' AND article.AUTHORSNAME='${sname}'`;
+			let queryString = `SELECT * FROM ARTICLE, ELEMENT WHERE ELEMENT.ID=ARTICLE.ID AND ARTICLE.AUTHORFNAME='${fname}' AND ARTICLE.AUTHORSNAME='${sname}'`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
@@ -69,7 +72,7 @@ module.exports = {
 	},
 	deleteAllArticles: () => {
 		return new Promise((resolve, reject) => {
-			let queryString = `DELETE FROM article`;
+			let queryString = `DELETE FROM ARTICLE`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
@@ -78,7 +81,7 @@ module.exports = {
 	},
 	deleteArticleById: (id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `DELETE FROM article WHERE ID=${id}`;
+			let queryString = `DELETE FROM ARTICLE WHERE ID=${id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
@@ -94,7 +97,7 @@ module.exports = {
 		} = article;
 		const ch = (str) => str.replace(/'/g, "`");
 
-		// Creating an element and returning the 
+		// Creating an ELEMENT and returning the 
 		return new Promise((resolve, reject) => {
 			let queryString = `CALL add_article(
 				'${ch(title)}',
@@ -115,7 +118,7 @@ module.exports = {
 	editArticleBody: (article, id) => {
 		const body = article.body.replace(/'/g, "`");
 		return new Promise((resolve, reject) => {
-			let queryString = `UPDATE ARTICLE SET body = '${body}' WHERE ID = ${id} `;
+			let queryString = `UPDATE ARTICLE SET BODY = '${body}' WHERE ID = ${id} `;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
@@ -124,7 +127,7 @@ module.exports = {
 	},
 	addTopicToArticle: (a_id, t_id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `INSERT INTO article_topic(AID, TID) VALUES (${a_id}, ${t_id})`;
+			let queryString = `INSERT INTO ARTICLE_TOPIC(AID, TID) VALUES (${a_id}, ${t_id})`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
@@ -133,7 +136,7 @@ module.exports = {
 	},
 	removeTopicFromArticle: (a_id, t_id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `DELETE FROM article_topic WHERE AID=${a_id} AND TID=${t_id}`;
+			let queryString = `DELETE FROM ARTICLE_TOPIC WHERE AID=${a_id} AND TID=${t_id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
@@ -142,7 +145,7 @@ module.exports = {
 	},
 	getArticleTopics: (a_id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT NAME, TID FROM topic, article_topic WHERE TID=ID AND AID=${a_id}`;
+			let queryString = `SELECT NAME, TID FROM TOPIC, ARTICLE_TOPIC WHERE TID=ID AND AID=${a_id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
@@ -151,7 +154,7 @@ module.exports = {
 	},
 	deleteArticleTopics: (id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `DELETE FROM article_topic WHERE AID=${id}`;
+			let queryString = `DELETE FROM ARTICLE_TOPIC WHERE AID=${id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
@@ -160,7 +163,7 @@ module.exports = {
 	},
 	readArticle: (a_id, u_id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `INSERT INTO readarticle (SID, AID) VALUES (${u_id}, ${a_id})`;
+			let queryString = `INSERT INTO READARTICLE (SID, AID) VALUES (${u_id}, ${a_id})`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
@@ -169,7 +172,7 @@ module.exports = {
 	},
 	readCountUser: (u_id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT COUNT(*) AS count FROM readarticle WHERE SID=${u_id}`;
+			let queryString = `SELECT COUNT(*) AS count FROM READARTICLE WHERE SID=${u_id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows[0].count);
@@ -178,7 +181,7 @@ module.exports = {
 	},
 	readCountArticle: (a_id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT COUNT(*) AS count FROM readarticle WHERE AID=${a_id}`;
+			let queryString = `SELECT COUNT(*) AS count FROM READARTICLE WHERE AID=${a_id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows[0].count);
@@ -187,7 +190,7 @@ module.exports = {
 	},
 	likeArticle: (a_id, u_id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `INSERT INTO likeonarticle (UID, AID) VALUES (${u_id}, ${a_id})`;
+			let queryString = `INSERT INTO LIKEONARTICLE (UID, AID) VALUES (${u_id}, ${a_id})`;
 
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
@@ -197,7 +200,7 @@ module.exports = {
 	},
 	likeCountArticle: (a_id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT COUNT(*) AS count FROM likeonarticle WHERE AID=${a_id}`;
+			let queryString = `SELECT COUNT(*) AS count FROM LIKEONARTICLE WHERE AID=${a_id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows[0].count);
@@ -206,7 +209,7 @@ module.exports = {
 	},
 	getLikeOnArticle: (a_id, u_id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT * FROM likeonarticle WHERE AID=${a_id} AND UID=${u_id}`;
+			let queryString = `SELECT * FROM LIKEONARTICLE WHERE AID=${a_id} AND UID=${u_id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows[0]);
@@ -215,7 +218,7 @@ module.exports = {
 	},
 	dislikeArticle: (a_id, u_id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `DELETE FROM likeonarticle WHERE AID=${a_id} AND UID=${u_id}`;
+			let queryString = `DELETE FROM LIKEONARTICLE WHERE AID=${a_id} AND UID=${u_id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
@@ -224,7 +227,7 @@ module.exports = {
 	},
 	getArticlesLikedByUser: (u_id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT a.AUTHORFNAME, a.AUTHORSNAME, a.INSTRUCTORID, e.* FROM likeonarticle la, article a, element e WHERE la.AID=a.ID AND a.ID=e.ID AND la.UID=${u_id}`;
+			let queryString = `SELECT a.AUTHORFNAME, a.AUTHORSNAME, a.INSTRUCTORID, e.* FROM LIKEONARTICLE la, ARTICLE a, ELEMENT e WHERE la.AID=a.ID AND a.ID=e.ID AND la.UID=${u_id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
@@ -233,7 +236,7 @@ module.exports = {
 	},
 	getArticlesReadByUser: (u_id) => {
 		return new Promise((resolve, reject) => {
-			let queryString = `SELECT a.AUTHORFNAME, a.AUTHORSNAME, a.INSTRUCTORID, e.* FROM readarticle ra, article a, element e WHERE ra.AID=a.ID AND a.ID=e.ID AND ra.SID=${u_id}`;
+			let queryString = `SELECT a.AUTHORFNAME, a.AUTHORSNAME, a.INSTRUCTORID, e.* FROM READARTICLE ra, ARTICLE a, ELEMENT e WHERE ra.AID=a.ID AND a.ID=e.ID AND ra.SID=${u_id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
 				return resolve(rows);
@@ -243,8 +246,8 @@ module.exports = {
 	getArticlesByLesson: (l_id) => {
 		return new Promise((resolve, reject) => {
 			let queryString = `SELECT A.AUTHORFNAME, A.AUTHORSNAME, A.INSTRUCTORID, E.*, 
-				(SELECT COUNT(L.UID) FROM likeonarticle L WHERE L.AID = A.ID ) as likes 
-				FROM article A, element E 
+				(SELECT COUNT(L.UID) FROM LIKEONARTICLE L WHERE L.AID = A.ID ) as likes 
+				FROM ARTICLE A, ELEMENT E 
 				WHERE E.ID = A.ID AND A.LID=${l_id}`;
 			DBconnection.query(queryString, (err, rows) => {
 				if (err) return reject(err);
