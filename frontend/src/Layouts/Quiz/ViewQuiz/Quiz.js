@@ -7,7 +7,7 @@ import Questions from "./Questions";
 import useToken from "../../../useToken";
 
 export default function Quiz({
-  quiz: { quiz, questions, choices, topics, score },
+  quiz: { quiz, questions, choices, topics, score, max_score },
 }) {
   const [showQuiz, setShowQuiz] = useState(0);
   const { userdata } = useToken();
@@ -21,8 +21,8 @@ export default function Quiz({
     IMAGE,
     INSTRUCTORID,
     numOfStudents,
-    MAXSCORE,
   } = quiz;
+  console.log(score);
   const create_date = new Date(CREATIONDATE)
     .toDateString()
     .split(" ")
@@ -52,7 +52,7 @@ export default function Quiz({
       {score ? (
         <div className="tag-list">
           <div className="tag error">
-            {score.SCORE} / {MAXSCORE}
+            {score.SCORE} / {max_score}
           </div>
         </div>
       ) : (

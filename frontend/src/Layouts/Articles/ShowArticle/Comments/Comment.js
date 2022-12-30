@@ -14,7 +14,7 @@ export default function Comment({ comments, id, addComment, removeComment }) {
         setIsEditing(!isEditing)
     }
     const handelEditingBody = (value) => {
-        debugger;
+        // debugger;
         setBody(value)
         toggleEditing()
     }
