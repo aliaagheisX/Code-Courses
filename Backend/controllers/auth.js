@@ -128,7 +128,7 @@ module.exports = {
         //console.log(req.body.password);
         const validPassword = await bcrypt.compare(
           req.body.password,
-          userPassword._password.slice(0, userPassword._password.length-1)
+          userPassword._password
         );
         if (!validPassword)
           return res.status(403).send({ message: "Invalid password" });
