@@ -3,14 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 28, 2022 at 10:01 PM
+-- Generation Time: Jan 07, 2023 at 05:34 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-SET GLOBAL log_bin_trust_function_creators = 1;
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -21,15 +20,12 @@ SET GLOBAL log_bin_trust_function_creators = 1;
 --
 -- Database: `codecourses`
 --
-DROP DATABASE IF EXISTS codecourses;
-CREATE DATABASE codecourses;
-use codecourses;
 
 DELIMITER $$
 --
 -- Procedures
 --
-CREATE  PROCEDURE `activitesReport` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `activitesReport` ()   BEGIN
     SELECT 
     (SELECT COUNT(*) FROM course) as number_of_courses,
     (SELECT COUNT(*) FROM article) as number_of_article,
@@ -40,7 +36,7 @@ CREATE  PROCEDURE `activitesReport` ()   BEGIN
     (SELECT COUNT(*) FROM messages) as number_of_messages;
 END$$
 
-CREATE  PROCEDURE `add_article` (IN `title` VARCHAR(50), IN `description` VARCHAR(800), IN `image` VARCHAR(400), IN `body` VARCHAR(5000000), IN `i_id` INT(10), OUT `article_id` INT(10))   BEGIN    
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_article` (IN `title` VARCHAR(50), IN `description` VARCHAR(800), IN `image` VARCHAR(400), IN `body` VARCHAR(5000000), IN `i_id` INT(10), OUT `article_id` INT(10))   BEGIN    
     INSERT INTO ELEMENT(TITLE,DESCRIPTION,IMAGE) VALUES (title, description, image);
     SET article_id = LAST_INSERT_ID();
     INSERT INTO ARTICLE(ID,BODY,INSTRUCTORID, AUTHORFNAME, AUTHORSNAME) 
@@ -53,7 +49,7 @@ CREATE  PROCEDURE `add_article` (IN `title` VARCHAR(50), IN `description` VARCHA
     );
 END$$
 
-CREATE  PROCEDURE `add_course` (IN `title` VARCHAR(50), IN `description` VARCHAR(800), IN `image` VARCHAR(400), IN `pre` VARCHAR(256), IN `i_id` INT(10), OUT `course_id` INT(10))   BEGIN    
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_course` (IN `title` VARCHAR(50), IN `description` VARCHAR(800), IN `image` VARCHAR(400), IN `pre` VARCHAR(256), IN `i_id` INT(10), OUT `course_id` INT(10))   BEGIN    
     INSERT INTO ELEMENT(TITLE,DESCRIPTION,IMAGE) VALUES (title, description, image);
     SET course_id = LAST_INSERT_ID();
     INSERT INTO COURSE(ID,PREREQUISITES,INSTRUCTORID, 	INSTRUCTORFNAME, INSTRUCTORSNAME) 
@@ -66,13 +62,13 @@ CREATE  PROCEDURE `add_course` (IN `title` VARCHAR(50), IN `description` VARCHAR
     );
 END$$
 
-CREATE  PROCEDURE `add_lesson` (IN `name` VARCHAR(32), IN `description` VARCHAR(256), IN `cid` INT(11), IN `qid` INT(11), IN `aid` INT(11), OUT `lesson_id` INT(11))   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_lesson` (IN `name` VARCHAR(32), IN `description` VARCHAR(256), IN `cid` INT(11), IN `qid` INT(11), IN `aid` INT(11), OUT `lesson_id` INT(11))   BEGIN
     INSERT INTO lesson(NAME, DESCRIPTION, CID, QID, AID) VALUES (name, description, cid, qid, aid);
     SET lesson_id = LAST_INSERT_ID();
     
 END$$
 
-CREATE  PROCEDURE `add_quiz` (IN `title` VARCHAR(50), IN `description` VARCHAR(800), IN `image` VARCHAR(400), IN `max_score` INT(10), IN `i_id` INT(10), OUT `quiz_id` INT(10))   BEGIN    
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_quiz` (IN `title` VARCHAR(50), IN `description` VARCHAR(800), IN `image` VARCHAR(400), IN `max_score` INT(10), IN `i_id` INT(10), OUT `quiz_id` INT(10))   BEGIN    
     INSERT INTO ELEMENT(TITLE,DESCRIPTION,IMAGE) VALUES (title, description, image);
     SET quiz_id = LAST_INSERT_ID();
     INSERT INTO quiz(ID,MAXSCORE,INSTRUCTORID, INSTRUCTORFNAME, INSTRUCTORSNAME) 
@@ -85,7 +81,7 @@ CREATE  PROCEDURE `add_quiz` (IN `title` VARCHAR(50), IN `description` VARCHAR(8
     );
 END$$
 
-CREATE  PROCEDURE `getTopicsReport` ()  READS SQL DATA BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getTopicsReport` ()  READS SQL DATA BEGIN
     SELECT T.NAME, T.ID ,
     (SELECT COUNT(DISTINCT(QT.QID)) FROM quiz_question_topic QT WHERE QT.TID = T.ID ) AS number_of_quizzes,
     (SELECT COUNT(DISTINCT(A.AID)) FROM article_topic A WHERE A.TID = T.ID ) AS number_of_articles,
@@ -94,7 +90,7 @@ CREATE  PROCEDURE `getTopicsReport` ()  READS SQL DATA BEGIN
     
 END$$
 
-CREATE  PROCEDURE `getUsersReport` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getUsersReport` ()   BEGIN
     
     SELECT COUNT(U.ID) as num_of_users,  
     SUM(U.ISADMIN) AS num_of_admins ,
@@ -103,7 +99,7 @@ CREATE  PROCEDURE `getUsersReport` ()   BEGIN
   
 END$$
 
-CREATE  PROCEDURE `TopEnrolledCourses` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `TopEnrolledCourses` ()   BEGIN
       SELECT 
     C.INSTRUCTORFNAME, C.INSTRUCTORSNAME, E.*, 
     (SELECT COUNT(L.SID) FROM enroll L WHERE L.CID = C.ID ) as enrolls_count 
@@ -112,7 +108,7 @@ CREATE  PROCEDURE `TopEnrolledCourses` ()   BEGIN
     LIMIT 10;
 END$$
 
-CREATE  PROCEDURE `TopLikedArticles` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `TopLikedArticles` ()   BEGIN
     SELECT 
     A.AUTHORFNAME, A.AUTHORSNAME, A.INSTRUCTORID, 
     E.*, (SELECT COUNT(L.UID) FROM likeonarticle L WHERE L.AID = A.ID ) as likes 
@@ -121,7 +117,7 @@ CREATE  PROCEDURE `TopLikedArticles` ()   BEGIN
     LIMIT 10;
 END$$
 
-CREATE  PROCEDURE `TopRatedCourses` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `TopRatedCourses` ()   BEGIN
     SELECT 
     C.INSTRUCTORFNAME, C.INSTRUCTORSNAME, E.*, 
     (SELECT COUNT(L.SID) FROM enroll L WHERE L.CID = C.ID ) as enrolls_count,
@@ -131,7 +127,7 @@ CREATE  PROCEDURE `TopRatedCourses` ()   BEGIN
     LIMIT 10;
 END$$
 
-CREATE  PROCEDURE `TopTakenQuizzes` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `TopTakenQuizzes` ()   BEGIN
     SELECT E.CREATIONDATE, E.TITLE, E.IMAGE, E.DESCRIPTION,
     Q.*, (SELECT COUNT(DISTINCT  QQT.NID) FROM quiz_question_topic QQT WHERE QQT.QID=Q.ID) as numOfQuestions,
     (SELECT COUNT(STQ.SID) FROM studenttakesquiz STQ WHERE STQ.QID=Q.ID) as numOfStudents 
@@ -434,7 +430,7 @@ INSERT INTO `course_topic` (`CID`, `TID`) VALUES
 
 CREATE TABLE `element` (
   `ID` int(11) NOT NULL,
-  `CREATIONDATE` date ,
+  `CREATIONDATE` date DEFAULT current_timestamp(),
   `TITLE` varchar(50) NOT NULL CHECK (octet_length(`TITLE`) >= 2),
   `IMAGE` varchar(400) DEFAULT NULL,
   `DESCRIPTION` varchar(800) NOT NULL CHECK (octet_length(`DESCRIPTION`) >= 20)
@@ -517,7 +513,7 @@ INSERT INTO `element` (`ID`, `CREATIONDATE`, `TITLE`, `IMAGE`, `DESCRIPTION`) VA
 --
 
 CREATE TABLE `enroll` (
-  `STARTDATE` datetime ,
+  `STARTDATE` datetime DEFAULT current_timestamp(),
   `REVIEWBODY` varchar(256) DEFAULT NULL,
   `REVIEWRATING` int(11) DEFAULT NULL CHECK (`REVIEWRATING` >= 0 and `REVIEWRATING` <= 5),
   `SID` int(11) NOT NULL,
@@ -558,7 +554,10 @@ INSERT INTO `enroll` (`STARTDATE`, `REVIEWBODY`, `REVIEWRATING`, `SID`, `CID`) V
 ('2022-12-28 21:00:08', NULL, NULL, 11, 41),
 ('2022-12-28 21:00:14', NULL, NULL, 11, 43),
 ('2022-12-28 21:00:21', NULL, NULL, 11, 46),
-('2022-12-28 21:00:35', NULL, NULL, 11, 53);
+('2022-12-28 21:00:35', NULL, NULL, 11, 53),
+('2022-12-29 09:49:43', NULL, NULL, 12, 2),
+('2022-12-29 09:50:41', NULL, NULL, 12, 41),
+('2022-12-29 09:51:56', NULL, NULL, 13, 41);
 
 --
 -- Triggers `enroll`
@@ -595,7 +594,7 @@ CREATE TABLE `instructor` (
 
 INSERT INTO `instructor` (`ID`, `RATING`) VALUES
 (1, 2250),
-(2, 9700),
+(2, 10200),
 (3, 400),
 (4, 5300),
 (6, 3000),
@@ -715,7 +714,11 @@ INSERT INTO `likeonarticle` (`UID`, `AID`) VALUES
 (11, 47),
 (11, 50),
 (11, 55),
-(11, 56);
+(11, 56),
+(12, 1),
+(12, 4),
+(12, 11),
+(12, 27);
 
 --
 -- Triggers `likeonarticle`
@@ -749,6 +752,17 @@ CREATE TABLE `likeoncomment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `likeoncomment`
+--
+
+INSERT INTO `likeoncomment` (`UID`, `CID`) VALUES
+(12, 1),
+(12, 2),
+(12, 11),
+(12, 37),
+(12, 60);
+
+--
 -- Triggers `likeoncomment`
 --
 DELIMITER $$
@@ -776,7 +790,7 @@ DELIMITER ;
 
 CREATE TABLE `messages` (
   `MID` int(11) NOT NULL,
-  `SENDDATETIME` datetime ,
+  `SENDDATETIME` datetime DEFAULT current_timestamp(),
   `TXT` varchar(256) NOT NULL CHECK (octet_length(`TXT`) >= 1),
   `SENDER` varchar(20) NOT NULL CHECK (octet_length(`SENDER`) >= 3),
   `CID` int(11) DEFAULT NULL
@@ -788,7 +802,10 @@ CREATE TABLE `messages` (
 
 INSERT INTO `messages` (`MID`, `SENDDATETIME`, `TXT`, `SENDER`, `CID`) VALUES
 (1, '2022-12-28 19:21:44', 'hi', 'Samy6', 43),
-(2, '2022-12-28 19:21:49', 'how are you', 'Samy6', 43);
+(2, '2022-12-28 19:21:49', 'how are you', 'Samy6', 43),
+(3, '2022-12-29 09:50:48', 'hello', 'ahmedr2001', 41),
+(4, '2022-12-29 09:52:01', 'hi', 'moh', 41),
+(5, '2022-12-29 11:55:21', 'jhbkl', 'ahmedr2001', 2);
 
 -- --------------------------------------------------------
 
@@ -1036,7 +1053,9 @@ INSERT INTO `readarticle` (`SID`, `AID`) VALUES
 (11, 47),
 (11, 50),
 (11, 55),
-(11, 56);
+(11, 56),
+(12, 1),
+(12, 4);
 
 --
 -- Triggers `readarticle`
@@ -1071,15 +1090,17 @@ CREATE TABLE `student` (
 
 INSERT INTO `student` (`ID`, `SCORE`) VALUES
 (1, 825),
-(2, 100),
+(2, 110),
 (3, 50),
 (5, 0),
-(6, 550),
-(7, 900),
+(6, 560),
+(7, 910),
 (8, 670),
-(9, 626),
+(9, 636),
 (10, 638),
-(11, 426);
+(11, 436),
+(12, 51),
+(13, 0);
 
 -- --------------------------------------------------------
 
@@ -1091,7 +1112,7 @@ CREATE TABLE `studenttakesquiz` (
   `QID` int(11) NOT NULL,
   `SID` int(11) NOT NULL,
   `SCORE` int(11) NOT NULL,
-  `TAKEDATE` date 
+  `TAKEDATE` date DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -1110,6 +1131,7 @@ INSERT INTO `studenttakesquiz` (`QID`, `SID`, `SCORE`, `TAKEDATE`) VALUES
 (51, 11, 2, '2022-12-28'),
 (57, 9, 3, '2022-12-28'),
 (57, 11, 3, '2022-12-28'),
+(57, 12, 1, '2022-12-29'),
 (58, 9, 4, '2022-12-28'),
 (59, 9, 2, '2022-12-28'),
 (59, 10, 2, '2022-12-28');
@@ -1178,7 +1200,7 @@ CREATE TABLE `_comment` (
   `AID` int(11) NOT NULL,
   `RID` int(11) DEFAULT NULL,
   `UID` int(11) NOT NULL,
-  `CREATIONDATENTIME` datetime ,
+  `CREATIONDATENTIME` datetime DEFAULT current_timestamp(),
   `BODY` varchar(1000) NOT NULL CHECK (octet_length(`BODY`) > 5)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1253,7 +1275,8 @@ INSERT INTO `_comment` (`ID`, `AID`, `RID`, `UID`, `CREATIONDATENTIME`, `BODY`) 
 (64, 56, NULL, 11, '2022-12-28 20:58:53', 'Life is better with good people'),
 (65, 47, NULL, 11, '2022-12-28 20:59:20', 'React is pretty simple'),
 (66, 55, NULL, 11, '2022-12-28 20:59:34', 'Great article'),
-(67, 31, NULL, 11, '2022-12-28 20:59:57', 'that`s fantastic');
+(67, 31, NULL, 11, '2022-12-28 20:59:57', 'that`s fantastic'),
+(68, 4, NULL, 12, '2022-12-29 11:55:43', 'VERY BAD ARTICLE!!!!!!!!!');
 
 -- --------------------------------------------------------
 
@@ -1267,7 +1290,7 @@ CREATE TABLE `_user` (
   `FNAME` varchar(32) NOT NULL CHECK (`FNAME`  not like '%[^a-zA-Z]%' and octet_length(`FNAME`) >= 3),
   `SNAME` varchar(32) NOT NULL CHECK (`SNAME`  not like '%[^a-zA-Z]%' and octet_length(`SNAME`) >= 3),
   `EMAIL` varchar(32) NOT NULL CHECK (`EMAIL` like '%@%.%'),
-  `JOINDATE` date ,
+  `JOINDATE` date DEFAULT current_timestamp(),
   `ABOUT` mediumtext DEFAULT NULL,
   `ISADMIN` bit(1) NOT NULL DEFAULT b'0',
   `_PASSWORD` varchar(60) NOT NULL,
@@ -1289,7 +1312,9 @@ INSERT INTO `_user` (`ID`, `USERNAME`, `FNAME`, `SNAME`, `EMAIL`, `JOINDATE`, `A
 (8, 'Ali9', 'Ali', 'Sobhy', 'Ali9@gmail.com', '2022-12-28', NULL, b'0', '$2a$10$aBmlCOA8Enr9qursJbY2jenelVhMHooAPlbmGnauLoJuw3RpMSL2G', 'https://7wdata.be/wp-content/uploads/2016/05/icon-user-default.png}'),
 (9, 'Fatma7', 'Fatma', 'Ali', 'Fatma7@gmail.com', '2022-12-28', NULL, b'0', '$2a$10$PquETuXV454y1jGdCWGEaOxNBrdb6TGqEKfXHov11wW2/Wq3e1JXK', 'https://7wdata.be/wp-content/uploads/2016/05/icon-user-default.png}'),
 (10, 'Mazen9', 'Mazen', 'Mohsen', 'Mazen9@gmail.com', '2022-12-28', NULL, b'0', '$2a$10$qeTJG93bcerg..Lo2POu0OglRpE1nM6BDQA6U1uGbajRXukat7YUm', 'https://7wdata.be/wp-content/uploads/2016/05/icon-user-default.png}'),
-(11, 'Fady9', 'Fady', 'Karem', 'Fady9@gmail.com', '2022-12-28', NULL, b'0', '$2a$10$q9MPMFBRgUua7w34gD.9VuGiHjIeTFia15igzJSF/yRsVtEuAWyVi', 'https://7wdata.be/wp-content/uploads/2016/05/icon-user-default.png}');
+(11, 'Fady9', 'Fady', 'Karem', 'Fady9@gmail.com', '2022-12-28', NULL, b'0', '$2a$10$q9MPMFBRgUua7w34gD.9VuGiHjIeTFia15igzJSF/yRsVtEuAWyVi', 'https://7wdata.be/wp-content/uploads/2016/05/icon-user-default.png}'),
+(12, 'ahmedr2001', 'Ahmed', 'Abdelatty', 'ahmedradalla2001@gmail.com', '2022-12-29', NULL, b'0', '$2a$10$h9Y4dJ4k7eJqF6SNHWVoZOeC3PtF0Pxr.ucR9X/SPd9..Ygy0fm1C', 'https://7wdata.be/wp-content/uploads/2016/05/icon-user-default.png}'),
+(13, 'moh', 'Mohamed', 'Radalla', 'a@a.com', '2022-12-29', NULL, b'0', '$2a$10$clRj2MD3EvgZAvHFJVJ7JezXna/NJpuDAN0Ccc30momAxCUmUJIaW', 'https://7wdata.be/wp-content/uploads/2016/05/icon-user-default.png}');
 
 --
 -- Triggers `_user`
@@ -1506,7 +1531,7 @@ ALTER TABLE `lesson`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `MID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `MID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `question`
@@ -1530,13 +1555,13 @@ ALTER TABLE `topic`
 -- AUTO_INCREMENT for table `_comment`
 --
 ALTER TABLE `_comment`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `_user`
 --
 ALTER TABLE `_user`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables

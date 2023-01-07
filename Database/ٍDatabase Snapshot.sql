@@ -20,6 +20,9 @@ SET time_zone = "+00:00";
 --
 -- Database: `codecourses`
 --
+DROP Database IF EXISTS codecourses;
+CREATE Database codecourses;
+use codecourses;
 
 -- --------------------------------------------------------
 
@@ -131,7 +134,7 @@ INSERT INTO `article_topic` (`AID`, `TID`) VALUES
 
 CREATE TABLE `element` (
   `ID` int(11) NOT NULL,
-  `CREATIONDATE` date DEFAULT current_timestamp(),
+  `CREATIONDATE` date ,
   `TITLE` varchar(25) NOT NULL CHECK (octet_length(`TITLE`) >= 2),
   `IMAGE` varchar(400) DEFAULT NULL,
   `DESCRIPTION` varchar(800) NOT NULL CHECK (octet_length(`DESCRIPTION`) >= 20)
@@ -286,7 +289,7 @@ CREATE TABLE `_comment` (
   `AID` int(11) NOT NULL,
   `RID` int(11) DEFAULT NULL,
   `UID` int(11) NOT NULL,
-  `CREATIONDATENTIME` datetime DEFAULT current_timestamp(),
+  `CREATIONDATENTIME` datetime ,
   `BODY` varchar(1000) NOT NULL CHECK (octet_length(`BODY`) > 5)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -302,7 +305,7 @@ CREATE TABLE `_user` (
   `FNAME` varchar(32) NOT NULL CHECK (`FNAME`  not like '%[^a-zA-Z]%' and octet_length(`FNAME`) >= 3),
   `SNAME` varchar(32) NOT NULL CHECK (`SNAME`  not like '%[^a-zA-Z]%' and octet_length(`SNAME`) >= 3),
   `EMAIL` varchar(32) NOT NULL CHECK (`EMAIL` like '%@%.%'),
-  `JOINDATE` date DEFAULT current_timestamp(),
+  `JOINDATE` date ,
   `ABOUT` mediumtext DEFAULT NULL,
   `ISADMIN` bit(1) NOT NULL DEFAULT b'0',
   `_PASSWORD` varchar(60) NOT NULL,

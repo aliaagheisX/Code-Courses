@@ -1,8 +1,8 @@
 const mysql = require("mysql");
 const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
+  host: "codecourses.mysql.database.azure.com",
+  user: "codecourses@codecourses",
+  password: "17102002aA@",
   database: "codecourses",
   port: 3306,
   multipleStatements: true,

@@ -6,7 +6,7 @@ export default function Logo() {
     return (
         <Link to={'/'}>
             <div className={styles.wrapper}>
-                <img src='./logo.png' alt='logo' />
+                <img src={require('./logo.png')} alt='logo' />
                 {/* <div className={styles.logo}>CODE Courses</div> */}
             </div>
         </Link>
